@@ -4,11 +4,15 @@ import React from 'react'
 import { CopyButton } from './copy-button'
 import { Code } from './mdx'
 
-export function Pre({ children, ...props }) {
+export function Pre({ children, ...props }: { children: React.ReactNode } & React.HTMLAttributes<HTMLPreElement>) {
   // Extract the text content from the Code component
-  const textContent = React.Children.toArray(children)
-    .find(child => React.isValidElement(child) && child.type === Code)
-    ?.props?.children || ''
+  const childrenArray = React.Children.toArray(children)
+  const codeElement = childrenArray.find(
+    (child): child is React.ReactElement => 
+      React.isValidElement(child) && 
+      child.type === Code
+  )
+  const textContent = codeElement?.props?.children || ''
 
   return (
     <div className="relative group">
