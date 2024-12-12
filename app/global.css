@@ -193,3 +193,29 @@ pre code {
 .overflow-x-auto::-webkit-scrollbar-track {
   background: transparent;
 }
+
+/* Syntax highlighting with better contrast */
+.sh__token--property {
+  color: #7dd3fc !important; /* Light blue with better contrast */
+}
+
+.sh__token--comment {
+  color: #94a3b8 !important; /* Slate-400 for better contrast */
+}
+
+.sh__line {
+  color: #e2e8f0 !important; /* Slate-200 for better base text contrast */
+}
+
+/* Ensure dark mode has sufficient contrast */
+.dark .sh__token--property {
+  color: #38bdf8 !important; /* Brighter blue for dark mode */
+}
+
+.dark .sh__token--comment {
+  color: #94a3b8 !important; /* Slate-400 for dark mode comments */
+}
+
+.dark .sh__line {
+  color: #f1f5f9 !important; /* Slate-100 for dark mode base text */
+}
