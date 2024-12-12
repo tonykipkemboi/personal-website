@@ -31,6 +31,14 @@
 
 html {
   min-width: 360px;
+  background-image: radial-gradient(circle at 1px 1px, #e5e5e5 1px, transparent 0);
+  background-size: 20px 20px;
+}
+
+@media (prefers-color-scheme: dark) {
+  html {
+    background-image: radial-gradient(circle at 1px 1px, #333333 1px, transparent 0);
+  }
 }
 
 .prose .anchor {
@@ -147,4 +155,41 @@ table {
 
 .title {
   text-wrap: balance;
+}
+
+/* Add styles for code blocks in MDX */
+pre {
+  overflow-x: auto;
+  white-space: pre;
+  word-wrap: normal;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  background-color: #1a1a1a;
+  margin: 1rem 0;
+}
+
+pre code {
+  display: block;
+  min-width: 100%;
+  padding: 0;
+}
+
+.prose pre {
+  max-width: 100vw;
+  overflow-x: auto;
+}
+
+/* Scrollbar styles for code blocks */
+.overflow-x-auto::-webkit-scrollbar {
+  height: 6px;
+  background: transparent;
+}
+
+.overflow-x-auto::-webkit-scrollbar-thumb {
+  background: rgba(156, 163, 175, 0.3);
+  border-radius: 3px;
+}
+
+.overflow-x-auto::-webkit-scrollbar-track {
+  background: transparent;
 }

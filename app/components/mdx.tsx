@@ -3,6 +3,7 @@ import Image from 'next/image'
 import { MDXRemote } from 'next-mdx-remote/rsc'
 import { highlight } from 'sugar-high'
 import React from 'react'
+import { Pre } from './pre'
 
 function Table({ data }) {
   let headers = data.headers.map((header, index) => (
@@ -31,37 +32,53 @@ function CustomLink(props) {
 
   if (href.startsWith('/')) {
     return (
-      <Link href={href} {...props}>
+      <Link href={href} className="text-blue-500 hover:text-blue-600 transition-colors" {...props}>
         {props.children}
       </Link>
     )
   }
 
   if (href.startsWith('#')) {
-    return <a {...props} />
+    return <a className="text-blue-500 hover:text-blue-600 transition-colors" {...props} />
   }
 
-  return <a target="_blank" rel="noopener noreferrer" {...props} />
+  return <a target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:text-blue-600 transition-colors" {...props} />
 }
 
 function RoundedImage(props) {
   return <Image alt={props.alt} className="rounded-lg" {...props} />
 }
 
-function Code({ children, ...props }) {
+export function Code({ children, ...props }) {
   let codeHTML = highlight(children)
-  return <code dangerouslySetInnerHTML={{ __html: codeHTML }} {...props} />
+  return (
+    <code 
+      dangerouslySetInnerHTML={{ __html: codeHTML }} 
+      {...props}
+    />
+  )
+}
+
+function AiOutput({ children }) {
+  return (
+    <div className="my-4 p-6 bg-neutral-50 border border-neutral-200 rounded-lg overflow-auto dark:bg-neutral-900 dark:border-neutral-800">
+      <div className="text-sm text-neutral-500 dark:text-neutral-400 mb-2">Example Output:</div>
+      <div className="prose prose-neutral dark:prose-invert max-w-none text-sm">
+        {children}
+      </div>
+    </div>
+  )
 }
 
 function slugify(str) {
   return str
     .toString()
     .toLowerCase()
-    .trim() // Remove whitespace from both ends of a string
-    .replace(/\s+/g, '-') // Replace spaces with -
-    .replace(/&/g, '-and-') // Replace & with 'and'
-    .replace(/[^\w\-]+/g, '') // Remove all non-word characters except for -
-    .replace(/\-\-+/g, '-') // Replace multiple - with single -
+    .trim()
+    .replace(/\s+/g, '-')
+    .replace(/&/g, '-and-')
+    .replace(/[^\w\-]+/g, '')
+    .replace(/\-\-+/g, '-')
 }
 
 function createHeading(level) {
@@ -82,7 +99,6 @@ function createHeading(level) {
   }
 
   Heading.displayName = `Heading${level}`
-
   return Heading
 }
 
@@ -96,7 +112,9 @@ let components = {
   Image: RoundedImage,
   a: CustomLink,
   code: Code,
+  pre: Pre,
   Table,
+  AiOutput
 }
 
 export function CustomMDX(props) {

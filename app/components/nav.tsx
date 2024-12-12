@@ -1,16 +1,23 @@
 import Link from 'next/link'
 
-const navItems = {
-  '/': {
-    name: 'home',
+const links = [
+  {
+    href: '/',
+    text: 'home',
   },
-  '/blog': {
-    name: 'blog',
+  {
+    href: '/blog',
+    text: 'blog',
   },
-  'https://www.youtube.com/@tonykipkemboi': {
-    name: 'youtube',
+  {
+    href: '/projects',
+    text: 'projects',
   },
-}
+  {
+    href: '/press',
+    text: 'press',
+  },
+]
 
 export function Navbar() {
   return (
@@ -21,14 +28,15 @@ export function Navbar() {
           id="nav"
         >
           <div className="flex flex-row space-x-0 pr-10">
-            {Object.entries(navItems).map(([path, { name }]) => {
+            {links.map((link) => {
               return (
                 <Link
-                  key={path}
-                  href={path}
-                  className="transition-all hover:text-neutral-800 dark:hover:text-neutral-200 flex align-middle relative py-1 px-2 m-1"
+                  key={link.href}
+                  href={link.href}
+                  className="transition-all duration-200 hover:text-neutral-800 dark:hover:text-neutral-200 flex align-middle relative py-2 px-3 sm:py-1 sm:px-2 group"
                 >
-                  {name}
+                  {link.text}
+                  <span className="absolute inset-x-0 bottom-0 h-[1px] bg-neutral-400 dark:bg-neutral-700 transform origin-left scale-x-0 transition-transform duration-200 ease-out group-hover:scale-x-100" />
                 </Link>
               )
             })}

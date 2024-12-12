@@ -1,0 +1,195 @@
+---
+title: 'getting started with ai agents using crewai'
+publishedAt: '2024-12-12'
+summary: 'learn how to build your first ai agent using crewai, a framework for creating autonomous ai agents that can work together to accomplish complex tasks.'
+---
+
+as a developer advocate at [crewai](https://crewai.com), i get asked a lot about how to get started with building ai agents. 
+in this brief blog post, i'll walk you through the process of getting started with crewai and creating your first ai agent.
+
+## what is crewai?
+
+crewai is an innovative framework designed to orchestrate role-playing ai agents. it allows you to create autonomous ai agents that can:
+- work together in a hierarchical structure
+- share context and information
+- execute complex tasks sequentially or in parallel
+- integrate with various llm providers
+
+## setting up your environment
+
+first, you'll need to install crewai and crewai tools:
+
+```bash
+pip install crewai crewai-tools
+```
+
+you'll also need to configure your llm provider. crewai supports various options including:
+- openai
+- anthropic
+- local models via ollama
+- google vertex ai
+- azure openai
+- [more here](https://docs.crewai.com/concepts/llms#provider-configuration-examples)
+
+## creating your first agent
+
+there are [various ways](https://docs.crewai.com/concepts/agents) to create an agent, but i'll show you how to create a simple agent in crewai. 
+start by creating a file called **"main.py"** and add the following code:
+
+```python
+from crewai import Agent, Task, Crew, Process, LLM
+from crewai.tools import SerperDevTool
+
+# configure your serper api key
+# get you free api key here: https://serper.dev
+export SERPER_API_KEY='your_serper_api_key' 
+
+# create a llm provider
+llm = LLM(
+    model='o1-preview',
+    api_key='your_openai_api_key',
+    temperature=0.7
+)
+
+# create a research agent
+researcher = Agent(
+    role='Research Analyst',
+    goal='conduct detailed research on ai technology trends',
+    backstory="""you are an expert research analyst with a focus on AI technology.
+    you have a track record of identifying emerging trends and providing actionable insights.""",
+    tools=[SerperDevTool()],
+    llm=llm,
+    verbose=True
+)
+```
+
+## defining tasks
+
+tasks are what agents need to accomplish:
+
+```python
+... # continuation
+
+# create a task
+research_task = Task(
+    description="""analyze the latest developments in ai agents and autonomous systems.
+    focus on real-world applications and emerging trends.""",
+    expected_output="an executive summary of comprehensive insights into the current state of ai agent technology",
+    agent=researcher,
+)
+```
+
+## assembling your crew
+
+now let's put it all together:
+
+```python
+... # continuation
+
+# create the crew with our agents and tasks
+crew = Crew(
+    agents=[researcher],
+    tasks=[research_task],
+    process=Process.sequential,
+    verbose=True
+)
+
+# kick off the work
+result = crew.kickoff()
+```
+
+run your code with the following command:
+
+```bash
+python main.py
+```
+
+## what did we just do?
+
+that's it! you've successfully created your first ai agent using crewai. you should see a full report of your task in the terminal.
+here's an example of the final executive summary report:
+
+<AiOutput>
+# Comprehensive Report on the Rise and Impact of AI Agents in 2024
+
+## 1. Introduction to AI Agents
+In 2024, Artificial Intelligence (AI) agents are at the forefront of innovation across various industries. As intelligent systems that can perform tasks typically requiring human cognition, AI agents are paving the way for significant advancements in operational efficiency, decision-making, and overall productivity within sectors like Human Resources (HR) and Finance. This report aims to detail the rise of AI agents, their frameworks, applications, and potential implications on the workforce.
+
+## 2. Benefits of AI Agents
+AI agents bring numerous advantages that are transforming traditional work environments. Key benefits include:
+
+- **Task Automation**: AI agents can carry out repetitive tasks such as data entry, scheduling, and payroll processing without human intervention, greatly reducing the time and resources spent on these activities.
+- **Improved Efficiency**: By quickly processing large datasets and performing analyses that would take humans significantly longer, AI agents enhance operational efficiency. This allows teams to focus on strategic tasks that require higher-level thinking.
+- **Enhanced Decision-Making**: AI agents can analyze trends and patterns in data, provide insights, and even suggest actions, helping stakeholders make informed decisions based on factual data rather than intuition alone.
+
+## 3. Popular AI Agent Frameworks
+Several frameworks have emerged to facilitate the development of AI agents, each with its own unique features and capabilities. Some of the most popular frameworks include:
+
+- **Autogen**: A framework designed to streamline the development of AI agents through automation of code generation.
+- **Semantic Kernel**: Focuses on natural language processing and understanding, enabling agents to comprehend user intentions better.
+- **Promptflow**: Provides tools for developers to create conversational agents that can navigate complex interactions seamlessly.
+- **Langchain**: Specializes in leveraging various APIs to ensure agents can access and utilize external data effectively.
+- **CrewAI**: Aimed at collaborative environments, CrewAI strengthens teamwork by facilitating communication through AI-driven insights.
+- **MemGPT**: Combines memory-optimized architectures with generative capabilities, allowing for more personalized interactions with users.
+
+These frameworks empower developers to build versatile and intelligent agents that can engage users, perform advanced analytics, and execute various tasks aligned with organizational goals.
+
+## 4. AI Agents in Human Resources
+AI agents are revolutionizing HR practices by automating and optimizing key functions:
+
+- **Recruiting**: AI agents can screen resumes, schedule interviews, and even conduct initial assessments, thus accelerating the hiring process while minimizing biases.
+- **Succession Planning**: AI systems analyze employee performance data and potential, helping organizations identify future leaders and plan appropriate training.
+- **Employee Engagement**: Chatbots powered by AI can facilitate feedback loops between employees and management, promoting an open culture and addressing concerns promptly.
+
+As AI continues to evolve, HR departments leveraging these agents can realize substantial improvements in both efficiency and employee satisfaction.
+
+## 5. AI Agents in Finance
+The finance sector is seeing extensive integration of AI agents that enhance financial practices:
+
+- **Expense Tracking**: Automated systems manage and monitor expenses, flagging anomalies and offering recommendations based on spending patterns.
+- **Risk Assessment**: AI models assess credit risk and uncover potential fraud by analyzing transaction data and behavioral patterns.
+- **Investment Decisions**: AI agents provide stock predictions and analytics based on historical data and current market conditions, empowering investors with informative insights.
+
+The incorporation of AI agents into finance is fostering a more responsive and risk-aware financial landscape.
+
+## 6. Market Trends and Investments
+The growth of AI agents has attracted significant investment, especially amidst the rising popularity of chatbots and generative AI technologies. Companies and entrepreneurs are eager to explore the potential of these systems, recognizing their ability to streamline operations and improve customer engagement.
+
+Conversely, corporations like Microsoft are taking strides to integrate AI agents into their product offerings, with enhancements to their Copilot 365 applications. This strategic move emphasizes the importance of AI literacy in the modern workplace and indicates the stabilizing of AI agents as essential business tools.
+
+## 7. Future Predictions and Implications
+Experts predict that AI agents will transform essential aspects of work life. As we look toward the future, several anticipated changes include:
+
+- Enhanced integration of AI agents across all business functions, creating interconnected systems that leverage data from various departmental silos for comprehensive decision-making.
+- Continued advancement of AI technologies, resulting in smarter, more adaptable agents capable of learning and evolving from user interactions.
+- Increased regulatory scrutiny to ensure ethical use, especially concerning data privacy and employee surveillance as AI agents become more prevalent.
+
+To stay competitive and harness the full potential of AI agents, organizations must remain vigilant about latest developments in AI technology and consider continuous learning and adaptation in their strategic planning.
+
+## 8. Conclusion
+The emergence of AI agents is undeniably reshaping the workplace landscape in 2024. With their ability to automate tasks, enhance efficiency, and improve decision-making, AI agents are critical in driving operational success. Organizations must embrace and adapt to AI developments to thrive in an increasingly digital business environment.
+</AiOutput>
+
+you can further customize your agents, tasks, and crew as needed and add more complex workflows.
+
+another thing to note is that you can use pydantic models to make sure you get consistent task outputs and agent responses. watch this [tutorial](https://www.youtube.com/watch?v=dNpKQk5uxHw) for more details on how to use pydantic models with crewai.
+
+## best practices
+
+when building with crewai:
+1. give agents clear, specific roles and goals
+2. provide relevant context in task descriptions
+3. use appropriate tools for the task
+4. not all llms are created equal; for example, some are not suitable for tool calling
+
+## what's next?
+
+crewai is constantly evolving with new features and improvements. stay tuned for more tutorials where we'll explore:
+- building complex multi-agent systems
+- integrating custom tools
+- optimizing agent performance
+- handling advanced workflows
+
+check out crewai [documentation](https://docs.crewai.com/) for more detailed information and advanced usage examples.
+
+**ps**: _i manage the docs for crewai. if you have any questions or feedback, don't hesitate to reach out to me on [twitter](https://twitter.com/tonykipkemboi)._
