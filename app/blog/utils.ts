@@ -60,20 +60,18 @@ export function formatDate(date: string, includeRelative = false) {
   }
   let targetDate = new Date(date)
 
-  let yearsAgo = currentDate.getFullYear() - targetDate.getFullYear()
-  let monthsAgo = currentDate.getMonth() - targetDate.getMonth()
-  let daysAgo = currentDate.getDate() - targetDate.getDate()
+  // Calculate time difference in milliseconds
+  let timeDiff = currentDate.getTime() - targetDate.getTime()
+  let daysDiff = Math.floor(timeDiff / (1000 * 60 * 60 * 24))
 
   let formattedDate = ''
 
-  if (yearsAgo > 0) {
-    formattedDate = `${yearsAgo}y ago`
-  } else if (monthsAgo > 0) {
-    formattedDate = `${monthsAgo}mo ago`
-  } else if (daysAgo > 0) {
-    formattedDate = `${daysAgo}d ago`
-  } else {
+  if (daysDiff < 0) {
+    formattedDate = 'Future'
+  } else if (daysDiff === 0) {
     formattedDate = 'Today'
+  } else {
+    formattedDate = `${daysDiff}d ago`
   }
 
   let fullDate = targetDate.toLocaleString('en-us', {
