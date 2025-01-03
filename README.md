@@ -1,42 +1,71 @@
 # Portfolio Blog Starter
 
-This is a porfolio site template complete with a blog. Includes:
+> This project is a private fork of the [Vercel Blog Template](https://github.com/vercel/examples/tree/main/solutions/blog).
 
-- MDX and Markdown support
-- Optimized for SEO (sitemap, robots, JSON-LD schema)
-- RSS Feed
-- Dynamic OG images
-- Syntax highlighting
-- Tailwind v4
-- Vercel Speed Insights / Web Analytics
-- Geist font
+A modern portfolio site template with integrated blog functionality. Built with Next.js and optimized for performance.
 
-## Demo
+## Features
 
-https://portfolio-blog-starter.vercel.app
+- ✍️ MDX and Markdown support for blog posts
+- 🔍 SEO optimized (sitemap, robots.txt, JSON-LD schema)
+- 📡 RSS Feed support
+- 🖼️ Dynamic OG image generation
+- ✨ Syntax highlighting for code blocks
+- 🎨 Styled with Tailwind CSS v4
+- 📊 Vercel Speed Insights & Web Analytics integration
+- 🔤 Geist font integration
 
-## How to Use
+## Roadmap
 
-You can choose from one of the following two methods to use this repository:
+- [ ] Add dark mode support
+- [ ] Implement comment system
+- [ ] Add search functionality
+- [ ] Create tag-based filtering for blog posts
+- [ ] Create AI & Tech Newsletter Page
+  - [ ] Embed Substack newsletter
+  - [ ] Add bi-weekly roundup section
+  - [ ] Create newsletter archive
+  - [ ] Add AI/Tech news categories
+- [ ] Improve mobile responsiveness
+- [ ] Add social sharing buttons
+- [ ] Create API documentation
+- [ ] Add unit tests
+- [ ] Implement CI/CD pipeline
 
-### One-Click Deploy
+## Newsletter
 
-Deploy the example using [Vercel](https://vercel.com?utm_source=github&utm_medium=readme&utm_campaign=vercel-examples):
+The bi-weekly newsletter focuses on curating the most interesting developments in AI and technology. Each edition provides:
+- 🤖 AI breakthroughs and innovations
+- 💡 Interesting tech developments
+- 🔍 Concise, spam-free updates
+- 📚 Curated resources and insights
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/vercel/examples/tree/main/solutions/blog&project-name=blog&repository-name=blog)
+Subscribe to stay updated on the latest in AI and tech, delivered straight to your inbox every two weeks.
 
-### Clone and Deploy
+## Getting Started
 
-Execute [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app) with [pnpm](https://pnpm.io/installation) to bootstrap the example:
+### Development
 
+1. Clone the repository
+2. Install dependencies:
 ```bash
-pnpm create next-app --example https://github.com/vercel/examples/tree/main/solutions/blog blog
+pnpm install
 ```
-
-Then, run Next.js in development mode:
-
+3. Start the development server:
 ```bash
 pnpm dev
 ```
 
-Deploy it to the cloud with [Vercel](https://vercel.com/templates) ([Documentation](https://nextjs.org/docs/app/building-your-application/deploying)).
+### Production
+
+Deploy to Vercel for the best experience:
+
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/vercel/examples/tree/main/solutions/blog&project-name=blog&repository-name=blog)
+
+## Credits
+
+This project is based on the [Vercel Blog Template](https://github.com/vercel/examples/tree/main/solutions/blog). Original deployment and documentation links have been preserved for reference.
+
+## Live Site
+
+[tonykipkemboi.com](https://tonykipkemboi.com)

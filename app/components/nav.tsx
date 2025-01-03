@@ -17,6 +17,10 @@ const links = [
     href: '/press',
     text: 'press',
   },
+  {
+    href: '/newsletter',
+    text: 'newsletter',
+  },
 ]
 
 export function Navbar() {
