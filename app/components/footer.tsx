@@ -46,7 +46,7 @@ export default function Footer() {
         </li>
       </ul>
       <p className="mt-8 text-neutral-600 dark:text-neutral-300">
-        {new Date().getFullYear()} Tony Kipkemboi. All rights reserved.
+        © {new Date().getFullYear()} Tony Kipkemboi. All rights reserved.
       </p>
     </footer>
   )
