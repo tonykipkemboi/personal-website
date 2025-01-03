@@ -55,12 +55,14 @@ function formatDate(date: string) {
 export default function PressPage() {
   return (
     <div className="max-w-4xl mx-auto py-16 px-4">
-      <header className="mb-16">
-        <h1 className="text-3xl font-bold mb-4">media & press</h1>
+      <section>
+        <h1 className="text-2xl font-medium mb-8">
+          online footprint
+        </h1>
         <p className="text-neutral-600 dark:text-neutral-400">
-          podcasts, interviews, and articles featuring my work and thoughts on technology.
+          my appearances in podcasts, interviews, articles, and talks.
         </p>
-      </header>
+      </section>
 
       <div className="space-y-12">
         {appearances.map((appearance, index) => (

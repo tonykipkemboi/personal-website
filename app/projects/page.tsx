@@ -8,7 +8,7 @@ export const metadata = {
 export default function ProjectsPage() {
   return (
     <section>
-      <h1 className="font-medium text-2xl mb-8 tracking-tighter">
+      <h1 className="text-2xl font-medium mb-8">
         my projects
       </h1>
       <div className="prose prose-neutral dark:prose-invert">

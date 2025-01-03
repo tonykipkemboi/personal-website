@@ -9,7 +9,11 @@ export default function Newsletter() {
   return (
     <div className="container mx-auto px-4 py-16">
       <div className="max-w-2xl mx-auto">
-        <h1 className="text-3xl font-bold mb-6">ai agents & dna storage newsletter</h1>
+        <section>
+          <h1 className="text-2xl font-medium mb-8">
+            my newsletter
+          </h1>
+        </section>
         <p className="text-lg mb-8">
           this bi-weekly newsletter brings you the latest in <em><strong>ai agents</strong></em> and <em><strong>dna storage technologies</strong></em>.
           i am interested in these two vertical at the moment and will be sharing my learnings and insights on these topics + industry news.
