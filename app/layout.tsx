@@ -16,13 +16,13 @@ export const viewport: Viewport = {
 }
 
 export const metadata: Metadata = {
-  metadataBase: new URL(baseUrl),
+  metadataBase: new URL('https://tonykipkemboi.com'),
   manifest: '/manifest.json',
   title: {
     default: 'Tony Kipkemboi',
     template: '%s | Tony Kipkemboi',
   },
-  description: 'Developer Advocate and Software Engineer writing about AI, data engineering, and software development.',
+  description: 'Developer Advocate and Content Creator writing about AI, data engineering, and software development.',
   icons: {
     icon: [
       { url: '/favicon.ico' },
@@ -59,16 +59,25 @@ export const metadata: Metadata = {
   },
   openGraph: {
     title: 'Tony Kipkemboi',
-    description: 'Developer Advocate and Software Engineer writing about AI, data engineering, and software development.',
-    url: baseUrl,
+    description: 'Developer Advocate and Content Creator writing about AI, data engineering, and software development.',
+    url: 'https://tonykipkemboi.com',
     siteName: 'Tony Kipkemboi',
-    locale: 'en_US',
+    images: [
+      {
+        url: '/api/og',
+        width: 1200,
+        height: 630,
+        alt: 'Tony Kipkemboi',
+      },
+    ],
+    locale: 'en-US',
     type: 'website',
   },
   twitter: {
-    title: 'Tony Kipkemboi',
     card: 'summary_large_image',
-    creator: '@tonykipkemboi',
+    title: 'Tony Kipkemboi',
+    description: 'Developer Advocate and Content Creator writing about AI, data engineering, and software development.',
+    images: ['/api/og'],
   },
   robots: {
     index: true,
