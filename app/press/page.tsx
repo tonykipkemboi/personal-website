@@ -54,17 +54,16 @@ function formatDate(date: string) {
 
 export default function PressPage() {
   return (
-    <div className="max-w-4xl mx-auto py-16 px-4">
-      <section>
-        <h1 className="text-2xl font-medium mb-8">
-          online footprint
-        </h1>
-        <p className="text-neutral-600 dark:text-neutral-400">
-          my appearances in podcasts, interviews, articles, and talks.
-        </p>
-      </section>
+    <section>
+      <h1 className="text-2xl font-medium mb-8 text-neutral-900 dark:text-neutral-100">
+        online footprint
+      </h1>
+      <p className="text-neutral-600 dark:text-neutral-400 mb-8">
+        my appearances in podcasts, interviews, articles, and talks. i regularly share insights about ai agents, data engineering, and my experiences in the tech industry. below you'll find a collection of my
+        contributions to various tech platforms and communities.
+      </p>
 
-      <div className="space-y-12">
+      <div className="grid grid-cols-1 gap-6 md:gap-8">
         {appearances.map((appearance, index) => (
           <Link
             key={index}
@@ -124,6 +123,6 @@ export default function PressPage() {
           </Link>
         ))}
       </div>
-    </div>
+    </section>
   )
 }

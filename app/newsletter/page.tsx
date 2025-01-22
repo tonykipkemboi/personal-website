@@ -7,29 +7,25 @@ export const metadata: Metadata = {
 
 export default function Newsletter() {
   return (
-    <div className="container mx-auto px-4 py-16">
-      <div className="max-w-2xl mx-auto">
-        <section>
-          <h1 className="text-2xl font-medium mb-8">
-            my newsletter
-          </h1>
-        </section>
-        <p className="text-lg mb-8">
-          this bi-weekly newsletter brings you the latest in <em><strong>ai agents</strong></em> and <em><strong>dna storage technologies</strong></em>.
-          i am interested in these two vertical at the moment and will be sharing my learnings and insights on these topics + industry news.
-          no fluff or spam, just the good stuff. 
-        </p>
-        
-        {/* Substack iframe embed */}
-        <iframe
-          src="https://tonykipkemboi.substack.com/embed?v=2"
-          width="100%"
-          height="320"
-          style={{ border: '1px solid #EEE', background: 'white' }}
-          frameBorder="0"
-          scrolling="no"
-        ></iframe>
-      </div>
-    </div>
+    <section>
+      <h1 className="text-2xl font-medium mb-8 text-neutral-900 dark:text-neutral-100">
+        my newsletter
+      </h1>
+      <p className="text-neutral-600 dark:text-neutral-400 mb-8">
+        welcome to my bi-weekly newsletter where i explore the fascinating intersection of <em><strong>ai agents</strong></em> and <em><strong>dna storage technologies</strong></em>. 
+        expect quick, no-fluff updates on breakthroughs and news in ai agents, practical applications of dna data storage,
+        and thought-provoking insights about the future of computing and data storage.
+      </p>
+      
+      {/* Substack iframe embed */}
+      <iframe
+        src="https://tonykipkemboi.substack.com/embed?v=2"
+        width="100%"
+        height="320"
+        style={{ border: '1px solid #EEE', background: 'transparent' }}
+        frameBorder="0"
+        scrolling="no"
+      ></iframe>
+    </section>
   )
 } 
