@@ -4,10 +4,10 @@ import Link from 'next/link'
 export function LatestVideo() {
   // Latest video details
   const latestVideo = {
-    title: "how to get structured outputs with ollama [pydantic models]",
-    videoId: "KCJwvMFLjgA",
-    description: "in this video, we'll explore how ollama now supports structured outputs, making it possible to constrain a model's output to a specific format defined by a json schema.",
-    thumbnail: `https://img.youtube.com/vi/KCJwvMFLjgA/maxresdefault.jpg`
+    title: "ai agent generated podcast using crewai and elevenlabs",
+    videoId: "I5K8KdY__sU",
+    description: "the video demonstrates the entire process from uploading a research paper to generating the final podcast, providing explanations of the code and functionalities along the way.",
+    thumbnail: `https://img.youtube.com/vi/I5K8KdY__sU/maxresdefault.jpg`
   }
 
   return (
