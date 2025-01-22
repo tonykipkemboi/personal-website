@@ -1,3 +1,4 @@
+import { Suspense } from 'react'
 import Link from 'next/link'
 import { LatestPost } from './components/latest-post'
 import { LatestProject } from './components/latest-project'
@@ -21,7 +22,7 @@ function ArrowIcon() {
   )
 }
 
-export default function Page() {
+export default async function Page() {
   return (
     <div className="space-y-16">
       {/* Hero Section */}
@@ -128,7 +129,9 @@ export default function Page() {
             read all
           </Link>
         </div>
-        <LatestPost />
+        <Suspense fallback={<div>Loading latest post...</div>}>
+          <LatestPost />
+        </Suspense>
       </section>
 
       {/* Latest Project Section */}
