@@ -31,13 +31,10 @@
 
 html {
   min-width: 360px;
-  background-image: radial-gradient(circle at 1px 1px, #e5e5e5 1px, transparent 0);
-  background-size: 20px 20px;
 }
 
 @media (prefers-color-scheme: dark) {
   html {
-    background-image: radial-gradient(circle at 1px 1px, #333333 1px, transparent 0);
   }
 }
 
