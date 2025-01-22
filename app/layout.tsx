@@ -7,6 +7,7 @@ import { Analytics } from '@vercel/analytics/react'
 import { SpeedInsights } from '@vercel/speed-insights/next'
 import Footer from './components/footer'
 import { baseUrl } from './sitemap'
+import Script from 'next/script'
 
 export const viewport: Viewport = {
   themeColor: [
@@ -99,8 +100,24 @@ export default function RootLayout({
         GeistMono.variable
       )}
     >
-      <body className="antialiased max-w-2xl mb-40 flex flex-col md:flex-row mx-4 mt-8 lg:mx-auto">
-        <main className="flex-auto min-w-0 mt-6 flex flex-col px-2 md:px-0">
+      <head>
+        {/* Google Analytics Tag */}
+        <Script
+          async
+          src="https://www.googletagmanager.com/gtag/js?id=G-67ZB0DXL8P"
+          strategy="afterInteractive"
+        />
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-67ZB0DXL8P');
+          `}
+        </Script>
+      </head>
+      <body className="antialiased">
+        <main className="max-w-2xl mb-40 flex flex-col md:flex-row mx-4 mt-8 lg:mx-auto">
           <Navbar />
           {children}
           <Footer />
