@@ -2,7 +2,7 @@ import { Suspense } from 'react'
 import Link from 'next/link'
 import { LatestPost } from './components/latest-post'
 import { LatestProject } from './components/latest-project'
-import { LatestVideo } from './components/latest-video'
+import { PopularVideo } from './components/latest-video'
 
 function ArrowIcon() {
   return (
@@ -121,7 +121,7 @@ export default async function Page() {
       {/* Latest Post Section */}
       <section className="mb-16">
         <div className="flex justify-between items-center mb-8">
-          <h2 className="text-2xl font-semibold tracking-tighter">latest post</h2>
+          <h2 className="text-2xl font-medium text-neutral-900 dark:text-neutral-100">latest post</h2>
           <Link
             href="/blog"
             className="text-neutral-600 hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-neutral-100 transition-colors"
@@ -137,7 +137,7 @@ export default async function Page() {
       {/* Latest Project Section */}
       <section className="mb-16">
         <div className="flex justify-between items-center mb-8">
-          <h2 className="text-2xl font-semibold tracking-tighter">latest project</h2>
+          <h2 className="text-2xl font-medium text-neutral-900 dark:text-neutral-100">latest project</h2>
           <Link
             href="/projects"
             className="text-neutral-600 hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-neutral-100 transition-colors"
@@ -148,10 +148,10 @@ export default async function Page() {
         <LatestProject />
       </section>
 
-      {/* Latest Video Section */}
+      {/* Popular Video Section */}
       <section className="mb-16">
         <div className="flex justify-between items-center mb-8">
-          <h2 className="text-2xl font-semibold tracking-tighter">latest video</h2>
+          <h2 className="text-2xl font-medium text-neutral-900 dark:text-neutral-100">most popular video</h2>
           <Link
             href="https://www.youtube.com/@tonykipkemboi"
             className="text-neutral-600 hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-neutral-100 transition-colors"
@@ -161,7 +161,7 @@ export default async function Page() {
             subscribe <ArrowIcon />
           </Link>
         </div>
-        <LatestVideo />
+        <PopularVideo />
       </section>
     </div>
   )
