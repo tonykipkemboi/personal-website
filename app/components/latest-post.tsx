@@ -18,7 +18,7 @@ export async function LatestPost() {
             dateTime={latestPost.metadata.publishedAt}
             className="text-sm text-neutral-600 dark:text-neutral-400 tabular-nums transition-colors duration-200 group-hover:text-neutral-800 dark:group-hover:text-neutral-200"
           >
-            {formatDate(latestPost.metadata.publishedAt, true)}
+            {formatDate(latestPost.metadata.publishedAt)}
           </time>
           <span className="text-neutral-600 dark:text-neutral-400 transition-colors duration-200 group-hover:text-neutral-800 dark:group-hover:text-neutral-200">
             <svg

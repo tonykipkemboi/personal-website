@@ -18,7 +18,7 @@ export async function BlogPosts() {
                 dateTime={post.metadata.publishedAt}
                 className="text-sm text-neutral-600 dark:text-neutral-400 tabular-nums transition-colors duration-200 group-hover:text-neutral-800 dark:group-hover:text-neutral-200"
               >
-                {formatDate(post.metadata.publishedAt, true)}
+                {formatDate(post.metadata.publishedAt)}
               </time>
               <div className="flex items-center space-x-1">
                 <span className="text-neutral-600 dark:text-neutral-400 transition-colors duration-200 group-hover:text-neutral-800 dark:group-hover:text-neutral-200">
