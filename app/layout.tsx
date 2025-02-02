@@ -23,10 +23,10 @@ export const metadata: Metadata = {
     default: 'Tony Kipkemboi',
     template: '%s | Tony Kipkemboi',
   },
-  description: 'Developer Advocate and Software Engineer writing about AI, data engineering, and software development.',
+  description: 'Developer Advocate and Community Builder writing about AI, data engineering, and software development.',
   openGraph: {
     title: 'Tony Kipkemboi',
-    description: 'Developer Advocate and Software Engineer writing about AI, data engineering, and software development.',
+    description: 'Developer Advocate and Community Builder writing about AI, data engineering, and software development.',
     url: baseUrl,
     siteName: 'Tony Kipkemboi',
     images: [
@@ -34,7 +34,7 @@ export const metadata: Metadata = {
         url: '/og-image.png',
         width: 1200,
         height: 630,
-        alt: 'Tony Kipkemboi - Developer Advocate and Software Engineer'
+        alt: 'Tony Kipkemboi - Developer Advocate and Community Builder',
       }
     ],
     locale: 'en_US',
@@ -43,7 +43,7 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     title: 'Tony Kipkemboi',
-    description: 'Developer Advocate and Software Engineer writing about AI, data engineering, and software development.',
+    description: 'Developer Advocate and Community Builder writing about AI, data engineering, and software development.',
     creator: '@tonykipkemboi',
     images: ['/og-image.png'],
   },
