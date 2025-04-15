@@ -1,36 +1,42 @@
 import Image from 'next/image'
 import Link from 'next/link'
 
-export function LatestVideo() {
-  // Latest video details
-  const latestVideo = {
-    title: "how to get structured outputs with ollama [pydantic models]",
-    videoId: "KCJwvMFLjgA",
-    description: "in this video, we'll explore how ollama now supports structured outputs, making it possible to constrain a model's output to a specific format defined by a json schema.",
-    thumbnail: `https://img.youtube.com/vi/KCJwvMFLjgA/maxresdefault.jpg`
+export function PopularVideo() {
+  // Most popular video details
+  const popularVideo = {
+    title: "how to chat with your pdfs using local large language models [ollama rag]",
+    videoId: "ztBJqzBU5kc",
+    description: "learn how to build a powerful pdf chat system using ollama and langchain. this tutorial shows you how to create a retrieval-augmented generation (rag) system that runs completely on your local machine.",
+    views: "140K+ views",
+    thumbnail: `https://img.youtube.com/vi/ztBJqzBU5kc/maxresdefault.jpg`
   }
 
   return (
     <Link
-      href={`https://www.youtube.com/watch?v=${latestVideo.videoId}`}
+      href={`https://www.youtube.com/watch?v=${popularVideo.videoId}`}
       target="_blank"
       rel="noopener noreferrer"
       className="group block overflow-hidden rounded-lg border border-neutral-200 hover:border-neutral-400 dark:border-neutral-800 dark:hover:border-neutral-600 transition-all"
     >
       <div className="aspect-video relative">
         <Image
-          src={latestVideo.thumbnail}
-          alt={latestVideo.title}
+          src={popularVideo.thumbnail}
+          alt={popularVideo.title}
           fill
           className="object-cover"
         />
       </div>
       <div className="p-4">
-        <h3 className="font-medium text-neutral-900 dark:text-neutral-100 mb-2 line-clamp-2">
-          {latestVideo.title}
-        </h3>
+        <div className="flex items-center gap-2 mb-2">
+          <h3 className="font-medium text-neutral-900 dark:text-neutral-100 line-clamp-2">
+            {popularVideo.title}
+          </h3>
+          <span className="text-sm text-neutral-600 dark:text-neutral-400">
+            {popularVideo.views}
+          </span>
+        </div>
         <p className="text-neutral-600 dark:text-neutral-400 text-sm line-clamp-2">
-          {latestVideo.description}
+          {popularVideo.description}
         </p>
       </div>
     </Link>

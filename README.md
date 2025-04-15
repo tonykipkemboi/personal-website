@@ -21,26 +21,11 @@ A modern portfolio site template with integrated blog functionality. Built with 
 - [ ] Implement comment system
 - [ ] Add search functionality
 - [ ] Create tag-based filtering for blog posts
-- [ ] Create AI & Tech Newsletter Page
-  - [ ] Embed Substack newsletter
-  - [ ] Add bi-weekly roundup section
-  - [ ] Create newsletter archive
-  - [ ] Add AI/Tech news categories
 - [ ] Improve mobile responsiveness
 - [ ] Add social sharing buttons
 - [ ] Create API documentation
 - [ ] Add unit tests
 - [ ] Implement CI/CD pipeline
-
-## Newsletter
-
-The bi-weekly newsletter focuses on curating the most interesting developments in AI and technology. Each edition provides:
-- 🤖 AI breakthroughs and innovations
-- 💡 Interesting tech developments
-- 🔍 Concise, spam-free updates
-- 📚 Curated resources and insights
-
-Subscribe to stay updated on the latest in AI and tech, delivered straight to your inbox every two weeks.
 
 ## Getting Started
 

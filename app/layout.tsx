@@ -7,6 +7,7 @@ import { Analytics } from '@vercel/analytics/react'
 import { SpeedInsights } from '@vercel/speed-insights/next'
 import Footer from './components/footer'
 import { baseUrl } from './sitemap'
+import Script from 'next/script'
 
 export const viewport: Viewport = {
   themeColor: [
@@ -22,7 +23,30 @@ export const metadata: Metadata = {
     default: 'Tony Kipkemboi',
     template: '%s | Tony Kipkemboi',
   },
-  description: 'Developer Advocate and Software Engineer writing about AI, data engineering, and software development.',
+  description: 'Developer Advocate and Community Builder writing about AI, data engineering, and software development.',
+  openGraph: {
+    title: 'Tony Kipkemboi',
+    description: 'Developer Advocate and Community Builder writing about AI, data engineering, and software development.',
+    url: baseUrl,
+    siteName: 'Tony Kipkemboi',
+    images: [
+      {
+        url: '/og-image.png',
+        width: 1200,
+        height: 630,
+        alt: 'Tony Kipkemboi - Developer Advocate and Community Builder',
+      }
+    ],
+    locale: 'en_US',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Tony Kipkemboi',
+    description: 'Developer Advocate and Community Builder writing about AI, data engineering, and software development.',
+    creator: '@tonykipkemboi',
+    images: ['/og-image.png'],
+  },
   icons: {
     icon: [
       { url: '/favicon.ico' },
@@ -57,19 +81,6 @@ export const metadata: Metadata = {
     statusBarStyle: 'default',
     title: 'Tony Kipkemboi'
   },
-  openGraph: {
-    title: 'Tony Kipkemboi',
-    description: 'Developer Advocate and Software Engineer writing about AI, data engineering, and software development.',
-    url: baseUrl,
-    siteName: 'Tony Kipkemboi',
-    locale: 'en_US',
-    type: 'website',
-  },
-  twitter: {
-    title: 'Tony Kipkemboi',
-    card: 'summary_large_image',
-    creator: '@tonykipkemboi',
-  },
   robots: {
     index: true,
     follow: true,
@@ -99,6 +110,22 @@ export default function RootLayout({
         GeistMono.variable
       )}
     >
+      <head>
+        {/* Google Analytics Tag */}
+        <Script
+          async
+          src="https://www.googletagmanager.com/gtag/js?id=G-67ZB0DXL8P"
+          strategy="afterInteractive"
+        />
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-67ZB0DXL8P');
+          `}
+        </Script>
+      </head>
       <body className="antialiased max-w-2xl mb-40 flex flex-col md:flex-row mx-4 mt-8 lg:mx-auto">
         <main className="flex-auto min-w-0 mt-6 flex flex-col px-2 md:px-0">
           <Navbar />

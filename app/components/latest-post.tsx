@@ -1,15 +1,9 @@
 import Link from 'next/link'
 import { formatDate, getBlogPosts } from 'app/blog/utils'
 
-export function LatestPost() {
-  const allBlogs = getBlogPosts()
-  const latestPost = allBlogs
-    .sort((a, b) => {
-      if (new Date(a.metadata.publishedAt) > new Date(b.metadata.publishedAt)) {
-        return -1
-      }
-      return 1
-    })[0] // Get only the latest post
+export async function LatestPost() {
+  const allBlogs = await getBlogPosts()
+  const latestPost = allBlogs[0] // Posts are already sorted by date in getBlogPosts
 
   if (!latestPost) return null
 
@@ -24,46 +18,31 @@ export function LatestPost() {
             dateTime={latestPost.metadata.publishedAt}
             className="text-sm text-neutral-600 dark:text-neutral-400 tabular-nums transition-colors duration-200 group-hover:text-neutral-800 dark:group-hover:text-neutral-200"
           >
-            {formatDate(latestPost.metadata.publishedAt, true)}
+            {formatDate(latestPost.metadata.publishedAt)}
           </time>
           <span className="text-neutral-600 dark:text-neutral-400 transition-colors duration-200 group-hover:text-neutral-800 dark:group-hover:text-neutral-200">
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth={1.5}
-              stroke="currentColor"
-              className="h-5 w-5"
+              viewBox="0 0 20 20"
+              fill="currentColor"
+              className="w-5 h-5"
             >
               <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3"
+                fillRule="evenodd"
+                d="M3 10a.75.75 0 01.75-.75h10.638L10.23 5.29a.75.75 0 111.04-1.08l5.5 5.25a.75.75 0 010 1.08l-5.5 5.25a.75.75 0 11-1.04-1.08l4.158-3.96H3.75A.75.75 0 013 10z"
+                clipRule="evenodd"
               />
             </svg>
           </span>
         </div>
-        
-        <div>
-          <h2 className="text-xl font-medium tracking-tight text-neutral-900 dark:text-neutral-100 group-hover:text-neutral-700 dark:group-hover:text-neutral-300">
+        <div className="flex flex-col space-y-2">
+          <h2 className="font-medium text-xl tracking-tight text-neutral-900 dark:text-neutral-100">
             {latestPost.metadata.title}
           </h2>
-          {latestPost.metadata.summary && (
-            <p className="mt-2 line-clamp-3 text-neutral-600 dark:text-neutral-400 group-hover:text-neutral-700 dark:group-hover:text-neutral-300">
-              {latestPost.metadata.summary}
-            </p>
-          )}
+          <p className="text-neutral-600 dark:text-neutral-400 line-clamp-2">
+            {latestPost.metadata.summary}
+          </p>
         </div>
-
-        {latestPost.metadata.image && (
-          <div className="relative h-48 overflow-hidden rounded-md">
-            <img
-              src={latestPost.metadata.image}
-              alt={latestPost.metadata.title}
-              className="object-cover w-full h-full transition-transform duration-300 group-hover:scale-105"
-            />
-          </div>
-        )}
       </div>
     </Link>
   )
