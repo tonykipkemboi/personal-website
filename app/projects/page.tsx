@@ -13,8 +13,7 @@ export default function ProjectsPage() {
       </h1>
       <div className="prose prose-neutral dark:prose-invert">
         <p className="mb-8 text-neutral-600 dark:text-neutral-400">
-          here are some of the projects i've worked on. each project represents a unique challenge and learning experience.
-          click on the project cards to view the live sites or explore the source code on github.
+          some of the stuff i’ve built or shipped for fun. click a card to see more.
         </p>
       </div>
       <Projects />

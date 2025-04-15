@@ -18,13 +18,18 @@ interface MediaAppearance {
 }
 
 const appearances: MediaAppearance[] = [
+  // items will be sorted below
+]
+
+// Unsorted list (copied from previous appearances array)
+const unsortedAppearances: MediaAppearance[] = [
   {
-    title: "C.I.S. Strong: Meet Tony Kipkemboi",
+    title: "Build agentic systems with CrewAI and Amazon Bedrock",
     type: "article",
-    source: "Penn Engineering Blog",
-    date: "2023-11-15",
-    link: "https://blog.cis.upenn.edu/c-i-s-strong-meet-tony-kipkemboi/",
-    description: "Featured in Penn Engineering's CIS Strong series, highlighting my journey in computer science and contributions to the tech community.",
+    source: "AWS Machine Learning Blog",
+    date: "2025-03-31",
+    link: "https://aws.amazon.com/blogs/machine-learning/build-agentic-systems-with-crewai-and-amazon-bedrock/",
+    description: "Co-authored an AWS ML Blog post on building agentic systems with CrewAI and Amazon Bedrock, empowering developers to build sophisticated AI agent workflows.",
   },
   {
     title: "PyCon US 2024 Speaker",
@@ -35,6 +40,14 @@ const appearances: MediaAppearance[] = [
     description: "Selected speaker at PyCon US 2024, the largest annual gathering for the Python programming community.",
   },
   {
+    title: "C.I.S. Strong: Meet Tony Kipkemboi",
+    type: "article",
+    source: "Penn Engineering Blog",
+    date: "2023-11-15",
+    link: "https://blog.cis.upenn.edu/c-i-s-strong-meet-tony-kipkemboi/",
+    description: "Featured in Penn Engineering's CIS Strong series, highlighting my journey in computer science and contributions to the tech community.",
+  },
+  {
     title: "Ripple Ventures Fellowship",
     type: "article",
     source: "Ripple Ventures",
@@ -42,7 +55,11 @@ const appearances: MediaAppearance[] = [
     link: "https://www.fellowship.rippleventures.com/school/university-of-pennsylvania",
     description: "Featured in Ripple Ventures' fellowship program at the University of Pennsylvania.",
   }
-]
+];
+
+// Sort by date descending
+unsortedAppearances.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+appearances.push(...unsortedAppearances);
 
 function formatDate(date: string) {
   return new Date(date).toLocaleDateString('en-US', {
@@ -59,8 +76,7 @@ export default function PressPage() {
         online footprint
       </h1>
       <p className="text-neutral-600 dark:text-neutral-400 mb-8">
-        my appearances in podcasts, interviews, articles, and talks. i regularly share insights about ai agents, data engineering, and my experiences in the tech industry. below you'll find a collection of my
-        contributions to various tech platforms and communities.
+        some places i’ve appeared or spoken. podcasts, interviews, articles, and talks.
       </p>
 
       <div className="grid grid-cols-1 gap-6 md:gap-8">
