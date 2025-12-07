@@ -31,16 +31,7 @@ export default async function Page() {
           tony kipkemboi
         </h1>
         <p className="text-lg text-neutral-600 dark:text-neutral-400 max-w-2xl">
-          i’m a founding senior developer advocate at{' '}
-          <a
-            href="https://www.crewai.com/"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="underline text-blue-500 hover:text-blue-600 dark:text-blue-400 dark:hover:text-blue-300"
-          >
-            crewai
-          </a>
-          , where <u className="underline decoration-dotted decoration-2 underline-offset-2">i help developers build effective ai agents</u>. i'm a veteran of the <u className="underline decoration-dotted decoration-2 underline-offset-2">us army</u>, and have previously worked at <u className="underline decoration-dotted decoration-2 underline-offset-2">bloomberg</u>, <u className="underline decoration-dotted decoration-2 underline-offset-2">booz allen hamilton</u>, and <u className="underline decoration-dotted decoration-2 underline-offset-2">snowflake</u>. i’ve spoken at <u className="underline decoration-dotted decoration-2 underline-offset-2">pyconus</u>, <u className="underline decoration-dotted decoration-2 underline-offset-2">odsc</u>, <u className="underline decoration-dotted decoration-2 underline-offset-2">harvard</u>, and more. i'm passionate about open-source, startups, and tech education.
+          i build <u className="underline decoration-dotted decoration-2 underline-offset-2">ai automations and agent systems</u> that help teams work smarter and create <u className="underline decoration-dotted decoration-2 underline-offset-2">technical content</u> about ai across social platforms. i'm a veteran of the <u className="underline decoration-dotted decoration-2 underline-offset-2">us army</u>, and have previously worked at <u className="underline decoration-dotted decoration-2 underline-offset-2">crewai</u>, <u className="underline decoration-dotted decoration-2 underline-offset-2">snowflake</u>, <u className="underline decoration-dotted decoration-2 underline-offset-2">bloomberg</u>, and <u className="underline decoration-dotted decoration-2 underline-offset-2">booz allen hamilton</u>. i've spoken at <u className="underline decoration-dotted decoration-2 underline-offset-2">pyconus</u>, <u className="underline decoration-dotted decoration-2 underline-offset-2">odsc</u>, <u className="underline decoration-dotted decoration-2 underline-offset-2">harvard</u>, and more. i'm passionate about <u className="underline decoration-dotted decoration-2 underline-offset-2">open-source</u>, <u className="underline decoration-dotted decoration-2 underline-offset-2">ai agents</u>, and <u className="underline decoration-dotted decoration-2 underline-offset-2">developer education</u>.
         </p>
         <div className="flex flex-col items-center justify-center">
           <div className="flex flex-wrap gap-3 justify-center bg-neutral-100 dark:bg-neutral-800 rounded-xl px-4 py-2 shadow-sm mt-4">
