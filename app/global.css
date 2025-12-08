@@ -31,10 +31,19 @@
 
 html {
   min-width: 360px;
+  /* Subtle dotted mesh background */
+  background-image: radial-gradient(circle, rgba(0, 0, 0, 0.05) 1px, transparent 1px);
+  background-size: 20px 20px;
+  background-position: 0 0, 10px 10px;
+  background-attachment: fixed;
 }
 
 @media (prefers-color-scheme: dark) {
   html {
+    background-image: radial-gradient(circle, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+    background-size: 20px 20px;
+    background-position: 0 0, 10px 10px;
+    background-attachment: fixed;
   }
 }
 
