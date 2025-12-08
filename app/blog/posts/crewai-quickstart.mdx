@@ -1,0 +1,124 @@
+---
+title: 'Getting Started with AI Agents using CrewAI'
+publishedAt: '2024-12-12'
+summary: 'Learn how to build your first AI agent using CrewAI, a framework for creating autonomous AI agents that can work together to accomplish complex tasks.'
+---
+
+As a developer advocate at [CrewAI](https://crewai.com), I get asked a lot about how to get started with building AI agents. In this brief blog post, I'll walk you through the process of getting started with CrewAI and creating your first AI agent.
+
+## What is CrewAI?
+
+CrewAI is an innovative framework designed to orchestrate role-playing AI agents. It allows you to create autonomous AI agents that can:
+- Work together in a hierarchical structure
+- Share context and information
+- Execute complex tasks sequentially or in parallel
+- Integrate with various LLM providers
+
+## Setting up your environment
+
+First, you'll need to install CrewAI and CrewAI tools:
+
+```bash
+pip install crewai crewai-tools
+```
+
+You'll also need to configure your LLM provider. CrewAI supports various options including:
+- OpenAI
+- Anthropic
+- Local models via Ollama
+- Google Vertex AI
+- Azure OpenAI
+- [More here](https://docs.crewai.com/concepts/llms#provider-configuration-examples)
+
+## Creating your first agent
+
+There are [various ways](https://docs.crewai.com/concepts/agents) to create an agent, but I'll show you how to create a simple agent in CrewAI.
+
+First, configure your API keys:
+
+```bash
+# Get your free API key here: https://serper.dev
+export SERPER_API_KEY='your_serper_api_key'
+```
+
+Then create a file called **"main.py"** and add the following code:
+
+```python
+from crewai import Agent, Task, Crew, Process, LLM
+from crewai.tools import SerperDevTool
+
+# Create an LLM provider
+llm = LLM(
+    model='o1-preview',
+    api_key='your_openai_api_key',
+    temperature=0.7
+)
+
+# Create a research agent
+researcher = Agent(
+    role='Research Analyst',
+    goal='Conduct detailed research on AI technology trends',
+    backstory="""You are an expert research analyst with a focus on AI technology.
+    You have a track record of identifying emerging trends and providing actionable insights.""",
+    tools=[SerperDevTool()],
+    llm=llm,
+    verbose=True
+)
+```
+
+## Defining tasks
+
+Tasks are what agents need to accomplish:
+
+```python
+# Create a task
+research_task = Task(
+    description="""Analyze the latest developments in AI agents and autonomous systems.
+    Focus on real-world applications and emerging trends.""",
+    expected_output="An executive summary of comprehensive insights into the current state of AI agent technology",
+    agent=researcher,
+)
+```
+
+## Assembling your crew
+
+Now let's put it all together:
+
+```python
+# Create the crew with our agents and tasks
+crew = Crew(
+    agents=[researcher],
+    tasks=[research_task],
+    process=Process.sequential,
+    verbose=True
+)
+
+# Kick off the work
+result = crew.kickoff()
+```
+
+Run your code with the following command:
+
+```bash
+python main.py
+```
+
+## What did we just do?
+
+That's it! You've successfully created your first AI agent using CrewAI. You should see a full report of your task in the terminal.
+
+You can further customize your agents, tasks, and crew as needed and add more complex workflows.
+
+Another thing to note is that you can use Pydantic models to make sure you get consistent task outputs and agent responses. Watch this [tutorial](https://www.youtube.com/watch?v=dNpKQk5uxHw) for more details on how to use Pydantic models with CrewAI.
+
+## Best practices to keep in mind when building with CrewAI
+
+1. Give agents clear, specific roles and goals
+2. Provide relevant context in task descriptions
+3. Use appropriate tools for the task
+4. Not all LLMs are created equal; for example, some are not suitable for tool calling
+5. Use Pydantic models to ensure consistent task outputs and agent responses
+
+Check out CrewAI [documentation](https://docs.crewai.com/) for more detailed information and advanced usage examples.
+
+**PS**: _I manage the docs for CrewAI. If you have any questions or feedback, don't hesitate to reach out to me on [Twitter](https://twitter.com/tonykipkemboi)._

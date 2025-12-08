@@ -49,20 +49,20 @@ function RoundedImage(props) {
   return <Image alt={props.alt} className="rounded-lg" {...props} />
 }
 
-export function Code({ children, ...props }) {
+function Code({ children, ...props }) {
   let codeHTML = highlight(children)
   return (
-    <code 
-      dangerouslySetInnerHTML={{ __html: codeHTML }} 
+    <code
+      dangerouslySetInnerHTML={{ __html: codeHTML }}
       {...props}
     />
   )
 }
 
-function AiOutput({ children }) {
+export function AiOutput({ children }) {
   return (
     <div className="my-4 p-6 bg-neutral-50 border border-neutral-200 rounded-lg overflow-auto dark:bg-neutral-900 dark:border-neutral-800">
-      <div className="text-sm text-neutral-500 dark:text-neutral-400 mb-2">Example Output:</div>
+      <div className="text-sm text-neutral-500 dark:text-neutral-400 mb-2">AI-Generated Output:</div>
       <div className="prose prose-neutral dark:prose-invert max-w-none text-sm">
         {children}
       </div>
