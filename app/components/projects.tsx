@@ -14,7 +14,7 @@ const projects: Project[] = [
     link: 'https://github.com/tonykipkemboi/ollama_pdf_rag',
     github: 'https://github.com/tonykipkemboi/ollama_pdf_rag',
     tech: ['Python', 'Ollama', 'LangChain', 'Streamlit', 'ChromaDB'],
-    stars: '383',
+    stars: '472',
   },
   {
     title: 'Trip Planner Agent',
@@ -22,7 +22,7 @@ const projects: Project[] = [
     link: 'https://github.com/tonykipkemboi/trip_planner_agent',
     github: 'https://github.com/tonykipkemboi/trip_planner_agent',
     tech: ['Python', 'CrewAI', 'Streamlit', 'LangChain'],
-    stars: '122',
+    stars: '137',
   },
   {
     title: 'CrewAI Streamlit Demo',
@@ -30,7 +30,7 @@ const projects: Project[] = [
     link: 'https://github.com/tonykipkemboi/crewai-streamlit-demo',
     github: 'https://github.com/tonykipkemboi/crewai-streamlit-demo',
     tech: ['Python', 'CrewAI', 'Streamlit'],
-    stars: '48',
+    stars: '66',
   },
   {
     title: 'Research Paper to Podcast',
@@ -38,7 +38,7 @@ const projects: Project[] = [
     link: 'https://github.com/tonykipkemboi/research-paper-to-podcast',
     github: 'https://github.com/tonykipkemboi/research-paper-to-podcast',
     tech: ['Python', 'CrewAI', 'ElevenLabs'],
-    stars: '47',
+    stars: '65',
   },
   {
     title: 'Kaa Rada',
