@@ -28,10 +28,10 @@ export default async function Page() {
       {/* Hero Section */}
       <section className="space-y-4">
         <h1 className="text-3xl font-bold tracking-tighter">
-          tony kipkemboi
+          Tony Kipkemboi
         </h1>
         <p className="text-lg text-neutral-600 dark:text-neutral-400 max-w-2xl">
-          i build <u className="underline decoration-dotted decoration-2 underline-offset-2">ai automations and agent systems</u> that help teams work smarter and create <u className="underline decoration-dotted decoration-2 underline-offset-2">technical content</u> about ai across social platforms. i'm a veteran of the <u className="underline decoration-dotted decoration-2 underline-offset-2">us army</u>, and have previously worked at <u className="underline decoration-dotted decoration-2 underline-offset-2">crewai</u>, <u className="underline decoration-dotted decoration-2 underline-offset-2">snowflake</u>, <u className="underline decoration-dotted decoration-2 underline-offset-2">bloomberg</u>, and <u className="underline decoration-dotted decoration-2 underline-offset-2">booz allen hamilton</u>. i've spoken at <u className="underline decoration-dotted decoration-2 underline-offset-2">pyconus</u>, <u className="underline decoration-dotted decoration-2 underline-offset-2">odsc</u>, <u className="underline decoration-dotted decoration-2 underline-offset-2">harvard</u>, and more. i'm passionate about <u className="underline decoration-dotted decoration-2 underline-offset-2">open-source</u>, <u className="underline decoration-dotted decoration-2 underline-offset-2">ai agents</u>, and <u className="underline decoration-dotted decoration-2 underline-offset-2">developer education</u>.
+          I build <u className="underline decoration-dotted decoration-2 underline-offset-2">AI automations and agent systems</u> that help teams work smarter and create <u className="underline decoration-dotted decoration-2 underline-offset-2">technical content</u> about AI across social platforms. I'm a veteran of the <u className="underline decoration-dotted decoration-2 underline-offset-2">US Army</u>, and have previously worked at <u className="underline decoration-dotted decoration-2 underline-offset-2">CrewAI</u>, <u className="underline decoration-dotted decoration-2 underline-offset-2">Snowflake</u>, <u className="underline decoration-dotted decoration-2 underline-offset-2">Bloomberg</u>, and <u className="underline decoration-dotted decoration-2 underline-offset-2">Booz Allen Hamilton</u>. I've spoken at <u className="underline decoration-dotted decoration-2 underline-offset-2">PyCon US</u>, <u className="underline decoration-dotted decoration-2 underline-offset-2">ODSC</u>, <u className="underline decoration-dotted decoration-2 underline-offset-2">Harvard</u>, and more. I'm passionate about <u className="underline decoration-dotted decoration-2 underline-offset-2">open-source</u>, <u className="underline decoration-dotted decoration-2 underline-offset-2">AI agents</u>, and <u className="underline decoration-dotted decoration-2 underline-offset-2">developer education</u>.
         </p>
         <div className="flex flex-col items-center justify-center">
           <div className="flex flex-wrap gap-3 justify-center bg-neutral-100 dark:bg-neutral-800 rounded-xl px-4 py-2 shadow-sm mt-4">
@@ -113,12 +113,12 @@ export default async function Page() {
       {/* Latest Post Section */}
       <section className="mb-16">
         <div className="flex justify-between items-center mb-8">
-          <h2 className="text-2xl font-medium text-neutral-900 dark:text-neutral-100">latest post</h2>
+          <h2 className="text-2xl font-medium text-neutral-900 dark:text-neutral-100">Latest Post</h2>
           <Link
             href="/blog"
             className="text-neutral-600 hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-neutral-100 transition-colors"
           >
-            read all
+            Read All
           </Link>
         </div>
         <Suspense fallback={<div>Loading latest post...</div>}>
@@ -129,12 +129,12 @@ export default async function Page() {
       {/* Latest Project Section */}
       <section className="mb-16">
         <div className="flex justify-between items-center mb-8">
-          <h2 className="text-2xl font-medium text-neutral-900 dark:text-neutral-100">latest project</h2>
+          <h2 className="text-2xl font-medium text-neutral-900 dark:text-neutral-100">Latest Project</h2>
           <Link
             href="/projects"
             className="text-neutral-600 hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-neutral-100 transition-colors"
           >
-            see all
+            See All
           </Link>
         </div>
         <LatestProject />
@@ -143,14 +143,14 @@ export default async function Page() {
       {/* Popular Video Section */}
       <section className="mb-16">
         <div className="flex justify-between items-center mb-8">
-          <h2 className="text-2xl font-medium text-neutral-900 dark:text-neutral-100">most popular video</h2>
+          <h2 className="text-2xl font-medium text-neutral-900 dark:text-neutral-100">Most Popular Video</h2>
           <Link
             href="https://www.youtube.com/@tonykipkemboi"
             className="text-neutral-600 hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-neutral-100 transition-colors"
             target="_blank"
             rel="noopener noreferrer"
           >
-            subscribe <ArrowIcon />
+            Subscribe <ArrowIcon />
           </Link>
         </div>
         <PopularVideo />

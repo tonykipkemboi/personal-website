@@ -137,10 +137,10 @@ export default function PressPage() {
   return (
     <section>
       <h1 className="text-2xl font-medium mb-8 text-neutral-900 dark:text-neutral-100">
-        online footprint
+        Online Footprint
       </h1>
       <p className="text-neutral-600 dark:text-neutral-400 mb-8">
-        some places i’ve appeared or spoken. podcasts, interviews, articles, and talks.
+        Some places I've appeared or spoken. Podcasts, interviews, articles, and talks.
       </p>
 
       <div className="grid grid-cols-1 gap-6 md:gap-8">
