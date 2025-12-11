@@ -1,6 +1,3 @@
-import Image from 'next/image'
-import Link from 'next/link'
-
 export function PopularVideo() {
   // Most popular video details
   const popularVideo = {
@@ -8,22 +5,17 @@ export function PopularVideo() {
     videoId: "ztBJqzBU5kc",
     description: "Learn how to build a powerful PDF chat system using Ollama and LangChain. This tutorial shows you how to create a Retrieval-Augmented Generation (RAG) system that runs completely on your local machine.",
     views: "188K+ views",
-    thumbnail: `https://img.youtube.com/vi/ztBJqzBU5kc/maxresdefault.jpg`
   }
 
   return (
-    <Link
-      href={`https://www.youtube.com/watch?v=${popularVideo.videoId}`}
-      target="_blank"
-      rel="noopener noreferrer"
-      className="group block overflow-hidden rounded-lg border border-neutral-200 hover:border-neutral-400 dark:border-neutral-800 dark:hover:border-neutral-600 transition-all"
-    >
+    <div className="overflow-hidden rounded-lg border border-neutral-200 dark:border-neutral-800">
       <div className="aspect-video relative">
-        <Image
-          src={popularVideo.thumbnail}
-          alt={popularVideo.title}
-          fill
-          className="object-cover"
+        <iframe
+          src={`https://www.youtube.com/embed/${popularVideo.videoId}`}
+          title={popularVideo.title}
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          allowFullScreen
+          className="absolute inset-0 w-full h-full"
         />
       </div>
       <div className="p-4">
@@ -39,6 +31,6 @@ export function PopularVideo() {
           {popularVideo.description}
         </p>
       </div>
-    </Link>
+    </div>
   )
 }
