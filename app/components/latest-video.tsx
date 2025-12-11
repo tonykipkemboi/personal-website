@@ -4,9 +4,9 @@ import Link from 'next/link'
 export function PopularVideo() {
   // Most popular video details
   const popularVideo = {
-    title: "how to chat with your pdfs using local large language models [ollama rag]",
+    title: "How to Chat with Your PDFs Using Local Large Language Models [Ollama RAG]",
     videoId: "ztBJqzBU5kc",
-    description: "learn how to build a powerful pdf chat system using ollama and langchain. this tutorial shows you how to create a retrieval-augmented generation (rag) system that runs completely on your local machine.",
+    description: "Learn how to build a powerful PDF chat system using Ollama and LangChain. This tutorial shows you how to create a Retrieval-Augmented Generation (RAG) system that runs completely on your local machine.",
     views: "140K+ views",
     thumbnail: `https://img.youtube.com/vi/ztBJqzBU5kc/maxresdefault.jpg`
   }

@@ -3,19 +3,19 @@ import Link from 'next/link'
 const links = [
   {
     href: '/',
-    text: 'home',
+    text: 'Home',
   },
   {
     href: '/blog',
-    text: 'blog',
+    text: 'Blog',
   },
   {
     href: '/projects',
-    text: 'projects',
+    text: 'Projects',
   },
   {
     href: '/press',
-    text: 'press',
+    text: 'Press',
   },
 ]
 

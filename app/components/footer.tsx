@@ -29,7 +29,7 @@ export default function Footer() {
             aria-label="RSS Feed"
           >
             <ArrowIcon />
-            <p className="ml-2 h-7">rss</p>
+            <p className="ml-2 h-7">RSS</p>
           </a>
         </li>
         <li>
@@ -41,7 +41,7 @@ export default function Footer() {
             aria-label="GitHub Profile"
           >
             <ArrowIcon />
-            <p className="ml-2 h-7">github</p>
+            <p className="ml-2 h-7">GitHub</p>
           </a>
         </li>
       </ul>
