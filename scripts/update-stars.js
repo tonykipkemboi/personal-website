@@ -5,9 +5,15 @@ const path = require('path');
 
 const repos = [
   { owner: 'tonykipkemboi', repo: 'ollama_pdf_rag', title: 'Ollama PDF RAG' },
+  { owner: 'tonykipkemboi', repo: 'crewai-gmail-automation', title: 'CrewAI Gmail Automation' },
+  { owner: 'tonykipkemboi', repo: 'resume-optimization-crew', title: 'Resume Optimization Crew' },
   { owner: 'tonykipkemboi', repo: 'trip_planner_agent', title: 'Trip Planner Agent' },
+  { owner: 'tonykipkemboi', repo: 'streamlit-replicate-img-app', title: 'Streamlit Replicate Image App' },
+  { owner: 'tonykipkemboi', repo: 'groq_streamlit_demo', title: 'Groq Streamlit Demo' },
+  { owner: 'tonykipkemboi', repo: 'ollama_streamlit_demos', title: 'Ollama Streamlit Demos' },
   { owner: 'tonykipkemboi', repo: 'crewai-streamlit-demo', title: 'CrewAI Streamlit Demo' },
   { owner: 'tonykipkemboi', repo: 'research-paper-to-podcast', title: 'Research Paper to Podcast' },
+  { owner: 'tonykipkemboi', repo: 'youtube_yapper_trapper', title: 'YouTube Yapper Trapper' },
 ];
 
 async function getStarCount(owner, repo) {

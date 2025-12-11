@@ -17,12 +17,52 @@ const projects: Project[] = [
     stars: '472',
   },
   {
+    title: 'CrewAI Gmail Automation',
+    description: 'Automate Gmail inbox management using CrewAI agents. Intelligently categorizes, responds to, and organizes emails using AI-powered workflows.',
+    link: 'https://github.com/tonykipkemboi/crewai-gmail-automation',
+    github: 'https://github.com/tonykipkemboi/crewai-gmail-automation',
+    tech: ['Python', 'CrewAI', 'Gmail API', 'LangChain'],
+    stars: '171',
+  },
+  {
+    title: 'Resume Optimization Crew',
+    description: 'AI-powered resume optimization system using CrewAI. Analyzes and enhances resumes to match job descriptions and ATS requirements.',
+    link: 'https://github.com/tonykipkemboi/resume-optimization-crew',
+    github: 'https://github.com/tonykipkemboi/resume-optimization-crew',
+    tech: ['Python', 'CrewAI', 'AI Optimization'],
+    stars: '142',
+  },
+  {
     title: 'Trip Planner Agent',
     description: 'CrewAI agents that can plan your vacation. Uses multi-agent collaboration to create detailed itineraries based on your preferences.',
     link: 'https://github.com/tonykipkemboi/trip_planner_agent',
     github: 'https://github.com/tonykipkemboi/trip_planner_agent',
     tech: ['Python', 'CrewAI', 'Streamlit', 'LangChain'],
     stars: '137',
+  },
+  {
+    title: 'Streamlit Replicate Image App',
+    description: 'Image generation application built with Streamlit and Replicate API. Generate AI images using various models through an intuitive interface.',
+    link: 'https://github.com/tonykipkemboi/streamlit-replicate-img-app',
+    github: 'https://github.com/tonykipkemboi/streamlit-replicate-img-app',
+    tech: ['Python', 'Streamlit', 'Replicate', 'Image Generation'],
+    stars: '98',
+  },
+  {
+    title: 'Groq Streamlit Demo',
+    description: 'Demo showcasing Groq\'s ultra-fast LLM inference with Streamlit. Experience lightning-fast AI responses in an interactive web interface.',
+    link: 'https://github.com/tonykipkemboi/groq_streamlit_demo',
+    github: 'https://github.com/tonykipkemboi/groq_streamlit_demo',
+    tech: ['Python', 'Groq', 'Streamlit', 'LLM'],
+    stars: '85',
+  },
+  {
+    title: 'Ollama Streamlit Demos',
+    description: 'Collection of Streamlit demos showcasing various Ollama local LLM capabilities. Run AI models locally with no API keys required.',
+    link: 'https://github.com/tonykipkemboi/ollama_streamlit_demos',
+    github: 'https://github.com/tonykipkemboi/ollama_streamlit_demos',
+    tech: ['Python', 'Ollama', 'Streamlit', 'Local LLM'],
+    stars: '81',
   },
   {
     title: 'CrewAI Streamlit Demo',
@@ -39,6 +79,14 @@ const projects: Project[] = [
     github: 'https://github.com/tonykipkemboi/research-paper-to-podcast',
     tech: ['Python', 'CrewAI', 'ElevenLabs'],
     stars: '65',
+  },
+  {
+    title: 'YouTube Yapper Trapper',
+    description: 'Extract and analyze YouTube video transcripts. Perfect for researchers, content creators, and anyone who wants to quickly digest video content.',
+    link: 'https://github.com/tonykipkemboi/youtube_yapper_trapper',
+    github: 'https://github.com/tonykipkemboi/youtube_yapper_trapper',
+    tech: ['Python', 'YouTube API', 'Transcription'],
+    stars: '64',
   },
   {
     title: 'Kaa Rada',
@@ -78,7 +126,7 @@ export function ProjectCard({ project }: { project: Project }) {
           )}
           {project.stars && (
             <span className="flex items-center text-sm text-black dark:text-white ml-1">
-              <span role="img" aria-label="star">⭐</span> {project.stars}
+              {project.stars}
             </span>
           )}
           <a
