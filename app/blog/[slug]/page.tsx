@@ -2,6 +2,7 @@ import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import { CustomMDX } from 'app/components/mdx'
 import { Breadcrumbs } from 'app/components/breadcrumbs'
+import { ElevenLabsPlayer } from 'app/components/elevenlabs-player'
 import { formatDate, getBlogPosts, calculateReadingTime } from 'app/blog/utils'
 import { baseUrl } from 'app/sitemap'
 
@@ -167,6 +168,7 @@ export default async function BlogPost({ params }: PageParams) {
           </div>
         )}
       </div>
+      <ElevenLabsPlayer publicUserId="4d1408eed0a43d9837f0ae1fca22c2d6c41b9797ff457b7c74dbc66105fd238f" />
       <article className="prose prose-quoteless prose-neutral dark:prose-invert">
         <CustomMDX source={post.content} />
       </article>

@@ -60,6 +60,31 @@ Your go-to checklist for publishing new content.
 
 ---
 
+#### 5. **[BASELINE_METRICS_GUIDE.md](./BASELINE_METRICS_GUIDE.md)** 📊
+General guide to collecting baseline metrics before optimization.
+- Why baseline metrics matter
+- Google Search Console setup
+- Analytics options (Plausible, Vercel, GA4)
+- Tools and resources
+- Monthly tracking templates
+
+**Use this for:** Understanding what metrics to track and how to set up tools.
+
+---
+
+#### 6. **[COLLECT_GA4_BASELINE.md](./COLLECT_GA4_BASELINE.md)** 📈 START HERE FOR BASELINE
+Step-by-step guide for extracting your existing Google Analytics 4 data.
+- GA4 data extraction walkthrough
+- Traffic, engagement, and source metrics
+- Google Search Console data collection
+- Domain authority checks
+- AI engine citation testing
+- Baseline template to fill out
+
+**Use this for:** Collecting your actual baseline metrics from existing GA4 setup (DO THIS FIRST).
+
+---
+
 ## 🎯 Quick Start Guide
 
 ### If You're Writing a New Blog Post
@@ -73,6 +98,13 @@ Your go-to checklist for publishing new content.
 2. Check target keywords and content gaps
 3. Plan topics that align with roadmap
 4. Review **[GEO_STRATEGY.md](./GEO_STRATEGY.md)** for citation-worthy ideas
+
+### If You're Collecting Baseline Metrics (DO THIS FIRST)
+1. Open **[COLLECT_GA4_BASELINE.md](./COLLECT_GA4_BASELINE.md)**
+2. Log into Google Analytics 4 (you already have this set up!)
+3. Follow the step-by-step guide to extract your historical data
+4. Create `docs/BASELINE_DATA.md` with completed template
+5. Time required: 30-45 minutes
 
 ### If You're Tracking Performance
 1. Update metrics in **[SEO_PLAYBOOK.md](./SEO_PLAYBOOK.md)**
