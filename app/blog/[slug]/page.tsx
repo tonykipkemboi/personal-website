@@ -119,10 +119,16 @@ export default async function BlogPost({ params }: PageParams) {
     timeRequired: `PT${readingTime}M`,
   }
 
-  const breadcrumbItems = [
-    { label: 'Blog', href: '/blog' },
-    { label: post.metadata.title, href: `/blog/${post.slug}` },
-  ]
+  // Build breadcrumbs with category instead of title for better UX
+  const breadcrumbItems = post.metadata.category
+    ? [
+        { label: 'Blog', href: '/blog' },
+        {
+          label: post.metadata.category,
+          href: `/blog/category/${post.metadata.category.toLowerCase().replace(/\s+/g, '-')}`
+        },
+      ]
+    : [{ label: 'Blog', href: '/blog' }]
 
   return (
     <section>
