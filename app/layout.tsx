@@ -1,13 +1,19 @@
 import './global.css'
 import type { Metadata, Viewport } from 'next'
-import { GeistSans } from 'geist/font/sans'
-import { GeistMono } from 'geist/font/mono'
+import { IBM_Plex_Mono } from 'next/font/google'
 import { Navbar } from './components/nav'
 import { Analytics } from '@vercel/analytics/react'
 import { SpeedInsights } from '@vercel/speed-insights/next'
 import Footer from './components/footer'
 import { baseUrl } from './sitemap'
 import Script from 'next/script'
+
+const ibmPlexMono = IBM_Plex_Mono({
+  weight: ['400', '500', '600', '700'],
+  subsets: ['latin'],
+  variable: '--font-ibm-plex-mono',
+  display: 'swap',
+})
 
 export const viewport: Viewport = {
   themeColor: [
@@ -106,8 +112,7 @@ export default function RootLayout({
       lang="en"
       className={cx(
         'text-black bg-white dark:text-white dark:bg-[#111010]',
-        GeistSans.variable,
-        GeistMono.variable
+        ibmPlexMono.variable
       )}
     >
       <head>

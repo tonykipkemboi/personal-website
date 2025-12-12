@@ -1,5 +1,9 @@
 @import 'tailwindcss';
 
+* {
+  font-family: var(--font-ibm-plex-mono), monospace;
+}
+
 ::selection {
   background-color: #47a3f3;
   color: #fefefe;
