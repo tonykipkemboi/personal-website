@@ -14,6 +14,7 @@ export function ElevenLabsPlayer({
   width = '100%',
 }: ElevenLabsPlayerProps) {
   const scriptLoaded = useRef(false)
+  const widgetRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     // Check if script already exists
@@ -21,7 +22,26 @@ export function ElevenLabsPlayer({
       'script[src="https://elevenlabs.io/player/audioNativeHelper.js"]'
     )
 
-    if (existingScript || scriptLoaded.current) {
+    const initializeWidget = () => {
+      // Give the widget a moment to initialize after script loads
+      setTimeout(() => {
+        if (widgetRef.current) {
+          // Trigger re-initialization if needed
+          const event = new Event('DOMContentLoaded', {
+            bubbles: true,
+            cancelable: true
+          })
+          document.dispatchEvent(event)
+        }
+      }, 100)
+    }
+
+    if (existingScript) {
+      // Script already loaded, just initialize
+      if (!scriptLoaded.current) {
+        scriptLoaded.current = true
+        initializeWidget()
+      }
       return
     }
 
@@ -34,6 +54,7 @@ export function ElevenLabsPlayer({
     script.onload = () => {
       scriptLoaded.current = true
       console.log('ElevenLabs AudioNative script loaded')
+      initializeWidget()
     }
 
     script.onerror = () => {
@@ -48,6 +69,7 @@ export function ElevenLabsPlayer({
   return (
     <div className="my-6 not-prose">
       <div
+        ref={widgetRef}
         id="elevenlabs-audionative-widget"
         data-height={height}
         data-width={width}
