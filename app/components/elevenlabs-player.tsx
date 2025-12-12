@@ -56,16 +56,7 @@ export function ElevenLabsPlayer({
         data-publicuserid={publicUserId}
         data-playerurl="https://elevenlabs.io/player/index.html"
       >
-        Loading the{' '}
-        <a
-          href="https://elevenlabs.io/text-to-speech"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="text-blue-500 hover:text-blue-600 transition-colors"
-        >
-          Elevenlabs Text to Speech
-        </a>{' '}
-        AudioNative Player...
+        Loading audio player...
       </div>
     </div>
   )
