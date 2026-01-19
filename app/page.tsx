@@ -14,7 +14,7 @@ export default async function Page() {
           <img
             src="/headshot.jpg"
             alt="Tony Kipkemboi"
-            className="w-20 h-20 rounded-full object-cover border-2 border-neutral-200 dark:border-neutral-700"
+            className="w-20 h-20 rounded-full object-cover border-2 border-neutral-200 dark:border-neutral-700 grayscale"
           />
           <div>
             <h1 className="text-3xl font-bold tracking-tighter">
