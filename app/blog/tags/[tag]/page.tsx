@@ -1,6 +1,5 @@
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
-import { Breadcrumbs } from 'app/components/breadcrumbs'
 import { getBlogPostsByTag, getAllTags, formatDate, calculateReadingTime } from '../../utils'
 
 export async function generateStaticParams() {
@@ -34,14 +33,8 @@ export default async function TagPage({ params }: { params: { tag: string } }) {
     notFound()
   }
 
-  const breadcrumbItems = [
-    { label: 'Blog', href: '/blog' },
-    { label: `Tag: ${tag}`, href: `/blog/tags/${params.tag}` },
-  ]
-
   return (
     <section>
-      <Breadcrumbs items={breadcrumbItems} />
       <h1 className="font-medium text-2xl mb-8 tracking-tighter">
         Posts Tagged: {tag}
       </h1>

@@ -1,7 +1,6 @@
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import { CustomMDX } from 'app/components/mdx'
-import { Breadcrumbs } from 'app/components/breadcrumbs'
 import { ElevenLabsPlayer } from 'app/components/elevenlabs-player'
 import { formatDate, getBlogPosts, calculateReadingTime } from 'app/blog/utils'
 import { baseUrl } from 'app/sitemap'
@@ -119,17 +118,6 @@ export default async function BlogPost({ params }: PageParams) {
     timeRequired: `PT${readingTime}M`,
   }
 
-  // Build breadcrumbs with category instead of title for better UX
-  const breadcrumbItems = post.metadata.category
-    ? [
-        { label: 'Blog', href: '/blog' },
-        {
-          label: post.metadata.category,
-          href: `/blog/category/${post.metadata.category.toLowerCase().replace(/\s+/g, '-')}`
-        },
-      ]
-    : [{ label: 'Blog', href: '/blog' }]
-
   return (
     <section>
       <script
@@ -139,7 +127,6 @@ export default async function BlogPost({ params }: PageParams) {
           __html: JSON.stringify(jsonLd),
         }}
       />
-      <Breadcrumbs items={breadcrumbItems} />
       <h1 className="text-2xl font-medium tracking-tighter max-w-[650px]">
         {post.metadata.title}
       </h1>

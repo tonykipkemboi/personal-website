@@ -1,6 +1,5 @@
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
-import { Breadcrumbs } from 'app/components/breadcrumbs'
 import { getBlogPostsByCategory, getAllCategories, formatDate, calculateReadingTime } from '../../utils'
 
 export async function generateStaticParams() {
@@ -34,14 +33,8 @@ export default async function CategoryPage({ params }: { params: { category: str
     notFound()
   }
 
-  const breadcrumbItems = [
-    { label: 'Blog', href: '/blog' },
-    { label: category, href: `/blog/category/${params.category}` },
-  ]
-
   return (
     <section>
-      <Breadcrumbs items={breadcrumbItems} />
       <h1 className="font-medium text-2xl mb-8 tracking-tighter">
         {category}
       </h1>
