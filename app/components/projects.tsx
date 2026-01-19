@@ -177,9 +177,9 @@ export function ProjectCard({ project }: { project: Project }) {
 
 export function Projects({ limit }: { limit?: number }) {
   const displayProjects = limit ? projects.slice(0, limit) : projects;
-  
+
   return (
-    <div className="flex flex-col space-y-4">
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
       {displayProjects.map((project) => (
         <ProjectCard key={project.title} project={project} />
       ))}

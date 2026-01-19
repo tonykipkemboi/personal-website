@@ -1,12 +1,12 @@
-import Image from 'next/image'
 import type { Metadata } from 'next'
+import { FilteredAppearances } from '../components/press-filter'
 
 export const metadata: Metadata = {
   title: 'Press',
   description: 'Media appearances, talks, and press coverage.',
 }
 
-interface MediaAppearance {
+export interface MediaAppearance {
   title: string
   type: 'podcast' | 'article' | 'talk' | 'video'
   source: string
@@ -16,12 +16,15 @@ interface MediaAppearance {
   image?: string
 }
 
-const appearances: MediaAppearance[] = [
-  // items will be sorted below
-]
-
-// Unsorted list (copied from previous appearances array)
-const unsortedAppearances: MediaAppearance[] = [
+const appearancesData: MediaAppearance[] = [
+  {
+    title: "O'Reilly AI Catalyst: Enterprise Agent Deployments",
+    type: "video",
+    source: "O'Reilly Media",
+    date: "2025-11-18",
+    link: "https://www.oreilly.com/live-events/ai-catalyst-enterprise-agent-deployments/0642572250188/",
+    description: "Presented 'How Enterprises Operationalize Multi-Agent Teams with CrewAI' covering architectural patterns, agent collaboration strategies, and operational scaling for enterprise deployments.",
+  },
   {
     title: "MLOps World Conference - Austin",
     type: "talk",
@@ -29,6 +32,14 @@ const unsortedAppearances: MediaAppearance[] = [
     date: "2025-10-08",
     link: "https://mlopsworld.com/speakers/",
     description: "Speaker at MLOps World demonstrating how agent orchestration, paired with rigorous evaluation, accelerates the path from prototype to production.",
+  },
+  {
+    title: "O'Reilly AI Superstream: AI Agents",
+    type: "video",
+    source: "O'Reilly Media",
+    date: "2025-06-15",
+    link: "https://www.oreilly.com/live-events/ai-superstream-ai-agents/0642572016299/",
+    description: "Presented 'Putting Multiple AI Agent Systems in Production' covering interagent communication, resource management, scalability, and system reliability with real-world deployment patterns.",
   },
   {
     title: "IBM TechXchange Conference",
@@ -118,90 +129,24 @@ const unsortedAppearances: MediaAppearance[] = [
     link: "https://www.fellowship.rippleventures.com/school/university-of-pennsylvania",
     description: "Featured in Ripple Ventures' fellowship program at the University of Pennsylvania.",
   }
-];
+]
 
-// Sort by date descending
-unsortedAppearances.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
-appearances.push(...unsortedAppearances);
+const appearances = appearancesData.sort((a, b) =>
+  new Date(b.date).getTime() - new Date(a.date).getTime()
+)
 
-function formatDate(date: string) {
-  return new Date(date).toLocaleDateString('en-US', {
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric'
-  })
-}
+const types: MediaAppearance['type'][] = ['talk', 'video', 'podcast', 'article']
 
 export default function PressPage() {
   return (
     <section>
-      <h1 className="text-2xl font-medium mb-8 text-neutral-900 dark:text-neutral-100">
+      <h1 className="text-2xl font-medium mb-2 text-neutral-900 dark:text-neutral-100">
         Online Footprint
       </h1>
-      <p className="text-neutral-600 dark:text-neutral-400 mb-8">
-        Some places I've appeared or spoken. Podcasts, interviews, articles, and talks.
+      <p className="text-neutral-600 dark:text-neutral-400 mb-6">
+        Podcasts, talks, articles, and videos.
       </p>
-
-      <div className="grid grid-cols-1 gap-6">
-        {appearances.map((appearance, index) => (
-          <a
-            key={index}
-            href={appearance.link}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="block group"
-          >
-            <article className="group relative flex flex-col md:flex-row gap-6 rounded-lg border border-neutral-200 p-5 transition-all hover:border-neutral-400 dark:border-neutral-800 dark:hover:border-neutral-600">
-              {appearance.image && (
-                <div className="relative w-full md:w-48 h-48 rounded-md overflow-hidden flex-shrink-0">
-                  <Image
-                    src={appearance.image}
-                    alt={appearance.title}
-                    fill
-                    className="object-cover"
-                  />
-                </div>
-              )}
-              
-              <div className="flex flex-col flex-grow">
-                <div className="flex items-center gap-2 text-sm text-neutral-600 dark:text-neutral-400 mb-2">
-                  <span className="capitalize">{appearance.type}</span>
-                  <span>•</span>
-                  <span>{appearance.source}</span>
-                  <span>•</span>
-                  <time dateTime={appearance.date}>{formatDate(appearance.date)}</time>
-                </div>
-
-                <h2 className="text-xl font-medium text-neutral-900 dark:text-neutral-100 group-hover:text-neutral-700 dark:group-hover:text-neutral-300 mb-2">
-                  {appearance.title}
-                </h2>
-
-                <p className="text-neutral-600 dark:text-neutral-400">
-                  {appearance.description}
-                </p>
-
-                <div className="mt-4 flex items-center text-neutral-600 dark:text-neutral-400 group-hover:text-neutral-900 dark:group-hover:text-neutral-100">
-                  <span className="text-sm">Read more</span>
-                  <svg
-                    className="ml-1 h-4 w-4"
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M9 5l7 7-7 7"
-                    />
-                  </svg>
-                </div>
-              </div>
-            </article>
-          </a>
-        ))}
-      </div>
+      <FilteredAppearances appearances={appearances} types={types} />
     </section>
   )
 }
