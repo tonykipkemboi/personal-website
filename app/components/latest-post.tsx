@@ -10,7 +10,7 @@ export async function LatestPost() {
   return (
     <Link
       href={`/blog/${latestPost.slug}`}
-      className="group relative flex flex-col space-y-3 sm:space-y-4 p-4 sm:p-6 rounded-lg border border-neutral-200 hover:border-neutral-400 dark:border-neutral-800 dark:hover:border-neutral-600 transition-all"
+      className="group relative flex flex-col space-y-4 p-5 rounded-lg border border-neutral-200 hover:border-neutral-400 dark:border-neutral-800 dark:hover:border-neutral-600 transition-all"
     >
       <div className="flex flex-col space-y-4">
         <div className="flex items-center justify-between">

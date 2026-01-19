@@ -15,15 +15,16 @@ export function PopularVideo() {
           title={popularVideo.title}
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
           allowFullScreen
-          className="absolute inset-0 w-full h-full"
+          loading="lazy"
+          className="absolute inset-0 w-full h-full border-0"
         />
       </div>
-      <div className="p-4">
-        <div className="flex items-center gap-2 mb-2">
+      <div className="p-5">
+        <div className="flex items-start justify-between gap-4 mb-2">
           <h3 className="font-medium text-neutral-900 dark:text-neutral-100 line-clamp-2">
             {popularVideo.title}
           </h3>
-          <span className="text-sm text-neutral-600 dark:text-neutral-400">
+          <span className="text-sm text-neutral-600 dark:text-neutral-400 whitespace-nowrap flex-shrink-0">
             {popularVideo.views}
           </span>
         </div>

@@ -3,24 +3,7 @@ import Link from 'next/link'
 import { LatestPost } from './components/latest-post'
 import { LatestProject } from './components/latest-project'
 import { PopularVideo } from './components/latest-video'
-
-function ArrowIcon() {
-  return (
-    <svg
-      width="12"
-      height="12"
-      viewBox="0 0 12 12"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-      className="inline-block ml-1"
-    >
-      <path
-        d="M2.07102 11.3494L0.963068 10.2415L9.2017 1.98864H2.83807L2.85227 0.454545H11.8438V9.46023H10.2955L10.3097 3.09659L2.07102 11.3494Z"
-        fill="currentColor"
-      />
-    </svg>
-  )
-}
+import { ArrowIcon } from './components/icons'
 
 export default async function Page() {
   return (
@@ -36,8 +19,8 @@ export default async function Page() {
       </section>
 
       {/* Latest Post Section */}
-      <section className="mb-16">
-        <div className="flex justify-between items-center mb-8">
+      <section>
+        <div className="flex justify-between items-center mb-6">
           <h2 className="text-2xl font-medium text-neutral-900 dark:text-neutral-100">Latest Post</h2>
           <Link
             href="/blog"
@@ -51,10 +34,10 @@ export default async function Page() {
         </Suspense>
       </section>
 
-      {/* Latest Project Section */}
-      <section className="mb-16">
-        <div className="flex justify-between items-center mb-8">
-          <h2 className="text-2xl font-medium text-neutral-900 dark:text-neutral-100">Latest Project</h2>
+      {/* Featured Project Section */}
+      <section>
+        <div className="flex justify-between items-center mb-6">
+          <h2 className="text-2xl font-medium text-neutral-900 dark:text-neutral-100">Featured Project</h2>
           <Link
             href="/projects"
             className="text-neutral-600 hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-neutral-100 transition-colors"
@@ -66,17 +49,17 @@ export default async function Page() {
       </section>
 
       {/* Popular Video Section */}
-      <section className="mb-16">
-        <div className="flex justify-between items-center mb-8">
+      <section>
+        <div className="flex justify-between items-center mb-6">
           <h2 className="text-2xl font-medium text-neutral-900 dark:text-neutral-100">Most Popular Video</h2>
-          <Link
+          <a
             href="https://www.youtube.com/@tonykipkemboi"
-            className="text-neutral-600 hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-neutral-100 transition-colors"
+            className="text-neutral-600 hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-neutral-100 transition-colors inline-flex items-center gap-1"
             target="_blank"
             rel="noopener noreferrer"
           >
             Subscribe <ArrowIcon />
-          </Link>
+          </a>
         </div>
         <PopularVideo />
       </section>

@@ -2,10 +2,10 @@ import { ProjectCard } from './projects'
 import { projects } from './projects'
 
 export function LatestProject() {
-  // Get the 'Research Paper to Podcast' project
-  const latestProject = projects.find(p => p.title === 'Research Paper to Podcast');
+  // Show the first project (most starred)
+  const featuredProject = projects[0];
 
-  if (!latestProject) return null;
+  if (!featuredProject) return null;
 
-  return <ProjectCard project={latestProject} />;
+  return <ProjectCard project={featuredProject} />;
 }

@@ -110,7 +110,7 @@ html {
 }
 
 .prose h2 {
-  @apply text-xl font-medium tracking-tight mt-6 mb-2;
+  @apply text-2xl font-medium tracking-tight mt-8 mb-3;
 }
 
 .prose h3 {
@@ -118,7 +118,7 @@ html {
 }
 
 .prose h4 {
-  @apply text-lg font-medium tracking-tight mt-6 mb-2;
+  @apply text-lg font-medium tracking-tight mt-5 mb-2;
 }
 
 .prose strong {
@@ -174,8 +174,14 @@ pre {
   word-wrap: normal;
   padding: 1rem;
   border-radius: 0.5rem;
-  background-color: #1a1a1a;
+  background-color: #f5f5f5;
   margin: 1rem 0;
+}
+
+@media (prefers-color-scheme: dark) {
+  pre {
+    background-color: #1a1a1a;
+  }
 }
 
 pre code {

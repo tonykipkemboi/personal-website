@@ -1,4 +1,3 @@
-import Link from 'next/link'
 import Image from 'next/image'
 import type { Metadata } from 'next'
 
@@ -143,16 +142,16 @@ export default function PressPage() {
         Some places I've appeared or spoken. Podcasts, interviews, articles, and talks.
       </p>
 
-      <div className="grid grid-cols-1 gap-6 md:gap-8">
+      <div className="grid grid-cols-1 gap-6">
         {appearances.map((appearance, index) => (
-          <Link
+          <a
             key={index}
             href={appearance.link}
             target="_blank"
             rel="noopener noreferrer"
             className="block group"
           >
-            <article className="group relative flex flex-col md:flex-row gap-6 rounded-lg border border-neutral-200 p-6 transition-all hover:border-neutral-400 dark:border-neutral-800 dark:hover:border-neutral-600">
+            <article className="group relative flex flex-col md:flex-row gap-6 rounded-lg border border-neutral-200 p-5 transition-all hover:border-neutral-400 dark:border-neutral-800 dark:hover:border-neutral-600">
               {appearance.image && (
                 <div className="relative w-full md:w-48 h-48 rounded-md overflow-hidden flex-shrink-0">
                   <Image
@@ -200,7 +199,7 @@ export default function PressPage() {
                 </div>
               </div>
             </article>
-          </Link>
+          </a>
         ))}
       </div>
     </section>
