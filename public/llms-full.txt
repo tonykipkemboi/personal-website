@@ -1,0 +1,130 @@
+# Tony Kipkemboi
+
+> AI Engineer and Content Creator specializing in AI automations, agent systems, and developer education. US Army veteran. Former CrewAI, Snowflake, Bloomberg, Booz Allen Hamilton.
+
+I build AI automations and agent systems that help teams work smarter. I create technical content about AI across social platforms including YouTube, where my most popular video on building PDF RAG systems with Ollama has 189K+ views.
+
+I've spoken at PyCon US, ODSC, Harvard Kennedy School, IBM TechXchange, MLOps World, and more. I'm passionate about open-source software, AI agents, and developer education.
+
+## Contact
+
+- Website: https://tonykipkemboi.com
+- GitHub: https://github.com/tonykipkemboi
+- YouTube: https://www.youtube.com/@tonykipkemboi
+- LinkedIn: https://linkedin.com/in/tonykipkemboi
+- X/Twitter: https://x.com/tonykipkemboi
+
+## Blog
+
+- [All Posts](https://tonykipkemboi.com/blog): Technical articles on AI agents, security, and tutorials
+
+### Recent Posts
+
+- [Securing the AI Frontier](https://tonykipkemboi.com/blog/ai-agent-security): Security considerations for AI agent systems
+- [Agent Authentication & RBAC](https://tonykipkemboi.com/blog/agent-authentication-rbac): Implementing authentication and role-based access control for agents
+- [SaaS vs Agents](https://tonykipkemboi.com/blog/saas-vs-agents): Comparing traditional SaaS with AI agent architectures
+
+## Open Source Projects
+
+### Ollama PDF RAG (484 stars)
+A locally-hosted RAG (Retrieval-Augmented Generation) system that allows users to chat with their PDF documents using Ollama and LangChain. Features include document chunking, vector embeddings, and semantic search.
+- GitHub: https://github.com/tonykipkemboi/ollama_pdf_rag
+- Tech: Python, Ollama, LangChain, Streamlit, ChromaDB
+
+### CrewAI Gmail Automation (175 stars)
+Automate Gmail inbox management using CrewAI agents. Intelligently categorizes, responds to, and organizes emails using AI-powered workflows.
+- GitHub: https://github.com/tonykipkemboi/crewai-gmail-automation
+- Tech: Python, CrewAI, Gmail API, LangChain
+
+### Resume Optimization Crew (145 stars)
+AI-powered resume optimization system using CrewAI. Analyzes and enhances resumes to match job descriptions and ATS requirements.
+- GitHub: https://github.com/tonykipkemboi/resume-optimization-crew
+- Tech: Python, CrewAI, AI Optimization
+
+### Trip Planner Agent (137 stars)
+CrewAI agents that can plan your vacation. Uses multi-agent collaboration to create detailed itineraries based on your preferences.
+- GitHub: https://github.com/tonykipkemboi/trip_planner_agent
+- Tech: Python, CrewAI, Streamlit, LangChain
+
+### Streamlit Replicate Image App (99 stars)
+Image generation application built with Streamlit and Replicate API. Generate AI images using various models through an intuitive interface.
+- GitHub: https://github.com/tonykipkemboi/streamlit-replicate-img-app
+- Tech: Python, Streamlit, Replicate, Image Generation
+
+### Groq Streamlit Demo (85 stars)
+Demo showcasing Groq's ultra-fast LLM inference with Streamlit. Experience lightning-fast AI responses in an interactive web interface.
+- GitHub: https://github.com/tonykipkemboi/groq_streamlit_demo
+- Tech: Python, Groq, Streamlit, LLM
+
+### Ollama Streamlit Demos (82 stars)
+Collection of Streamlit demos showcasing various Ollama local LLM capabilities. Run AI models locally with no API keys required.
+- GitHub: https://github.com/tonykipkemboi/ollama_streamlit_demos
+- Tech: Python, Ollama, Streamlit, Local LLM
+
+### CrewAI Streamlit Demo (66 stars)
+Demo showcasing how to output CrewAI agent task outputs on the Streamlit UI.
+- GitHub: https://github.com/tonykipkemboi/crewai-streamlit-demo
+- Tech: Python, CrewAI, Streamlit
+
+### Research Paper to Podcast (65 stars)
+Automated system that transforms academic research papers into engaging podcast conversations using CrewAI and ElevenLabs.
+- GitHub: https://github.com/tonykipkemboi/research-paper-to-podcast
+- Tech: Python, CrewAI, ElevenLabs
+
+### YouTube Yapper Trapper (64 stars)
+Extract and analyze YouTube video transcripts. Perfect for researchers, content creators, and anyone who wants to quickly digest video content.
+- GitHub: https://github.com/tonykipkemboi/youtube_yapper_trapper
+- Tech: Python, YouTube API, Transcription
+
+### Kaa Rada
+A modern Pomodoro web app to secure your focus and execute your tasks. Features a timer, music player (add YouTube tracks), task list, and live Hacker News feed.
+- Link: https://v0-kaa-rada-qohixj.vercel.app/
+- Tech: Next.js, Vercel v0, Pomodoro, YouTube, Hacker News
+
+### YouTube Thumbnail Extractor
+Extract high-quality thumbnails from any YouTube video. Simply paste the URL to get started.
+- Link: https://www.downloadthumbnails.com/
+- Tech: Next.js, YouTube, Web App
+
+## Speaking & Media Appearances
+
+### Talks
+
+- [MLOps World Conference - Austin](https://mlopsworld.com/speakers/) (October 2025): Speaker demonstrating how agent orchestration, paired with rigorous evaluation, accelerates the path from prototype to production.
+- [IBM TechXchange Conference](https://www.linkedin.com/posts/tonykipkemboi_ibmtechxchange-activity-7381001218820681728-Njde/) (October 2025): Speaker discussing AI agents and enterprise AI adoption strategies.
+- [Convergence 2025 - GenAI Engineering Conference](https://www.comet.com/site/about-us/news-and-events/events/convergence-2025/) (May 2025): Speaking at Comet's virtual conference on GenAI Engineering, covering AI agent orchestration and multi-agent systems.
+- [ODSC East 2025 Workshop](https://odsc.com/boston/) (May 2025): Led a highly attended workshop on 'Agentic AI in Action: Build Autonomous, Multi-Agent Systems Hands-On in Python'.
+- [Guest Lecture at Harvard Kennedy School](https://www.linkedin.com/posts/tonykipkemboi_aiagents-hks-activity-7301069792810008576-H7os/) (February 2025): Guest speaker on AI agents for Prof. Hu's data and information visualization class.
+- [PyCon US 2024](https://us.pycon.org/2024/speaker/profile/90/index.html) (May 2024): Selected speaker at PyCon US 2024, the largest annual gathering for the Python programming community.
+
+### Courses & Tutorials
+
+- [Building AI Agents with CrewAI - DataCamp Course](https://www.datacamp.com/courses/building-ai-agents-with-crewai) (October 2025): Comprehensive course teaching developers how to build AI agent systems with CrewAI.
+- [Creating a Podcast Generation AI Multi-Agent - DataCamp Code-Along](https://www.datacamp.com/code-along/creating-a-podcast-generation-ai-multi-agent-with-crew-ai) (August 2025): Interactive code-along tutorial teaching how to use CrewAI to build a multi-agent system.
+
+### Podcasts
+
+- [ODSC AI X Podcast - AI Agents](https://podcasts.apple.com/us/podcast/odsc-east-2025-minisodes/id1721516836?i=1000712490491) (June 2025): Featured on ODSC's AI X Podcast discussing foundational AI agent building skills and practical implementation strategies.
+
+### Articles
+
+- [Build agentic systems with CrewAI and Amazon Bedrock](https://aws.amazon.com/blogs/machine-learning/build-agentic-systems-with-crewai-and-amazon-bedrock/) (March 2025): Co-authored AWS ML Blog post on building agentic systems with CrewAI and Amazon Bedrock.
+- [C.I.S. Strong: Meet Tony Kipkemboi](https://blog.cis.upenn.edu/c-i-s-strong-meet-tony-kipkemboi/) (August 2020): Featured in Penn Engineering's CIS Strong series.
+
+## Expertise
+
+- AI Agents & Multi-Agent Systems
+- CrewAI, LangChain, LlamaIndex
+- RAG (Retrieval-Augmented Generation)
+- Python, Streamlit
+- Local LLMs (Ollama, Groq)
+- Developer Education & Technical Content
+
+## Background
+
+- US Army Veteran
+- Former Developer Advocate at CrewAI
+- Former Snowflake
+- Former Bloomberg
+- Former Booz Allen Hamilton
+- University of Pennsylvania (Penn Engineering)
