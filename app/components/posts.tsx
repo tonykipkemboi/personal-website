@@ -6,7 +6,7 @@ export async function BlogPosts() {
   const allBlogs = await getBlogPosts()
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+    <div className="grid grid-cols-1 gap-6">
       {allBlogs.map((post) => {
         const readingTime = calculateReadingTime(post.content)
 

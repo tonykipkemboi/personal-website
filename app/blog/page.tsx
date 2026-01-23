@@ -20,7 +20,7 @@ async function TagFilterWrapper() {
 
 function BlogSkeleton() {
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+    <div className="grid grid-cols-1 gap-6">
       {[...Array(4)].map((_, i) => (
         <div
           key={i}
