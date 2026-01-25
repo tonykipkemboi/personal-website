@@ -16,7 +16,7 @@ const projects: Project[] = [
     link: 'https://github.com/tonykipkemboi/ollama_pdf_rag',
     github: 'https://github.com/tonykipkemboi/ollama_pdf_rag',
     tech: ['Python', 'Ollama', 'LangChain', 'Streamlit', 'ChromaDB'],
-    stars: '484',
+    stars: '487',
   },
   {
     title: 'CrewAI Gmail Automation',
@@ -32,7 +32,7 @@ const projects: Project[] = [
     link: 'https://github.com/tonykipkemboi/resume-optimization-crew',
     github: 'https://github.com/tonykipkemboi/resume-optimization-crew',
     tech: ['Python', 'CrewAI', 'AI Optimization'],
-    stars: '145',
+    stars: '147',
   },
   {
     title: 'Trip Planner Agent',
@@ -88,7 +88,7 @@ const projects: Project[] = [
     link: 'https://github.com/tonykipkemboi/youtube_yapper_trapper',
     github: 'https://github.com/tonykipkemboi/youtube_yapper_trapper',
     tech: ['Python', 'YouTube API', 'Transcription'],
-    stars: '64',
+    stars: '65',
   },
   {
     title: 'Kaa Rada',

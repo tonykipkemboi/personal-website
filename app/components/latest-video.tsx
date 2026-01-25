@@ -4,7 +4,7 @@ export function PopularVideo() {
     title: "How to Chat with Your PDFs Using Local Large Language Models [Ollama RAG]",
     videoId: "ztBJqzBU5kc",
     description: "Learn how to build a powerful PDF chat system using Ollama and LangChain. This tutorial shows you how to create a Retrieval-Augmented Generation (RAG) system that runs completely on your local machine.",
-    views: "189K+ views",
+    views: "190K+ views",
   }
 
   return (
