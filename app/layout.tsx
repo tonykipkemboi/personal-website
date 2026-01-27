@@ -5,6 +5,7 @@ import { Navbar } from './components/nav'
 import { Analytics } from '@vercel/analytics/react'
 import { SpeedInsights } from '@vercel/speed-insights/next'
 import Footer from './components/footer'
+import { KonamiCode } from './components/konami'
 import { baseUrl } from './sitemap'
 import Script from 'next/script'
 
@@ -136,6 +137,7 @@ export default function RootLayout({
           <Navbar />
           {children}
           <Footer />
+          <KonamiCode />
           <Analytics />
           <SpeedInsights />
         </main>
