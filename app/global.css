@@ -294,17 +294,20 @@ html.retro-mode main {
 .retro-terminal {
   position: relative;
   z-index: 10001;
-  background: rgba(0, 0, 0, 0.85);
-  border: 1px solid #00ff41;
+  background: #0a0a0a !important;
+  border: 1px solid #00ff41 !important;
   border-radius: 4px;
   padding: 2rem;
   max-width: 500px;
   width: 90%;
-  box-shadow: 0 0 20px rgba(0, 255, 65, 0.3), inset 0 0 20px rgba(0, 255, 65, 0.05);
+  box-shadow: 0 0 20px rgba(0, 255, 65, 0.3), inset 0 0 20px rgba(0, 255, 65, 0.05) !important;
   pointer-events: auto;
 }
 
+.retro-terminal pre,
 .retro-text {
+  background: transparent !important;
+  background-color: transparent !important;
   font-family: var(--font-ibm-plex-mono), monospace;
   font-size: 13px;
   line-height: 1.6;
@@ -312,6 +315,9 @@ html.retro-mode main {
   white-space: pre-wrap;
   text-shadow: 0 0 5px rgba(0, 255, 65, 0.5);
   margin: 0;
+  border: none !important;
+  padding: 0;
+  box-shadow: none !important;
 }
 
 .retro-cursor {
