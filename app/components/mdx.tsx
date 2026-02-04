@@ -32,17 +32,37 @@ function CustomLink(props) {
 
   if (href.startsWith('/')) {
     return (
-      <Link href={href} className="text-blue-500 hover:text-blue-600 transition-colors" {...props}>
+      <Link
+        href={href}
+        className="text-blue-500 hover:text-blue-600 transition-colors"
+        {...props}
+      >
         {props.children}
       </Link>
     )
   }
 
   if (href.startsWith('#')) {
-    return <a className="text-blue-500 hover:text-blue-600 transition-colors" {...props} />
+    return (
+      <a
+        className="text-blue-500 hover:text-blue-600 transition-colors"
+        {...props}
+      >
+        {props.children}
+      </a>
+    )
   }
 
-  return <a target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:text-blue-600 transition-colors" {...props} />
+  return (
+    <a
+      target="_blank"
+      rel="noopener noreferrer"
+      className="text-blue-500 hover:text-blue-600 transition-colors"
+      {...props}
+    >
+      {props.children}
+    </a>
+  )
 }
 
 function RoundedImage(props) {
@@ -51,18 +71,15 @@ function RoundedImage(props) {
 
 function Code({ children, ...props }) {
   let codeHTML = highlight(children)
-  return (
-    <code
-      dangerouslySetInnerHTML={{ __html: codeHTML }}
-      {...props}
-    />
-  )
+  return <code dangerouslySetInnerHTML={{ __html: codeHTML }} {...props} />
 }
 
 export function AiOutput({ children }) {
   return (
     <div className="my-4 p-6 bg-neutral-50 border border-neutral-200 rounded-lg overflow-auto dark:bg-neutral-900 dark:border-neutral-800">
-      <div className="text-sm text-neutral-500 dark:text-neutral-400 mb-2">AI-Generated Output:</div>
+      <div className="text-sm text-neutral-500 dark:text-neutral-400 mb-2">
+        AI-Generated Output:
+      </div>
       <div className="prose prose-neutral dark:prose-invert max-w-none text-sm">
         {children}
       </div>
@@ -88,11 +105,20 @@ function createHeading(level) {
       `h${level}`,
       { id: slug },
       [
-        React.createElement('a', {
-          href: `#${slug}`,
-          key: `link-${slug}`,
-          className: 'anchor',
-        }),
+        React.createElement(
+          'a',
+          {
+            href: `#${slug}`,
+            key: `link-${slug}`,
+            className: 'anchor',
+            'aria-label': `Link to ${children}`,
+          },
+          React.createElement(
+            'span',
+            { className: 'sr-only' },
+            `Link to ${children}`
+          )
+        ),
       ],
       children
     )
@@ -114,7 +140,7 @@ let components = {
   code: Code,
   pre: Pre,
   Table,
-  AiOutput
+  AiOutput,
 }
 
 export function CustomMDX(props) {

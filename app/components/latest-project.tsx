@@ -3,9 +3,9 @@ import { projects } from './projects'
 
 export function LatestProject() {
   // Show the first project (most starred)
-  const featuredProject = projects[0];
+  const featuredProject = projects[0]
 
-  if (!featuredProject) return null;
+  if (!featuredProject) return null
 
-  return <ProjectCard project={featuredProject} />;
+  return <ProjectCard project={featuredProject} />
 }

@@ -45,36 +45,40 @@ export async function generateMetadata({ params }: PageParams) {
       type: 'article',
       publishedTime,
       url: `${baseUrl}/blog/${post.slug}`,
-      ...(image ? {
-        images: [
-          {
-            url: image,
-            width: 1200,
-            height: 630,
-            alt: `${title} - Tony Kipkemboi's Blog`,
-          },
-        ],
-      } : {
-        images: [
-          {
-            url: `${baseUrl}/og-image.png`,
-            width: 1200,
-            height: 630,
-            alt: 'Tony Kipkemboi - Developer Advocate and Community Builder',
-          },
-        ],
-      }),
+      ...(image
+        ? {
+            images: [
+              {
+                url: image,
+                width: 1200,
+                height: 630,
+                alt: `${title} - Tony Kipkemboi's Blog`,
+              },
+            ],
+          }
+        : {
+            images: [
+              {
+                url: `${baseUrl}/og-image.png`,
+                width: 1200,
+                height: 630,
+                alt: 'Tony Kipkemboi - Developer Advocate and Community Builder',
+              },
+            ],
+          }),
     },
     twitter: {
       card: 'summary_large_image',
       title,
       description: description || summary,
       creator: '@tonykipkemboi',
-      ...(image ? {
-        images: [image],
-      } : {
-        images: [`${baseUrl}/og-image.png`],
-      }),
+      ...(image
+        ? {
+            images: [image],
+          }
+        : {
+            images: [`${baseUrl}/og-image.png`],
+          }),
     },
   }
 }

@@ -1,18 +1,19 @@
 import { StarIcon } from './icons'
 
 interface Project {
-  title: string;
-  description: string;
-  link: string;
-  github?: string;
-  tech: string[];
-  stars?: string;
+  title: string
+  description: string
+  link: string
+  github?: string
+  tech: string[]
+  stars?: string
 }
 
 const projects: Project[] = [
   {
     title: 'Ollama PDF RAG',
-    description: 'A locally-hosted RAG (Retrieval-Augmented Generation) system that allows users to chat with their PDF documents using Ollama and LangChain. Features include document chunking, vector embeddings, and semantic search.',
+    description:
+      'A locally-hosted RAG (Retrieval-Augmented Generation) system that allows users to chat with their PDF documents using Ollama and LangChain. Features include document chunking, vector embeddings, and semantic search.',
     link: 'https://github.com/tonykipkemboi/ollama_pdf_rag',
     github: 'https://github.com/tonykipkemboi/ollama_pdf_rag',
     tech: ['Python', 'Ollama', 'LangChain', 'Streamlit', 'ChromaDB'],
@@ -20,7 +21,8 @@ const projects: Project[] = [
   },
   {
     title: 'CrewAI Gmail Automation',
-    description: 'Automate Gmail inbox management using CrewAI agents. Intelligently categorizes, responds to, and organizes emails using AI-powered workflows.',
+    description:
+      'Automate Gmail inbox management using CrewAI agents. Intelligently categorizes, responds to, and organizes emails using AI-powered workflows.',
     link: 'https://github.com/tonykipkemboi/crewai-gmail-automation',
     github: 'https://github.com/tonykipkemboi/crewai-gmail-automation',
     tech: ['Python', 'CrewAI', 'Gmail API', 'LangChain'],
@@ -28,7 +30,8 @@ const projects: Project[] = [
   },
   {
     title: 'Resume Optimization Crew',
-    description: 'AI-powered resume optimization system using CrewAI. Analyzes and enhances resumes to match job descriptions and ATS requirements.',
+    description:
+      'AI-powered resume optimization system using CrewAI. Analyzes and enhances resumes to match job descriptions and ATS requirements.',
     link: 'https://github.com/tonykipkemboi/resume-optimization-crew',
     github: 'https://github.com/tonykipkemboi/resume-optimization-crew',
     tech: ['Python', 'CrewAI', 'AI Optimization'],
@@ -36,7 +39,8 @@ const projects: Project[] = [
   },
   {
     title: 'Trip Planner Agent',
-    description: 'CrewAI agents that can plan your vacation. Uses multi-agent collaboration to create detailed itineraries based on your preferences.',
+    description:
+      'CrewAI agents that can plan your vacation. Uses multi-agent collaboration to create detailed itineraries based on your preferences.',
     link: 'https://github.com/tonykipkemboi/trip_planner_agent',
     github: 'https://github.com/tonykipkemboi/trip_planner_agent',
     tech: ['Python', 'CrewAI', 'Streamlit', 'LangChain'],
@@ -44,7 +48,8 @@ const projects: Project[] = [
   },
   {
     title: 'Streamlit Replicate Image App',
-    description: 'Image generation application built with Streamlit and Replicate API. Generate AI images using various models through an intuitive interface.',
+    description:
+      'Image generation application built with Streamlit and Replicate API. Generate AI images using various models through an intuitive interface.',
     link: 'https://github.com/tonykipkemboi/streamlit-replicate-img-app',
     github: 'https://github.com/tonykipkemboi/streamlit-replicate-img-app',
     tech: ['Python', 'Streamlit', 'Replicate', 'Image Generation'],
@@ -52,7 +57,8 @@ const projects: Project[] = [
   },
   {
     title: 'Groq Streamlit Demo',
-    description: 'Demo showcasing Groq\'s ultra-fast LLM inference with Streamlit. Experience lightning-fast AI responses in an interactive web interface.',
+    description:
+      "Demo showcasing Groq's ultra-fast LLM inference with Streamlit. Experience lightning-fast AI responses in an interactive web interface.",
     link: 'https://github.com/tonykipkemboi/groq_streamlit_demo',
     github: 'https://github.com/tonykipkemboi/groq_streamlit_demo',
     tech: ['Python', 'Groq', 'Streamlit', 'LLM'],
@@ -60,7 +66,8 @@ const projects: Project[] = [
   },
   {
     title: 'Ollama Streamlit Demos',
-    description: 'Collection of Streamlit demos showcasing various Ollama local LLM capabilities. Run AI models locally with no API keys required.',
+    description:
+      'Collection of Streamlit demos showcasing various Ollama local LLM capabilities. Run AI models locally with no API keys required.',
     link: 'https://github.com/tonykipkemboi/ollama_streamlit_demos',
     github: 'https://github.com/tonykipkemboi/ollama_streamlit_demos',
     tech: ['Python', 'Ollama', 'Streamlit', 'Local LLM'],
@@ -68,7 +75,8 @@ const projects: Project[] = [
   },
   {
     title: 'CrewAI Streamlit Demo',
-    description: 'Demo showcasing how to output CrewAI agent task outputs on the Streamlit UI.',
+    description:
+      'Demo showcasing how to output CrewAI agent task outputs on the Streamlit UI.',
     link: 'https://github.com/tonykipkemboi/crewai-streamlit-demo',
     github: 'https://github.com/tonykipkemboi/crewai-streamlit-demo',
     tech: ['Python', 'CrewAI', 'Streamlit'],
@@ -76,7 +84,8 @@ const projects: Project[] = [
   },
   {
     title: 'Research Paper to Podcast',
-    description: 'Automated system that transforms academic research papers into engaging podcast conversations using CrewAI and ElevenLabs.',
+    description:
+      'Automated system that transforms academic research papers into engaging podcast conversations using CrewAI and ElevenLabs.',
     link: 'https://github.com/tonykipkemboi/research-paper-to-podcast',
     github: 'https://github.com/tonykipkemboi/research-paper-to-podcast',
     tech: ['Python', 'CrewAI', 'ElevenLabs'],
@@ -84,7 +93,8 @@ const projects: Project[] = [
   },
   {
     title: 'YouTube Yapper Trapper',
-    description: 'Extract and analyze YouTube video transcripts. Perfect for researchers, content creators, and anyone who wants to quickly digest video content.',
+    description:
+      'Extract and analyze YouTube video transcripts. Perfect for researchers, content creators, and anyone who wants to quickly digest video content.',
     link: 'https://github.com/tonykipkemboi/youtube_yapper_trapper',
     github: 'https://github.com/tonykipkemboi/youtube_yapper_trapper',
     tech: ['Python', 'YouTube API', 'Transcription'],
@@ -92,19 +102,21 @@ const projects: Project[] = [
   },
   {
     title: 'Kaa Rada',
-    description: 'A modern Pomodoro web app to secure your focus and execute your tasks. Features a timer, music player (add YouTube tracks), task list, and live Hacker News feed. Built with Vercel v0.',
+    description:
+      'A modern Pomodoro web app to secure your focus and execute your tasks. Features a timer, music player (add YouTube tracks), task list, and live Hacker News feed. Built with Vercel v0.',
     link: 'https://v0-kaa-rada-qohixj.vercel.app/',
     tech: ['Next.js', 'Vercel v0', 'Pomodoro', 'YouTube', 'Hacker News'],
   },
   {
     title: 'YouTube Thumbnail Extractor',
-    description: 'Extract high-quality thumbnails from any YouTube video. Simply paste the URL to get started.',
+    description:
+      'Extract high-quality thumbnails from any YouTube video. Simply paste the URL to get started.',
     link: 'https://www.downloadthumbnails.com/',
     tech: ['Next.js', 'YouTube', 'Web App'],
   },
-];
+]
 
-export { projects };
+export { projects }
 
 export function ProjectCard({ project }: { project: Project }) {
   return (
@@ -125,11 +137,18 @@ export function ProjectCard({ project }: { project: Project }) {
               href={project.github}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-neutral-600 hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-neutral-100 transition-colors"
+              className="text-neutral-600 hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-neutral-100 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-500 rounded"
               aria-label={`View ${project.title} on GitHub`}
             >
-              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                <path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.387.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.415-4.042-1.415-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.084-.729.084-.729 1.205.084 1.84 1.236 1.84 1.236 1.07 1.834 2.809 1.304 3.495.997.108-.775.418-1.305.762-1.605-2.665-.305-5.466-1.334-5.466-5.931 0-1.31.469-2.381 1.236-3.221-.124-.303-.535-1.523.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.553 3.297-1.23 3.297-1.23.653 1.653.242 2.873.119 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.803 5.624-5.475 5.921.43.372.823 1.102.823 2.222 0 1.606-.015 2.898-.015 3.293 0 .322.216.694.825.576C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="18"
+                height="18"
+                fill="currentColor"
+                viewBox="0 0 24 24"
+                aria-hidden="true"
+              >
+                <path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.387.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.415-4.042-1.415-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.084-.729.084-.729 1.205.084 1.84 1.236 1.84 1.236 1.07 1.834 2.809 1.304 3.495.997.108-.775.418-1.305.762-1.605-2.665-.305-5.466-1.334-5.466-5.931 0-1.31.469-2.381 1.236-3.221-.124-.303-.535-1.523.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.553 3.297-1.23 3.297-1.23.653 1.653.242 2.873.119 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.803 5.624-5.475 5.921.43.372.823 1.102.823 2.222 0 1.606-.015 2.898-.015 3.293 0 .322.216.694.825.576C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12" />
               </svg>
             </a>
           )}
@@ -137,7 +156,7 @@ export function ProjectCard({ project }: { project: Project }) {
             href={project.link}
             target="_blank"
             rel="noopener noreferrer"
-            className="text-neutral-600 hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-neutral-100 transition-colors"
+            className="text-neutral-600 hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-neutral-100 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-500 rounded"
             aria-label={`Visit ${project.title}`}
           >
             <svg
@@ -172,11 +191,11 @@ export function ProjectCard({ project }: { project: Project }) {
         ))}
       </div>
     </div>
-  );
+  )
 }
 
 export function Projects({ limit }: { limit?: number }) {
-  const displayProjects = limit ? projects.slice(0, limit) : projects;
+  const displayProjects = limit ? projects.slice(0, limit) : projects
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -184,5 +203,5 @@ export function Projects({ limit }: { limit?: number }) {
         <ProjectCard key={project.title} project={project} />
       ))}
     </div>
-  );
+  )
 }

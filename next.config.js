@@ -9,6 +9,7 @@ const nextConfig = {
       },
     ],
   },
+  allowedDevOrigins: ['10.0.0.249'],
 }
 
 module.exports = nextConfig

@@ -29,9 +29,10 @@ function parseFrontmatter(fileContent: string) {
 
     // Handle array values (e.g., tags: ['AI Agents', 'Security'])
     if (value.startsWith('[') && value.endsWith(']')) {
-      const arrayValue = value.slice(1, -1).split(',').map(item =>
-        item.trim().replace(/^['"]|['"]$/g, '')
-      )
+      const arrayValue = value
+        .slice(1, -1)
+        .split(',')
+        .map((item) => item.trim().replace(/^['"]|['"]$/g, ''))
       metadata[trimmedKey] = arrayValue
     } else {
       metadata[trimmedKey] = value
@@ -65,7 +66,9 @@ async function getMDXData(dir: string) {
 }
 
 export async function getBlogPosts() {
-  const posts = await getMDXData(path.join(process.cwd(), 'app', 'blog', 'posts'))
+  const posts = await getMDXData(
+    path.join(process.cwd(), 'app', 'blog', 'posts')
+  )
   return posts.sort((a, b) => {
     if (a.metadata.publishedAt > b.metadata.publishedAt) return -1
     if (a.metadata.publishedAt < b.metadata.publishedAt) return 1
@@ -75,23 +78,23 @@ export async function getBlogPosts() {
 
 export async function getBlogPostsByTag(tag: string) {
   const posts = await getBlogPosts()
-  return posts.filter(post =>
-    post.metadata.tags?.some(t => t.toLowerCase() === tag.toLowerCase())
+  return posts.filter((post) =>
+    post.metadata.tags?.some((t) => t.toLowerCase() === tag.toLowerCase())
   )
 }
 
 export async function getBlogPostsByCategory(category: string) {
   const posts = await getBlogPosts()
-  return posts.filter(post =>
-    post.metadata.category?.toLowerCase() === category.toLowerCase()
+  return posts.filter(
+    (post) => post.metadata.category?.toLowerCase() === category.toLowerCase()
   )
 }
 
 export async function getAllTags() {
   const posts = await getBlogPosts()
   const tagsSet = new Set<string>()
-  posts.forEach(post => {
-    post.metadata.tags?.forEach(tag => tagsSet.add(tag))
+  posts.forEach((post) => {
+    post.metadata.tags?.forEach((tag) => tagsSet.add(tag))
   })
   return Array.from(tagsSet).sort()
 }
@@ -99,7 +102,7 @@ export async function getAllTags() {
 export async function getAllCategories() {
   const posts = await getBlogPosts()
   const categoriesSet = new Set<string>()
-  posts.forEach(post => {
+  posts.forEach((post) => {
     if (post.metadata.category) {
       categoriesSet.add(post.metadata.category)
     }

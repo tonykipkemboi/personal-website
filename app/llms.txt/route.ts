@@ -7,8 +7,10 @@ export async function GET() {
   const topProjects = projects.slice(0, 5) // Top 5 by stars
 
   const sortedBlogs = allBlogs
-    .sort((a, b) =>
-      new Date(b.metadata.publishedAt).getTime() - new Date(a.metadata.publishedAt).getTime()
+    .sort(
+      (a, b) =>
+        new Date(b.metadata.publishedAt).getTime() -
+        new Date(a.metadata.publishedAt).getTime()
     )
     .slice(0, 5) // Latest 5 posts
 

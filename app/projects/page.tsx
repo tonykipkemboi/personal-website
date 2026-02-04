@@ -9,8 +9,8 @@ export const metadata = {
 // Get unique tech tags from all projects
 function getAllTech(): string[] {
   const techSet = new Set<string>()
-  projects.forEach(project => {
-    project.tech.forEach(tech => techSet.add(tech))
+  projects.forEach((project) => {
+    project.tech.forEach((tech) => techSet.add(tech))
   })
   return Array.from(techSet).sort()
 }
@@ -21,7 +21,7 @@ export default function ProjectsPage() {
   return (
     <section>
       <h1 className="text-2xl font-medium mb-2 text-neutral-900 dark:text-neutral-100">
-        Things I've Built
+        Things I&apos;ve Built
       </h1>
       <p className="text-neutral-600 dark:text-neutral-400 mb-6">
         Open source projects and experiments. Click a card to explore.

@@ -1,6 +1,11 @@
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
-import { getBlogPostsByTag, getAllTags, formatDate, calculateReadingTime } from '../../utils'
+import {
+  getBlogPostsByTag,
+  getAllTags,
+  formatDate,
+  calculateReadingTime,
+} from '../../utils'
 
 export async function generateStaticParams() {
   const tags = await getAllTags()
@@ -9,7 +14,11 @@ export async function generateStaticParams() {
   }))
 }
 
-export async function generateMetadata({ params }: { params: { tag: string } }) {
+export async function generateMetadata({
+  params,
+}: {
+  params: { tag: string }
+}) {
   const tag = decodeURIComponent(params.tag).replace(/-/g, ' ')
   const posts = await getBlogPostsByTag(tag)
 
@@ -65,7 +74,9 @@ export default async function TagPage({ params }: { params: { tag: string } }) {
                   {post.metadata.category && (
                     <>
                       <span>•</span>
-                      <span className="text-neutral-500">{post.metadata.category}</span>
+                      <span className="text-neutral-500">
+                        {post.metadata.category}
+                      </span>
                     </>
                   )}
                 </div>

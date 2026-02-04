@@ -25,7 +25,9 @@ export async function BlogPosts() {
                   >
                     {formatDate(post.metadata.publishedAt)}
                   </time>
-                  <span className="text-neutral-300 dark:text-neutral-700">·</span>
+                  <span className="text-neutral-300 dark:text-neutral-700">
+                    ·
+                  </span>
                   <span className="transition-colors duration-200 group-hover:text-neutral-800 dark:group-hover:text-neutral-200">
                     {readingTime} min read
                   </span>

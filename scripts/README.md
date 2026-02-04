@@ -25,9 +25,13 @@ To track additional repositories, edit `scripts/update-stars.js` and add to the 
 
 ```javascript
 const repos = [
-  { owner: 'tonykipkemboi', repo: 'your-repo-name', title: 'Your Project Title' },
+  {
+    owner: 'tonykipkemboi',
+    repo: 'your-repo-name',
+    title: 'Your Project Title',
+  },
   // ...
-];
+]
 ```
 
 Make sure the `title` matches exactly what's in `app/components/projects.tsx`.
@@ -72,6 +76,7 @@ node scripts/update-youtube-views.js
 Both GitHub stars and YouTube views are automatically updated **every Sunday at 00:00 UTC** via GitHub Actions (`.github/workflows/update-stars.yml`).
 
 You can also trigger the workflow manually:
+
 1. Go to the [Actions tab](https://github.com/tonykipkemboi/personal-website/actions)
 2. Select "Update GitHub Stats" workflow
 3. Click "Run workflow"

@@ -12,7 +12,13 @@ interface Project {
   stars?: string
 }
 
-export function FilteredProjects({ projects, techs }: { projects: Project[], techs: string[] }) {
+export function FilteredProjects({
+  projects,
+  techs,
+}: {
+  projects: Project[]
+  techs: string[]
+}) {
   const [showAllTechs, setShowAllTechs] = useState(false)
   const [selectedTech, setSelectedTech] = useState<string | null>(null)
 
@@ -20,7 +26,7 @@ export function FilteredProjects({ projects, techs }: { projects: Project[], tec
   const hiddenCount = techs.length - 3
 
   const filteredProjects = selectedTech
-    ? projects.filter(p => p.tech.includes(selectedTech))
+    ? projects.filter((p) => p.tech.includes(selectedTech))
     : projects
 
   return (
@@ -28,7 +34,7 @@ export function FilteredProjects({ projects, techs }: { projects: Project[], tec
       <div className="flex flex-wrap items-center gap-2 mb-8">
         <button
           onClick={() => setSelectedTech(null)}
-          className={`px-3 py-1 text-sm rounded-full border transition-colors ${
+          className={`px-3 py-1 text-sm rounded-full border transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-500 focus-visible:ring-offset-2 ${
             selectedTech === null
               ? 'border-neutral-900 dark:border-neutral-100 text-neutral-900 dark:text-neutral-100'
               : 'border-neutral-200 dark:border-neutral-800 text-neutral-600 dark:text-neutral-400 hover:border-neutral-400 dark:hover:border-neutral-600'
@@ -40,7 +46,7 @@ export function FilteredProjects({ projects, techs }: { projects: Project[], tec
           <button
             key={tech}
             onClick={() => setSelectedTech(tech === selectedTech ? null : tech)}
-            className={`px-3 py-1 text-sm rounded-full border transition-colors ${
+            className={`px-3 py-1 text-sm rounded-full border transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-500 focus-visible:ring-offset-2 ${
               selectedTech === tech
                 ? 'border-neutral-900 dark:border-neutral-100 text-neutral-900 dark:text-neutral-100'
                 : 'border-neutral-200 dark:border-neutral-800 text-neutral-600 dark:text-neutral-400 hover:border-neutral-400 dark:hover:border-neutral-600'
@@ -52,7 +58,7 @@ export function FilteredProjects({ projects, techs }: { projects: Project[], tec
         {techs.length > 3 && (
           <button
             onClick={() => setShowAllTechs(!showAllTechs)}
-            className="px-3 py-1 text-sm text-neutral-500 dark:text-neutral-500 hover:text-neutral-900 dark:hover:text-neutral-100 transition-colors"
+            className="px-3 py-1 text-sm text-neutral-500 dark:text-neutral-500 hover:text-neutral-900 dark:hover:text-neutral-100 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-500 focus-visible:ring-offset-2 rounded-full"
           >
             {showAllTechs ? 'Show less' : `+${hiddenCount} more`}
           </button>

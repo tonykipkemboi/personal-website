@@ -1,10 +1,13 @@
 export function PopularVideo() {
   // Most popular video details
   const popularVideo = {
-    title: "How to Chat with Your PDFs Using Local Large Language Models [Ollama RAG]",
-    videoId: "ztBJqzBU5kc",
-    description: "Learn how to build a powerful PDF chat system using Ollama and LangChain. This tutorial shows you how to create a Retrieval-Augmented Generation (RAG) system that runs completely on your local machine.",
-    views: "190K+ views",
+    title:
+      'How to Chat with Your PDFs Using Local Large Language Models [Ollama RAG]',
+    videoId: 'ztBJqzBU5kc',
+    description:
+      'Learn how to build a powerful PDF chat system using Ollama and LangChain. This tutorial shows you how to create a Retrieval-Augmented Generation (RAG) system that runs completely on your local machine.',
+    views: '190K+ views',
+    subscribers: '8.19K',
   }
 
   return (
@@ -24,9 +27,11 @@ export function PopularVideo() {
           <h3 className="font-medium text-neutral-900 dark:text-neutral-100 line-clamp-2">
             {popularVideo.title}
           </h3>
-          <span className="text-sm text-neutral-600 dark:text-neutral-400 whitespace-nowrap flex-shrink-0">
-            {popularVideo.views}
-          </span>
+          <div className="flex items-center gap-3 text-sm text-neutral-600 dark:text-neutral-400 whitespace-nowrap flex-shrink-0">
+            <span>{popularVideo.views}</span>
+            <span className="text-neutral-300 dark:text-neutral-700">·</span>
+            <span>{popularVideo.subscribers} subs</span>
+          </div>
         </div>
         <p className="text-neutral-600 dark:text-neutral-400 text-sm line-clamp-2">
           {popularVideo.description}

@@ -1,6 +1,11 @@
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
-import { getBlogPostsByCategory, getAllCategories, formatDate, calculateReadingTime } from '../../utils'
+import {
+  getBlogPostsByCategory,
+  getAllCategories,
+  formatDate,
+  calculateReadingTime,
+} from '../../utils'
 
 export async function generateStaticParams() {
   const categories = await getAllCategories()
@@ -9,7 +14,11 @@ export async function generateStaticParams() {
   }))
 }
 
-export async function generateMetadata({ params }: { params: { category: string } }) {
+export async function generateMetadata({
+  params,
+}: {
+  params: { category: string }
+}) {
   const category = decodeURIComponent(params.category).replace(/-/g, ' ')
   const posts = await getBlogPostsByCategory(category)
 
@@ -25,7 +34,11 @@ export async function generateMetadata({ params }: { params: { category: string 
   }
 }
 
-export default async function CategoryPage({ params }: { params: { category: string } }) {
+export default async function CategoryPage({
+  params,
+}: {
+  params: { category: string }
+}) {
   const category = decodeURIComponent(params.category).replace(/-/g, ' ')
   const posts = await getBlogPostsByCategory(category)
 
@@ -35,9 +48,7 @@ export default async function CategoryPage({ params }: { params: { category: str
 
   return (
     <section>
-      <h1 className="font-medium text-2xl mb-8 tracking-tighter">
-        {category}
-      </h1>
+      <h1 className="font-medium text-2xl mb-8 tracking-tighter">{category}</h1>
 
       <div className="space-y-8">
         {posts.map((post) => {
@@ -61,7 +72,9 @@ export default async function CategoryPage({ params }: { params: { category: str
                   {post.metadata.summary}
                 </p>
                 <div className="flex flex-wrap items-center gap-2 text-sm">
-                  <span className="text-neutral-500">{readingTime} min read</span>
+                  <span className="text-neutral-500">
+                    {readingTime} min read
+                  </span>
                   {post.metadata.tags && post.metadata.tags.length > 0 && (
                     <>
                       <span className="text-neutral-500">•</span>

@@ -14,7 +14,7 @@ export function TagFilter({ tags }: { tags: string[] }) {
         <Link
           key={tag}
           href={`/blog/tags/${tag.toLowerCase().replace(/\s+/g, '-')}`}
-          className="px-3 py-1 text-sm rounded-full border border-neutral-200 dark:border-neutral-800 text-neutral-600 dark:text-neutral-400 hover:border-neutral-400 dark:hover:border-neutral-600 hover:text-neutral-900 dark:hover:text-neutral-100 transition-colors"
+          className="px-3 py-1 text-sm rounded-full border border-neutral-200 dark:border-neutral-800 text-neutral-600 dark:text-neutral-400 hover:border-neutral-400 dark:hover:border-neutral-600 hover:text-neutral-900 dark:hover:text-neutral-100 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-500 focus-visible:ring-offset-2"
         >
           {tag}
         </Link>
@@ -22,7 +22,7 @@ export function TagFilter({ tags }: { tags: string[] }) {
       {tags.length > 3 && (
         <button
           onClick={() => setShowAll(!showAll)}
-          className="px-3 py-1 text-sm text-neutral-500 dark:text-neutral-500 hover:text-neutral-900 dark:hover:text-neutral-100 transition-colors"
+          className="px-3 py-1 text-sm text-neutral-500 dark:text-neutral-500 hover:text-neutral-900 dark:hover:text-neutral-100 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-500 focus-visible:ring-offset-2 rounded-full"
         >
           {showAll ? 'Show less' : `+${hiddenCount} more`}
         </button>

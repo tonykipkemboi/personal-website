@@ -3,11 +3,16 @@
 import { useEffect, useState, useCallback } from 'react'
 
 const KONAMI_CODE = [
-  'ArrowUp', 'ArrowUp',
-  'ArrowDown', 'ArrowDown',
-  'ArrowLeft', 'ArrowRight',
-  'ArrowLeft', 'ArrowRight',
-  'KeyB', 'KeyA'
+  'ArrowUp',
+  'ArrowUp',
+  'ArrowDown',
+  'ArrowDown',
+  'ArrowLeft',
+  'ArrowRight',
+  'ArrowLeft',
+  'ArrowRight',
+  'KeyB',
+  'KeyA',
 ]
 
 const RETRO_DURATION = 8000
@@ -18,6 +23,11 @@ export function KonamiCode() {
   const [bootText, setBootText] = useState('')
 
   const activate = useCallback(() => {
+    // Check for reduced motion preference
+    const prefersReducedMotion = window.matchMedia(
+      '(prefers-reduced-motion: reduce)'
+    ).matches
+
     setActive(true)
     document.documentElement.classList.add('retro-mode')
 
@@ -34,29 +44,40 @@ export function KonamiCode() {
       '> RESUMING NORMAL OPERATIONS IN 5s...',
     ]
 
-    let currentText = ''
-    let lineIndex = 0
-    let charIndex = 0
+    // If user prefers reduced motion, show text instantly
+    if (prefersReducedMotion) {
+      setBootText(lines.join('\n'))
+    } else {
+      let currentText = ''
+      let lineIndex = 0
+      let charIndex = 0
 
-    const typeWriter = setInterval(() => {
-      if (lineIndex >= lines.length) {
+      const typeWriter = setInterval(() => {
+        if (lineIndex >= lines.length) {
+          clearInterval(typeWriter)
+          return
+        }
+
+        const line = lines[lineIndex]
+        if (charIndex <= line.length) {
+          currentText =
+            lines.slice(0, lineIndex).join('\n') +
+            '\n' +
+            line.slice(0, charIndex)
+          setBootText(currentText)
+          charIndex++
+        } else {
+          lineIndex++
+          charIndex = 0
+        }
+      }, 30)
+
+      setTimeout(() => {
         clearInterval(typeWriter)
-        return
-      }
-
-      const line = lines[lineIndex]
-      if (charIndex <= line.length) {
-        currentText = lines.slice(0, lineIndex).join('\n') + '\n' + line.slice(0, charIndex)
-        setBootText(currentText)
-        charIndex++
-      } else {
-        lineIndex++
-        charIndex = 0
-      }
-    }, 30)
+      }, RETRO_DURATION - 100)
+    }
 
     setTimeout(() => {
-      clearInterval(typeWriter)
       setActive(false)
       setBootText('')
       document.documentElement.classList.remove('retro-mode')
@@ -65,10 +86,12 @@ export function KonamiCode() {
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      setInput(prev => {
+      setInput((prev) => {
         const next = [...prev, e.code].slice(-KONAMI_CODE.length)
-        if (next.length === KONAMI_CODE.length &&
-            next.every((key, i) => key === KONAMI_CODE[i])) {
+        if (
+          next.length === KONAMI_CODE.length &&
+          next.every((key, i) => key === KONAMI_CODE[i])
+        ) {
           activate()
           return []
         }
@@ -86,7 +109,10 @@ export function KonamiCode() {
     <div className="retro-overlay">
       <div className="retro-scanlines" />
       <div className="retro-terminal">
-        <pre className="retro-text">{bootText}<span className="retro-cursor">_</span></pre>
+        <pre className="retro-text">
+          {bootText}
+          <span className="retro-cursor">_</span>
+        </pre>
       </div>
     </div>
   )

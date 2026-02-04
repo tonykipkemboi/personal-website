@@ -1,0 +1,39 @@
+# Dependencies
+node_modules/
+
+# Build outputs
+.next/
+out/
+build/
+dist/
+
+# Package manager files
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# Cache
+.cache/
+*.log
+
+# Generated files
+*.min.js
+*.min.css
+
+# Public assets (images, fonts, etc.)
+public/
+
+# IDE and editor files
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Environment files
+.env*
+
+# Coverage
+coverage/
+
+# MDX content (preserve formatting)
+*.mdx

@@ -19,8 +19,8 @@ const ibmPlexMono = IBM_Plex_Mono({
 export const viewport: Viewport = {
   themeColor: [
     { media: '(prefers-color-scheme: light)', color: '#ffffff' },
-    { media: '(prefers-color-scheme: dark)', color: '#000000' }
-  ]
+    { media: '(prefers-color-scheme: dark)', color: '#000000' },
+  ],
 }
 
 export const metadata: Metadata = {
@@ -30,10 +30,12 @@ export const metadata: Metadata = {
     default: 'Tony Kipkemboi',
     template: '%s | Tony Kipkemboi',
   },
-  description: 'AI engineer and content creator building AI automations, agent systems, and sharing technical insights across social platforms.',
+  description:
+    'AI engineer and content creator building AI automations, agent systems, and sharing technical insights across social platforms.',
   openGraph: {
     title: 'Tony Kipkemboi',
-    description: 'AI engineer and content creator building AI automations, agent systems, and sharing technical insights across social platforms.',
+    description:
+      'AI engineer and content creator building AI automations, agent systems, and sharing technical insights across social platforms.',
     url: baseUrl,
     siteName: 'Tony Kipkemboi',
     images: [
@@ -42,7 +44,7 @@ export const metadata: Metadata = {
         width: 1200,
         height: 630,
         alt: 'Tony Kipkemboi - AI Engineer and Content Creator',
-      }
+      },
     ],
     locale: 'en_US',
     type: 'website',
@@ -50,7 +52,8 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     title: 'Tony Kipkemboi',
-    description: 'AI engineer and content creator building AI automations, agent systems, and sharing technical insights across social platforms.',
+    description:
+      'AI engineer and content creator building AI automations, agent systems, and sharing technical insights across social platforms.',
     creator: '@tonykipkemboi',
     images: ['/og-image.png'],
   },
@@ -59,7 +62,7 @@ export const metadata: Metadata = {
       { url: '/favicon.ico' },
       { url: '/favicon-16x16.png', sizes: '16x16', type: 'image/png' },
       { url: '/favicon-32x32.png', sizes: '32x32', type: 'image/png' },
-      { url: '/favicon-96x96.png', sizes: '96x96', type: 'image/png' }
+      { url: '/favicon-96x96.png', sizes: '96x96', type: 'image/png' },
     ],
     shortcut: '/favicon.ico',
     apple: [
@@ -72,7 +75,7 @@ export const metadata: Metadata = {
       { url: '/apple-icon-120x120.png', sizes: '120x120', type: 'image/png' },
       { url: '/apple-icon-144x144.png', sizes: '144x144', type: 'image/png' },
       { url: '/apple-icon-152x152.png', sizes: '152x152', type: 'image/png' },
-      { url: '/apple-icon-180x180.png', sizes: '180x180', type: 'image/png' }
+      { url: '/apple-icon-180x180.png', sizes: '180x180', type: 'image/png' },
     ],
     other: [
       { url: '/android-icon-36x36.png', sizes: '36x36', type: 'image/png' },
@@ -80,13 +83,13 @@ export const metadata: Metadata = {
       { url: '/android-icon-72x72.png', sizes: '72x72', type: 'image/png' },
       { url: '/android-icon-96x96.png', sizes: '96x96', type: 'image/png' },
       { url: '/android-icon-144x144.png', sizes: '144x144', type: 'image/png' },
-      { url: '/android-icon-192x192.png', sizes: '192x192', type: 'image/png' }
-    ]
+      { url: '/android-icon-192x192.png', sizes: '192x192', type: 'image/png' },
+    ],
   },
   appleWebApp: {
     capable: true,
     statusBarStyle: 'default',
-    title: 'Tony Kipkemboi'
+    title: 'Tony Kipkemboi',
   },
   robots: {
     index: true,
@@ -133,7 +136,16 @@ export default function RootLayout({
         </Script>
       </head>
       <body className="antialiased max-w-2xl flex flex-col mx-4 mt-8 lg:mx-auto">
-        <main className="flex-auto min-w-0 mt-6 flex flex-col px-2 md:px-0">
+        <a
+          href="#main-content"
+          className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-neutral-900 focus:text-white focus:rounded-md dark:focus:bg-neutral-100 dark:focus:text-neutral-900"
+        >
+          Skip to main content
+        </a>
+        <main
+          id="main-content"
+          className="flex-auto min-w-0 mt-6 flex flex-col px-2 md:px-0"
+        >
           <Navbar />
           {children}
           <Footer />

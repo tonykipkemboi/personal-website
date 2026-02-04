@@ -34,15 +34,16 @@ export function Navbar() {
         >
           <div className="flex flex-row space-x-1 pr-10">
             {links.map((link) => {
-              const isActive = link.href === '/'
-                ? pathname === '/'
-                : pathname.startsWith(link.href)
+              const isActive =
+                link.href === '/'
+                  ? pathname === '/'
+                  : pathname.startsWith(link.href)
 
               return (
                 <Link
                   key={link.href}
                   href={link.href}
-                  className={`transition-all duration-200 flex align-middle relative py-1 px-3 rounded-md group ${
+                  className={`transition-colors duration-200 flex align-middle relative py-1 px-3 rounded-md group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-500 focus-visible:ring-offset-2 ${
                     isActive
                       ? 'text-neutral-900 dark:text-neutral-100 bg-neutral-100 dark:bg-neutral-800'
                       : 'text-neutral-600 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-neutral-100 hover:bg-neutral-50 dark:hover:bg-neutral-800/50'

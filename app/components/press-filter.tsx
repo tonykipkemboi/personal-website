@@ -17,7 +17,7 @@ function formatDate(date: string) {
   return new Date(date).toLocaleDateString('en-US', {
     year: 'numeric',
     month: 'long',
-    day: 'numeric'
+    day: 'numeric',
   })
 }
 
@@ -40,7 +40,7 @@ function capitalizeFirst(str: string) {
 
 export function FilteredAppearances({
   appearances,
-  types
+  types,
 }: {
   appearances: MediaAppearance[]
   types: string[]
@@ -48,7 +48,7 @@ export function FilteredAppearances({
   const [selectedType, setSelectedType] = useState<string | null>(null)
 
   const filteredAppearances = selectedType
-    ? appearances.filter(a => a.type === selectedType)
+    ? appearances.filter((a) => a.type === selectedType)
     : appearances
 
   return (
@@ -56,7 +56,7 @@ export function FilteredAppearances({
       <div className="flex flex-wrap items-center gap-2 mb-8">
         <button
           onClick={() => setSelectedType(null)}
-          className={`px-3 py-1 text-sm rounded-full border transition-colors ${
+          className={`px-3 py-1 text-sm rounded-full border transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-500 focus-visible:ring-offset-2 ${
             selectedType === null
               ? 'border-neutral-900 dark:border-neutral-100 text-neutral-900 dark:text-neutral-100'
               : 'border-neutral-200 dark:border-neutral-800 text-neutral-600 dark:text-neutral-400 hover:border-neutral-400 dark:hover:border-neutral-600'
@@ -68,7 +68,7 @@ export function FilteredAppearances({
           <button
             key={type}
             onClick={() => setSelectedType(type === selectedType ? null : type)}
-            className={`px-3 py-1 text-sm rounded-full border transition-colors ${
+            className={`px-3 py-1 text-sm rounded-full border transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-500 focus-visible:ring-offset-2 ${
               selectedType === type
                 ? 'border-neutral-900 dark:border-neutral-100 text-neutral-900 dark:text-neutral-100'
                 : 'border-neutral-200 dark:border-neutral-800 text-neutral-600 dark:text-neutral-400 hover:border-neutral-400 dark:hover:border-neutral-600'
@@ -106,7 +106,9 @@ export function FilteredAppearances({
                   <span>·</span>
                   <span>{appearance.source}</span>
                   <span>·</span>
-                  <time dateTime={appearance.date}>{formatDate(appearance.date)}</time>
+                  <time dateTime={appearance.date}>
+                    {formatDate(appearance.date)}
+                  </time>
                 </div>
 
                 <h2 className="text-xl font-medium text-neutral-900 dark:text-neutral-100 group-hover:text-neutral-700 dark:group-hover:text-neutral-300 mb-2">
@@ -125,6 +127,7 @@ export function FilteredAppearances({
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke="currentColor"
+                    aria-hidden="true"
                   >
                     <path
                       strokeLinecap="round"

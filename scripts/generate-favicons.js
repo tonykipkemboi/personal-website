@@ -1,10 +1,10 @@
-const sharp = require('sharp');
-const fs = require('fs').promises;
-const path = require('path');
+const sharp = require('sharp')
+const fs = require('fs').promises
+const path = require('path')
 
-const sizes = [16, 32, 48, 64, 128, 256];
-const inputImage = path.join(__dirname, '../public/favicon.ico');
-const outputDir = path.join(__dirname, '../public');
+const sizes = [16, 32, 48, 64, 128, 256]
+const inputImage = path.join(__dirname, '../public/favicon.ico')
+const outputDir = path.join(__dirname, '../public')
 
 async function generateFavicons() {
   try {
@@ -12,24 +12,24 @@ async function generateFavicons() {
     for (const size of sizes) {
       await sharp(inputImage)
         .resize(size, size)
-        .toFile(path.join(outputDir, `apple-icon-${size}x${size}.png`));
-      
+        .toFile(path.join(outputDir, `apple-icon-${size}x${size}.png`))
+
       await sharp(inputImage)
         .resize(size, size)
-        .toFile(path.join(outputDir, `android-icon-${size}x${size}.png`));
+        .toFile(path.join(outputDir, `android-icon-${size}x${size}.png`))
     }
 
     // Create favicon sizes
     for (const size of [16, 32, 96]) {
       await sharp(inputImage)
         .resize(size, size)
-        .toFile(path.join(outputDir, `favicon-${size}x${size}.png`));
+        .toFile(path.join(outputDir, `favicon-${size}x${size}.png`))
     }
 
-    console.log('All favicons generated successfully!');
+    console.log('All favicons generated successfully!')
   } catch (error) {
-    console.error('Error generating favicons:', error);
+    console.error('Error generating favicons:', error)
   }
 }
 
-generateFavicons();
+generateFavicons()
