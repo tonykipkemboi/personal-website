@@ -33,10 +33,13 @@ A modern portfolio site template with integrated blog functionality. Built with 
 
 1. Clone the repository
 2. Install dependencies:
+
 ```bash
 pnpm install
 ```
+
 3. Start the development server:
+
 ```bash
 pnpm dev
 ```

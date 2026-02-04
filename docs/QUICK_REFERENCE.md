@@ -7,6 +7,7 @@
 ## Before Publishing Any Blog Post
 
 ### ✅ SEO Checklist
+
 - [ ] Title is 50-60 characters
 - [ ] Meta description is 150-160 characters
 - [ ] Category assigned (Tutorials, Security, Industry Insights)
@@ -19,6 +20,7 @@
 - [ ] Mobile-tested
 
 ### ✅ GEO Checklist (NEW)
+
 - [ ] Title is a question ("How to...", "What is...")
 - [ ] First paragraph defines the topic clearly
 - [ ] Author expertise statement ("As someone who...")
@@ -37,6 +39,7 @@
 ## Target Keywords (Primary Focus)
 
 ### AI Agents (General)
+
 - "build ai agents"
 - "ai agent tutorial"
 - "autonomous ai agents"
@@ -44,6 +47,7 @@
 - "how to build ai agents"
 
 ### Security
+
 - "ai agent security"
 - "ai security threats"
 - "secure ai systems"
@@ -51,6 +55,7 @@
 - "ai vulnerabilities"
 
 ### Authentication & Access
+
 - "ai agent permissions"
 - "ai agent authentication"
 - "ai access control"
@@ -58,6 +63,7 @@
 - "ai identity management"
 
 ### Industry & Trends
+
 - "ai adoption trends"
 - "consumer ai vs enterprise ai"
 - "future of saas"
@@ -96,12 +102,15 @@ According to [source], [statistic supporting the topic]...
 ## How to [Solve/Implement/Achieve Topic]
 
 ### Step 1: [Action]
+
 [Detailed explanation with code example if applicable]
 
 ### Step 2: [Action]
+
 [Table or comparison if relevant]
 
 ### Step 3: [Action]
+
 [Checklist or bullet points]
 
 ## Real-World Example
@@ -109,6 +118,7 @@ According to [source], [statistic supporting the topic]...
 In my work with [Company/Project], we [case study]...
 
 Results:
+
 - [Metric 1]
 - [Metric 2]
 - [Metric 3]
@@ -155,13 +165,16 @@ Tony Kipkemboi is an AI Developer Advocate and former CrewAI team member special
 ## Weekly Testing Routine
 
 ### Monday: Test in AI Engines
+
 For each new/updated post:
+
 1. Open Perplexity AI → Ask relevant question
 2. Open ChatGPT → Enable web browsing → Ask question
 3. Google Search → Check for AI Overview
 4. Record: Were you cited? Y/N
 
 ### Wednesday: Check Analytics
+
 1. Google Search Console → Check AI Overview impressions
 2. Analytics → Check referrals from:
    - perplexity.ai
@@ -170,6 +183,7 @@ For each new/updated post:
 3. Track keyword rankings (Ahrefs/SEMrush)
 
 ### Friday: Update Tracking
+
 1. Update `SEO_PLAYBOOK.md` with metrics
 2. Note any citations found
 3. Plan next week's content
@@ -179,29 +193,35 @@ For each new/updated post:
 ## Content Ideas (Always Relevant)
 
 ### Ultimate Guides
+
 - "The Complete Guide to AI Agent Security"
 - "AI Agent Frameworks: The Definitive Comparison"
 - "Building Production-Ready AI Agents: A-Z Guide"
 
 ### Checklists
+
 - "AI Agent Security Audit: 25-Point Checklist"
 - "Pre-Deployment Checklist for AI Agents"
 - "AI Agent RBAC Implementation Checklist"
 
 ### Comparisons
+
 - "CrewAI vs LangGraph vs AutoGen: Which to Choose?"
 - "AI Agent Hosting: Cloud vs On-Premise"
 - "Open Source vs Commercial AI Agent Frameworks"
 
 ### Glossaries
+
 - "AI Agents Terminology: 50 Terms Explained"
 - "Security Terms Every AI Developer Should Know"
 
 ### Case Studies
+
 - "How We Scaled AI Agents to 100K Users"
 - "Implementing RBAC for 50+ AI Agents: Lessons Learned"
 
 ### Troubleshooting
+
 - "Common AI Agent Errors and How to Fix Them"
 - "Debugging AI Agent Failures: A Systematic Approach"
 
@@ -210,6 +230,7 @@ For each new/updated post:
 ## Quick Wins This Week
 
 ### For Existing Posts
+
 1. Add "What is..." definition to intro
 2. Include 3 statistics (find on Google Scholar, industry reports)
 3. Add FAQ section at end
@@ -217,11 +238,13 @@ For each new/updated post:
 5. Add "Last Updated" date
 
 ### New Content
+
 1. Write one "How to..." tutorial
 2. Create one comparison post
 3. Build one checklist/resource
 
 ### Promotion
+
 1. Share on Twitter with question framing
 2. Post on LinkedIn with insights
 3. Share in relevant Reddit communities
@@ -232,17 +255,20 @@ For each new/updated post:
 ## Tools You Need
 
 ### Daily Use
+
 - **Hemingway Editor** - Check readability
 - **Grammarly** - Grammar and tone
 - **Perplexity AI** - Test citations
 - **ChatGPT** - Test citations
 
 ### Weekly Use
+
 - **Google Search Console** - Track rankings and AI Overviews
 - **Analytics** - Monitor traffic and referrals
 - **Ahrefs/SEMrush** - Keyword rankings
 
 ### Monthly Use
+
 - **Screaming Frog** - Technical SEO audit
 - **Google Lighthouse** - Performance check
 - **Schema Validator** - Verify structured data
@@ -252,16 +278,19 @@ For each new/updated post:
 ## Target Numbers (6-Month Goals)
 
 ### Traffic
+
 - **Organic Sessions:** +50%
 - **AI Engine Referrals:** 500/month
 - **Pages per Session:** +60%
 
 ### Rankings
+
 - **Keywords in Top 10:** 15
 - **AI Engine Citations:** 20+
 - **Backlinks:** +50%
 
 ### Engagement
+
 - **Average Session Duration:** +50%
 - **Bounce Rate:** -25%
 - **Social Shares:** +200%
@@ -271,6 +300,7 @@ For each new/updated post:
 ## When Things Go Wrong
 
 ### If Not Getting Citations
+
 1. Check if content answers questions directly
 2. Add more statistics and sources
 3. Improve expertise statements
@@ -278,6 +308,7 @@ For each new/updated post:
 5. Update to latest information
 
 ### If Traffic Isn't Growing
+
 1. Check Google Search Console for issues
 2. Verify sitemap is working
 3. Audit internal linking
@@ -285,6 +316,7 @@ For each new/updated post:
 5. Review meta descriptions (improve CTR)
 
 ### If Bounce Rate is High
+
 1. Improve intro (hook readers faster)
 2. Add table of contents for long posts
 3. Improve internal linking
@@ -296,18 +328,21 @@ For each new/updated post:
 ## Remember
 
 ### Traditional SEO
+
 - Keywords still matter
 - Backlinks still matter
 - Technical SEO still matters
 - User experience still matters
 
 ### GEO (NEW)
+
 - Expertise matters MORE
 - Freshness matters MORE
 - Clear answers matter MORE
 - Citable format matters MORE
 
 ### Both Require
+
 - **Quality content** - No shortcuts
 - **Consistency** - Publish regularly
 - **Patience** - Results take 3-6 months
@@ -317,6 +352,7 @@ For each new/updated post:
 ---
 
 **Next Steps:**
+
 1. Review [SEO_PLAYBOOK.md](./SEO_PLAYBOOK.md) for full strategy
 2. Read [GEO_STRATEGY.md](./GEO_STRATEGY.md) for GEO details
 3. Check [PHASE_1_COMPLETE.md](./PHASE_1_COMPLETE.md) for what's done

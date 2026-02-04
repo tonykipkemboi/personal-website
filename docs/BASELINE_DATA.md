@@ -19,6 +19,7 @@
 - **Engagement Rate:** 20.11%
 
 ### Event Breakdown
+
 - **page_view:** 540
 - **session_start:** 356
 - **first_visit:** 290
@@ -30,20 +31,21 @@
 
 ## Traffic Sources (GA4)
 
-| Source | Active Users | Sessions | Engaged Sessions | Avg Engagement Time | Engagement Rate |
-|--------|--------------|----------|------------------|---------------------|-----------------|
-| **(not set) / Direct** | 239 (81.29%) | 266 (74.3%) | 30 (41.67%) | 9s | 11.28% |
-| **Google** | 31 (10.54%) | 44 (12.29%) | 22 (30.56%) | 26s | 50% |
-| **LinkedIn.com** | 9 (3.06%) | 22 (6.15%) | 8 (11.11%) | 11s | 36.36% |
-| **Bing** | 3 (1.02%) | 10 (2.79%) | 2 (2.78%) | 4s | 20% |
-| **Facebook.com** | 4 (1.36%) | 4 (1.12%) | 4 (5.56%) | 3s | 100% |
-| **GitHub.com** | 3 (1.02%) | 4 (1.12%) | 2 (2.78%) | 21s | 50% |
-| **t.co (Twitter)** | 2 (0.68%) | 3 (0.84%) | 2 (2.78%) | 21s | 66.67% |
-| **Instagram.com** | 1 (0.34%) | 1 (0.28%) | 1 (1.39%) | 4s | 100% |
+| Source                 | Active Users | Sessions    | Engaged Sessions | Avg Engagement Time | Engagement Rate |
+| ---------------------- | ------------ | ----------- | ---------------- | ------------------- | --------------- |
+| **(not set) / Direct** | 239 (81.29%) | 266 (74.3%) | 30 (41.67%)      | 9s                  | 11.28%          |
+| **Google**             | 31 (10.54%)  | 44 (12.29%) | 22 (30.56%)      | 26s                 | 50%             |
+| **LinkedIn.com**       | 9 (3.06%)    | 22 (6.15%)  | 8 (11.11%)       | 11s                 | 36.36%          |
+| **Bing**               | 3 (1.02%)    | 10 (2.79%)  | 2 (2.78%)        | 4s                  | 20%             |
+| **Facebook.com**       | 4 (1.36%)    | 4 (1.12%)   | 4 (5.56%)        | 3s                  | 100%            |
+| **GitHub.com**         | 3 (1.02%)    | 4 (1.12%)   | 2 (2.78%)        | 21s                 | 50%             |
+| **t.co (Twitter)**     | 2 (0.68%)    | 3 (0.84%)   | 2 (2.78%)        | 21s                 | 66.67%          |
+| **Instagram.com**      | 1 (0.34%)    | 1 (0.28%)   | 1 (1.39%)        | 4s                  | 100%            |
 
 ### Traffic Source Summary
 
 **By Channel:**
+
 - **Direct:** 262 sessions
 - **Organic Search:** 54 sessions
 - **Organic Social:** 33 sessions
@@ -53,6 +55,7 @@
 **AI Engine Referrals:** 0 sessions (none detected in this period)
 
 ### Key Insights
+
 - Most traffic is direct/unknown source (81%)
 - Google traffic has highest quality (26s engagement, 50% engagement rate)
 - LinkedIn shows promise (22 sessions, 36% engagement)
@@ -76,13 +79,13 @@
 
 Based on the views data, our blog posts are performing as follows:
 
-| Post Title (Slug) | Views | Performance Notes |
-|-------------------|-------|-------------------|
-| signals from the ai agent frontier | 72 | Top performing blog post |
-| rbac for ai agents (agent-authentication-rbac) | 37 | Strong performance |
-| get started with ai agents (crewai-quickstart) | 27 | Moderate traffic |
-| securing the ai frontier (ai-agent-security) | 13 | Newest post, building traction |
-| saas vs agents | Not individually tracked | Combined with overall metrics |
+| Post Title (Slug)                              | Views                    | Performance Notes              |
+| ---------------------------------------------- | ------------------------ | ------------------------------ |
+| signals from the ai agent frontier             | 72                       | Top performing blog post       |
+| rbac for ai agents (agent-authentication-rbac) | 37                       | Strong performance             |
+| get started with ai agents (crewai-quickstart) | 27                       | Moderate traffic               |
+| securing the ai frontier (ai-agent-security)   | 13                       | Newest post, building traction |
+| saas vs agents                                 | Not individually tracked | Combined with overall metrics  |
 
 **Average engagement time across blog pages:** 14s (site-wide average)
 
@@ -99,25 +102,27 @@ Based on the views data, our blog posts are performing as follows:
 
 ### Top Queries
 
-| Query | Clicks | Impressions | CTR | Position |
-|-------|--------|-------------|-----|----------|
-| **tony kipkemboi** | 5 (83.33%) | 20 (3.16%) | 25% | 1.05 |
-| **crewai** | 1 (16.67%) | 12 (1.9%) | 8.33% | 7.92 |
-| **"crewai" ai agent** | 0 | 6 (0.95%) | 0% | 8.33 |
-| **"crewai" ai agent framework** | 0 | 2 (0.32%) | 0% | 10.00 |
-| **"crewai" ai agents framework** | 0 | 16 (2.53%) | 0% | 8.88 |
-| **"from crewai import agent, task, crew"** | 0 | 9 (1.42%) | 0% | 5.67 |
-| **a developer is building a multi step reasoning agents that can use external tools** | 0 | 1 (0.16%) | 0% | 1.00 |
-| **agent access control** | 0 | 1 (0.16%) | 0% | 11.00 |
-| **agent platforms with rbac audit logs approvals** | 0 | 2 (0.32%) | 0% | 8.00 |
-| **agent saas** | 0 | 2 (0.32%) | 0% | 10.00 |
+| Query                                                                                 | Clicks     | Impressions | CTR   | Position |
+| ------------------------------------------------------------------------------------- | ---------- | ----------- | ----- | -------- |
+| **tony kipkemboi**                                                                    | 5 (83.33%) | 20 (3.16%)  | 25%   | 1.05     |
+| **crewai**                                                                            | 1 (16.67%) | 12 (1.9%)   | 8.33% | 7.92     |
+| **"crewai" ai agent**                                                                 | 0          | 6 (0.95%)   | 0%    | 8.33     |
+| **"crewai" ai agent framework**                                                       | 0          | 2 (0.32%)   | 0%    | 10.00    |
+| **"crewai" ai agents framework**                                                      | 0          | 16 (2.53%)  | 0%    | 8.88     |
+| **"from crewai import agent, task, crew"**                                            | 0          | 9 (1.42%)   | 0%    | 5.67     |
+| **a developer is building a multi step reasoning agents that can use external tools** | 0          | 1 (0.16%)   | 0%    | 1.00     |
+| **agent access control**                                                              | 0          | 1 (0.16%)   | 0%    | 11.00    |
+| **agent platforms with rbac audit logs approvals**                                    | 0          | 2 (0.32%)   | 0%    | 8.00     |
+| **agent saas**                                                                        | 0          | 2 (0.32%)   | 0%    | 10.00    |
 
 ### Organic Search Performance Over Time
+
 - Showing consistent low-volume traffic (0-4 clicks per day)
 - Peak days: Early December with 3 clicks
 - Most days have 0-1 clicks from organic search
 
 ### Key Insights
+
 - **Branded search performs excellently** (#1 position, 25% CTR)
 - **High impressions, low clicks** (632 impressions → 6 clicks = opportunity)
 - **Average position 13.98** means most queries are on page 2 of Google
@@ -128,24 +133,24 @@ Based on the views data, our blog posts are performing as follows:
 
 ## Domain Authority
 
-*Not collected yet - to be added using Ahrefs or Moz free tools*
+_Not collected yet - to be added using Ahrefs or Moz free tools_
 
-- **Domain Rating (Ahrefs):** _____
-- **Domain Authority (Moz):** _____
-- **Total Backlinks:** _____
-- **Referring Domains:** _____
-- **Organic Keywords (est.):** _____
-- **Organic Traffic (est.):** _____
+- **Domain Rating (Ahrefs):** **\_**
+- **Domain Authority (Moz):** **\_**
+- **Total Backlinks:** **\_**
+- **Referring Domains:** **\_**
+- **Organic Keywords (est.):** **\_**
+- **Organic Traffic (est.):** **\_**
 
 ---
 
 ## GEO (AI Engine) Performance
 
-*Not tested yet - expected to be 0 before optimization*
+_Not tested yet - expected to be 0 before optimization_
 
-- **Perplexity Citations:** _____ (0 expected)
-- **ChatGPT Citations:** _____ (0 expected)
-- **Google AI Overview:** _____ (0 expected)
+- **Perplexity Citations:** **\_** (0 expected)
+- **ChatGPT Citations:** **\_** (0 expected)
+- **Google AI Overview:** **\_** (0 expected)
 - **Total AI Citations:** 0
 - **AI Referral Traffic:** 0 sessions
 
@@ -185,28 +190,32 @@ Based on the views data, our blog posts are performing as follows:
 
 ## Device Breakdown
 
-*Not explicitly shown in screenshots - to be collected from GA4 Tech Details report*
+_Not explicitly shown in screenshots - to be collected from GA4 Tech Details report_
 
-- **Desktop:** _____ (_____%)
-- **Mobile:** _____ (_____%)
-- **Tablet:** _____ (_____%)
+- **Desktop:** **\_** (**\_**%)
+- **Mobile:** **\_** (**\_**%)
+- **Tablet:** **\_** (**\_**%)
 
 ---
 
 ## User Engagement Metrics
 
 ### User Stickiness
+
 - **DAU/MAU:** 3.2% (Daily Active Users / Monthly Active Users)
 - **DAU/WAU:** 12.3% (Daily Active Users / Weekly Active Users)
 - **WAU/MAU:** 26.2% (Weekly Active Users / Monthly Active Users)
 
 ### User Activity Over Time
+
 - **30 days:** 279 active users
 - **7 days:** 73 active users
 - **1 day:** 9 active users
 
 ### Cohort Retention
+
 Based on weekly cohorts, retention patterns show:
+
 - **Week 0:** 100%
 - **Week 1:** ~0.3%
 - **Week 2:** ~0.4%
@@ -268,6 +277,7 @@ Based on weekly cohorts, retention patterns show:
 ## Goals & Targets (6-Month Outlook)
 
 ### Traffic Goals (by June 14, 2026)
+
 - ⬆️ **Organic clicks:** 6 → 150+ (25x increase)
 - ⬆️ **Total impressions:** 632 → 5,000+ (8x increase)
 - ⬆️ **Average CTR:** 0.95% → 3% (3x increase)
@@ -276,11 +286,13 @@ Based on weekly cohorts, retention patterns show:
 - ⬆️ **Total users:** 294 → 1,000+ monthly users
 
 ### Engagement Goals
+
 - ⬆️ **Average engagement time:** 14s → 90s (with audio player)
 - ⬆️ **Engagement rate:** 20.11% → 40%+
 - ⬆️ **Engaged sessions per user:** 0.24 → 0.5+
 
 ### GEO Goals
+
 - ⬆️ **AI engine citations:** 0 → 20+ citations
 - ⬆️ **Perplexity citations:** 0 → 10+
 - ⬆️ **ChatGPT citations:** 0 → 5+
@@ -314,6 +326,7 @@ Based on weekly cohorts, retention patterns show:
 ## Analysis Summary
 
 This baseline shows a website with:
+
 - **Good content foundation** but minimal organic reach
 - **Strong branded presence** but weak non-branded visibility
 - **International audience** with engagement challenges
@@ -323,6 +336,7 @@ This baseline shows a website with:
 The data clearly shows that your content is relevant (getting impressions for AI agent queries), but you're not yet ranking high enough or optimized well enough to capture clicks. The addition of the audio player should help with engagement time, and focused SEO/GEO work should dramatically improve visibility over the next 3-6 months.
 
 **Primary Focus Areas:**
+
 1. Move from page 2 to page 1 (position 13.98 → 8.0)
 2. Improve CTR through better meta descriptions and titles
 3. Create more AI agent content to capture high-impression queries

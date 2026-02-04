@@ -10,11 +10,13 @@ Since you already have Google Analytics 4 set up with several months of data, le
 ## 🎯 Data Collection Strategy
 
 **Date Range to Use:** Last 90 days (September 11 - December 11, 2025)
+
 - This gives us a clean 3-month baseline
 - Excludes the Phase 1 implementation (Dec 11 onwards)
 - Shows seasonal trends if any
 
 **Alternative:** Last 30 days (November 11 - December 11, 2025)
+
 - More recent, more accurate snapshot
 - Better for quick baseline
 
@@ -36,16 +38,17 @@ Since you already have Google Analytics 4 set up with several months of data, le
 
 **Metrics to Collect:**
 
-| Metric | Where to Find | Value |
-|--------|--------------|-------|
-| **Total Users** | Reports → Reports Snapshot | _____ |
-| **Total Sessions** | Reports → Reports Snapshot | _____ |
-| **Total Pageviews** | Reports → Engagement → Pages and screens | _____ |
-| **Average Session Duration** | Reports → Engagement → Overview | _____ |
-| **Bounce Rate** | Reports → Engagement → Overview | _____ |
-| **Pages per Session** | Reports → Engagement → Overview | _____ |
+| Metric                       | Where to Find                            | Value  |
+| ---------------------------- | ---------------------------------------- | ------ |
+| **Total Users**              | Reports → Reports Snapshot               | **\_** |
+| **Total Sessions**           | Reports → Reports Snapshot               | **\_** |
+| **Total Pageviews**          | Reports → Engagement → Pages and screens | **\_** |
+| **Average Session Duration** | Reports → Engagement → Overview          | **\_** |
+| **Bounce Rate**              | Reports → Engagement → Overview          | **\_** |
+| **Pages per Session**        | Reports → Engagement → Overview          | **\_** |
 
 **How to Get It:**
+
 1. Go to **Reports** (left sidebar)
 2. Click **Reports Snapshot** (top of list)
 3. Note the numbers in the overview cards
@@ -59,24 +62,26 @@ Since you already have Google Analytics 4 set up with several months of data, le
 
 **Metrics to Collect:**
 
-| Source | Sessions | % of Total |
-|--------|----------|------------|
-| **Organic Search** (google, bing, etc.) | _____ | _____ |
-| **Direct** (typed URL or bookmarks) | _____ | _____ |
-| **Referral** (links from other sites) | _____ | _____ |
-| **Social** (twitter, linkedin, etc.) | _____ | _____ |
-| **Unassigned** (unknown) | _____ | _____ |
+| Source                                  | Sessions | % of Total |
+| --------------------------------------- | -------- | ---------- |
+| **Organic Search** (google, bing, etc.) | **\_**   | **\_**     |
+| **Direct** (typed URL or bookmarks)     | **\_**   | **\_**     |
+| **Referral** (links from other sites)   | **\_**   | **\_**     |
+| **Social** (twitter, linkedin, etc.)    | **\_**   | **\_**     |
+| **Unassigned** (unknown)                | **\_**   | **\_**     |
 
 **Special: AI Engine Referrals (if any)**
 
 Look specifically for these referrers:
-- `perplexity.ai` → _____ sessions
-- `chat.openai.com` → _____ sessions
-- `chatgpt.com` → _____ sessions
-- `claude.ai` → _____ sessions
-- `gemini.google.com` → _____ sessions
+
+- `perplexity.ai` → **\_** sessions
+- `chat.openai.com` → **\_** sessions
+- `chatgpt.com` → **\_** sessions
+- `claude.ai` → **\_** sessions
+- `gemini.google.com` → **\_** sessions
 
 **How to Get It:**
+
 1. In Traffic Acquisition, look at the "Session default channel group" table
 2. Note the sessions for each channel
 3. Click **+** next to a row to see detailed sources
@@ -90,15 +95,16 @@ Look specifically for these referrers:
 
 **Metrics to Collect:**
 
-| Page | Views | Users | Avg Time | Bounce Rate |
-|------|-------|-------|----------|-------------|
-| **1.** _____ | _____ | _____ | _____ | _____ |
-| **2.** _____ | _____ | _____ | _____ | _____ |
-| **3.** _____ | _____ | _____ | _____ | _____ |
-| **4.** _____ | _____ | _____ | _____ | _____ |
-| **5.** _____ | _____ | _____ | _____ | _____ |
+| Page          | Views  | Users  | Avg Time | Bounce Rate |
+| ------------- | ------ | ------ | -------- | ----------- |
+| **1.** **\_** | **\_** | **\_** | **\_**   | **\_**      |
+| **2.** **\_** | **\_** | **\_** | **\_**   | **\_**      |
+| **3.** **\_** | **\_** | **\_** | **\_**   | **\_**      |
+| **4.** **\_** | **\_** | **\_** | **\_**   | **\_**      |
+| **5.** **\_** | **\_** | **\_** | **\_**   | **\_**      |
 
 **How to Get It:**
+
 1. Go to Engagement → Pages and screens
 2. Sort by Views (default)
 3. Note top 5 pages
@@ -111,15 +117,16 @@ Look specifically for these referrers:
 
 **Filter:** URL contains `/blog/`
 
-| Blog Post | Views | Users | Avg Time | Bounce Rate |
-|-----------|-------|-------|----------|-------------|
-| crewai-quickstart | _____ | _____ | _____ | _____ |
-| ai-agent-security | _____ | _____ | _____ | _____ |
-| agent-authentication-rbac | _____ | _____ | _____ | _____ |
-| consumers-leading-ai-revolution | _____ | _____ | _____ | _____ |
-| saas-vs-agents | _____ | _____ | _____ | _____ |
+| Blog Post                       | Views  | Users  | Avg Time | Bounce Rate |
+| ------------------------------- | ------ | ------ | -------- | ----------- |
+| crewai-quickstart               | **\_** | **\_** | **\_**   | **\_**      |
+| ai-agent-security               | **\_** | **\_** | **\_**   | **\_**      |
+| agent-authentication-rbac       | **\_** | **\_** | **\_**   | **\_**      |
+| consumers-leading-ai-revolution | **\_** | **\_** | **\_**   | **\_**      |
+| saas-vs-agents                  | **\_** | **\_** | **\_**   | **\_**      |
 
 **How to Get It:**
+
 1. In Pages and screens report
 2. Add filter: Page path contains `/blog/`
 3. Note metrics for each post
@@ -132,13 +139,13 @@ Look specifically for these referrers:
 
 **Top 5 Countries:**
 
-| Country | Users | % of Total |
-|---------|-------|------------|
-| 1. _____ | _____ | _____ |
-| 2. _____ | _____ | _____ |
-| 3. _____ | _____ | _____ |
-| 4. _____ | _____ | _____ |
-| 5. _____ | _____ | _____ |
+| Country   | Users  | % of Total |
+| --------- | ------ | ---------- |
+| 1. **\_** | **\_** | **\_**     |
+| 2. **\_** | **\_** | **\_**     |
+| 3. **\_** | **\_** | **\_**     |
+| 4. **\_** | **\_** | **\_**     |
+| 5. **\_** | **\_** | **\_**     |
 
 ---
 
@@ -148,11 +155,11 @@ Look specifically for these referrers:
 
 **Metrics:**
 
-| Device | Users | % of Total |
-|--------|-------|------------|
-| **Desktop** | _____ | _____ |
-| **Mobile** | _____ | _____ |
-| **Tablet** | _____ | _____ |
+| Device      | Users  | % of Total |
+| ----------- | ------ | ---------- |
+| **Desktop** | **\_** | **\_**     |
+| **Mobile**  | **\_** | **\_**     |
+| **Tablet**  | **\_** | **\_**     |
 
 ---
 
@@ -167,6 +174,7 @@ Look specifically for these referrers:
 5. Save as: `GA4_Baseline_Nov11-Dec11_2025.pdf`
 
 **Also export:**
+
 - Traffic Acquisition report → Export as CSV
 - Pages and screens report → Export as CSV
 - Demographics report → Export as CSV
@@ -189,33 +197,34 @@ Look specifically for these referrers:
 
 **Metrics to Collect:**
 
-| Metric | Value (28 days) | Value (90 days) |
-|--------|----------------|----------------|
-| **Total Clicks** | _____ | _____ |
-| **Total Impressions** | _____ | _____ |
-| **Average CTR** | _____ | _____ |
-| **Average Position** | _____ | _____ |
+| Metric                | Value (28 days) | Value (90 days) |
+| --------------------- | --------------- | --------------- |
+| **Total Clicks**      | **\_**          | **\_**          |
+| **Total Impressions** | **\_**          | **\_**          |
+| **Average CTR**       | **\_**          | **\_**          |
+| **Average Position**  | **\_**          | **\_**          |
 
 **Top 10 Queries (Keywords):**
 
-| Query | Clicks | Impressions | CTR | Position |
-|-------|--------|-------------|-----|----------|
-| 1. _____ | _____ | _____ | _____ | _____ |
-| 2. _____ | _____ | _____ | _____ | _____ |
-| 3. _____ | _____ | _____ | _____ | _____ |
-| 4. _____ | _____ | _____ | _____ | _____ |
-| 5. _____ | _____ | _____ | _____ | _____ |
-| 6. _____ | _____ | _____ | _____ | _____ |
-| 7. _____ | _____ | _____ | _____ | _____ |
-| 8. _____ | _____ | _____ | _____ | _____ |
-| 9. _____ | _____ | _____ | _____ | _____ |
-| 10. _____ | _____ | _____ | _____ | _____ |
+| Query      | Clicks | Impressions | CTR    | Position |
+| ---------- | ------ | ----------- | ------ | -------- |
+| 1. **\_**  | **\_** | **\_**      | **\_** | **\_**   |
+| 2. **\_**  | **\_** | **\_**      | **\_** | **\_**   |
+| 3. **\_**  | **\_** | **\_**      | **\_** | **\_**   |
+| 4. **\_**  | **\_** | **\_**      | **\_** | **\_**   |
+| 5. **\_**  | **\_** | **\_**      | **\_** | **\_**   |
+| 6. **\_**  | **\_** | **\_**      | **\_** | **\_**   |
+| 7. **\_**  | **\_** | **\_**      | **\_** | **\_**   |
+| 8. **\_**  | **\_** | **\_**      | **\_** | **\_**   |
+| 9. **\_**  | **\_** | **\_**      | **\_** | **\_**   |
+| 10. **\_** | **\_** | **\_**      | **\_** | **\_**   |
 
-**Keywords in Top 10:** Count how many queries have "Position" < 10 → _____
+**Keywords in Top 10:** Count how many queries have "Position" < 10 → **\_**
 
-**Keywords in Top 20:** Count how many queries have "Position" < 20 → _____
+**Keywords in Top 20:** Count how many queries have "Position" < 20 → **\_**
 
 **How to Get It:**
+
 1. Go to Performance
 2. Click **+ NEW** → Filter → Query
 3. Export data: Click export icon → Download CSV
@@ -233,13 +242,13 @@ Look specifically for these referrers:
 
 **Metrics:**
 
-| Metric | Value |
-|--------|-------|
-| **Domain Rating (DR)** | _____ |
-| **Backlinks** | _____ |
-| **Referring Domains** | _____ |
-| **Organic Keywords** | _____ |
-| **Organic Traffic (est.)** | _____ |
+| Metric                     | Value  |
+| -------------------------- | ------ |
+| **Domain Rating (DR)**     | **\_** |
+| **Backlinks**              | **\_** |
+| **Referring Domains**      | **\_** |
+| **Organic Keywords**       | **\_** |
+| **Organic Traffic (est.)** | **\_** |
 
 ---
 
@@ -251,12 +260,12 @@ Look specifically for these referrers:
 
 **Metrics:**
 
-| Metric | Value |
-|--------|-------|
-| **Domain Authority (DA)** | _____ |
-| **Page Authority (PA)** | _____ |
-| **Linking Domains** | _____ |
-| **Inbound Links** | _____ |
+| Metric                    | Value  |
+| ------------------------- | ------ |
+| **Domain Authority (DA)** | **\_** |
+| **Page Authority (PA)**   | **\_** |
+| **Linking Domains**       | **\_** |
+| **Inbound Links**         | **\_** |
 
 ---
 
@@ -281,7 +290,7 @@ Test your site in AI engines to see if you're currently being cited.
 4. Look for citations
 
 **Result:** ☐ Cited | ☐ Not Cited
-**If cited, position:** _____
+**If cited, position:** **\_**
 
 ### Google AI Overview Test
 
@@ -295,13 +304,14 @@ Test your site in AI engines to see if you're currently being cited.
 ### Additional Queries to Test
 
 Test 5-10 queries related to your content:
+
 - "AI agent security"
 - "RBAC for AI agents"
 - "CrewAI tutorial"
 - "AI agent authentication"
 - "SaaS vs AI agents"
 
-**Total Citations Found:** _____
+**Total Citations Found:** **\_**
 
 ---
 
@@ -320,104 +330,105 @@ Copy this completed template to `docs/BASELINE_DATA.md`:
 
 ## Traffic Overview (GA4 - Last 30 Days)
 
-- **Total Users:** _____
-- **Total Sessions:** _____
-- **Total Pageviews:** _____
-- **Average Session Duration:** _____
-- **Bounce Rate:** _____
-- **Pages per Session:** _____
+- **Total Users:** **\_**
+- **Total Sessions:** **\_**
+- **Total Pageviews:** **\_**
+- **Average Session Duration:** **\_**
+- **Bounce Rate:** **\_**
+- **Pages per Session:** **\_**
 
 ---
 
 ## Traffic Sources (GA4)
 
-| Source | Sessions | % of Total |
-|--------|----------|------------|
-| Organic Search | _____ | _____ |
-| Direct | _____ | _____ |
-| Referral | _____ | _____ |
-| Social | _____ | _____ |
+| Source         | Sessions | % of Total |
+| -------------- | -------- | ---------- |
+| Organic Search | **\_**   | **\_**     |
+| Direct         | **\_**   | **\_**     |
+| Referral       | **\_**   | **\_**     |
+| Social         | **\_**   | **\_**     |
 
-**AI Engine Referrals:** _____ (if any)
+**AI Engine Referrals:** **\_** (if any)
 
 ---
 
 ## Top 5 Pages (GA4)
 
-1. _____ (_____ views)
-2. _____ (_____ views)
-3. _____ (_____ views)
-4. _____ (_____ views)
-5. _____ (_____ views)
+1. **\_** (**\_** views)
+2. **\_** (**\_** views)
+3. **\_** (**\_** views)
+4. **\_** (**\_** views)
+5. **\_** (**\_** views)
 
 ---
 
 ## Blog Posts Performance (GA4)
 
-| Post | Views | Users | Avg Time |
-|------|-------|-------|----------|
-| crewai-quickstart | _____ | _____ | _____ |
-| ai-agent-security | _____ | _____ | _____ |
-| agent-authentication-rbac | _____ | _____ | _____ |
-| consumers-leading-ai-revolution | _____ | _____ | _____ |
-| saas-vs-agents | _____ | _____ | _____ |
+| Post                            | Views  | Users  | Avg Time |
+| ------------------------------- | ------ | ------ | -------- |
+| crewai-quickstart               | **\_** | **\_** | **\_**   |
+| ai-agent-security               | **\_** | **\_** | **\_**   |
+| agent-authentication-rbac       | **\_** | **\_** | **\_**   |
+| consumers-leading-ai-revolution | **\_** | **\_** | **\_**   |
+| saas-vs-agents                  | **\_** | **\_** | **\_**   |
 
 ---
 
 ## Google Search Console (Last 28 Days)
 
-- **Total Clicks:** _____
-- **Total Impressions:** _____
-- **Average CTR:** _____
-- **Average Position:** _____
-- **Keywords in Top 10:** _____
-- **Keywords in Top 20:** _____
+- **Total Clicks:** **\_**
+- **Total Impressions:** **\_**
+- **Average CTR:** **\_**
+- **Average Position:** **\_**
+- **Keywords in Top 10:** **\_**
+- **Keywords in Top 20:** **\_**
 
 **Top 5 Keywords:**
-1. _____ (Position: _____)
-2. _____ (Position: _____)
-3. _____ (Position: _____)
-4. _____ (Position: _____)
-5. _____ (Position: _____)
+
+1. **\_** (Position: **\_**)
+2. **\_** (Position: **\_**)
+3. **\_** (Position: **\_**)
+4. **\_** (Position: **\_**)
+5. **\_** (Position: **\_**)
 
 ---
 
 ## Domain Authority
 
-- **Domain Rating (Ahrefs):** _____
-- **Domain Authority (Moz):** _____
-- **Total Backlinks:** _____
-- **Referring Domains:** _____
-- **Organic Keywords (est.):** _____
-- **Organic Traffic (est.):** _____
+- **Domain Rating (Ahrefs):** **\_**
+- **Domain Authority (Moz):** **\_**
+- **Total Backlinks:** **\_**
+- **Referring Domains:** **\_**
+- **Organic Keywords (est.):** **\_**
+- **Organic Traffic (est.):** **\_**
 
 ---
 
 ## GEO (AI Engine) Performance
 
-- **Perplexity Citations:** _____ (0 expected)
-- **ChatGPT Citations:** _____ (0 expected)
-- **Google AI Overview:** _____ (0 expected)
-- **Total AI Citations:** _____
-- **AI Referral Traffic:** _____ sessions
+- **Perplexity Citations:** **\_** (0 expected)
+- **ChatGPT Citations:** **\_** (0 expected)
+- **Google AI Overview:** **\_** (0 expected)
+- **Total AI Citations:** **\_**
+- **AI Referral Traffic:** **\_** sessions
 
 ---
 
 ## Geographic Distribution (Top 5)
 
-1. _____ (_____ users, _____%)
-2. _____ (_____ users, _____%)
-3. _____ (_____ users, _____%)
-4. _____ (_____ users, _____%)
-5. _____ (_____ users, _____%)
+1. **\_** (**\_** users, **\_**%)
+2. **\_** (**\_** users, **\_**%)
+3. **\_** (**\_** users, **\_**%)
+4. **\_** (**\_** users, **\_**%)
+5. **\_** (**\_** users, **\_**%)
 
 ---
 
 ## Device Breakdown
 
-- **Desktop:** _____ (_____%)
-- **Mobile:** _____ (_____%)
-- **Tablet:** _____ (_____%)
+- **Desktop:** **\_** (**\_**%)
+- **Mobile:** **\_** (**\_**%)
+- **Tablet:** **\_** (**\_**%)
 
 ---
 
@@ -427,23 +438,26 @@ Copy this completed template to `docs/BASELINE_DATA.md`:
 - **Total Categories:** 3
 - **Total Tags:** 18
 - **Total Projects:** 12
-- **Average Words per Post:** _____ (calculate from MDX)
+- **Average Words per Post:** **\_** (calculate from MDX)
 
 ---
 
 ## Observations
 
 ### What's Working
-- _____
-- _____
+
+- ***
+- ***
 
 ### What's Not Working
-- _____
-- _____
+
+- ***
+- ***
 
 ### Quick Wins Identified
-- _____
-- _____
+
+- ***
+- ***
 
 ---
 
@@ -460,6 +474,7 @@ Copy this completed template to `docs/BASELINE_DATA.md`:
 ---
 
 **Files Exported:**
+
 - [ ] GA4_Baseline_Nov11-Dec11_2025.pdf
 - [ ] GA4_Traffic_Acquisition.csv
 - [ ] GA4_Pages_Performance.csv
@@ -486,12 +501,14 @@ Copy this completed template to `docs/BASELINE_DATA.md`:
 ## 📈 What to Look For
 
 ### Good Signs
+
 - Consistent organic traffic month-over-month
 - Low bounce rate (< 70%)
 - Good average session duration (> 1 minute)
 - Multiple keywords ranking in positions 11-30 (easy to improve)
 
 ### Areas for Improvement
+
 - High bounce rate on blog posts → Need better content/UX
 - Zero organic search traffic → SEO not working yet (normal for new sites)
 - No keywords in top 30 → Content not matching search intent
