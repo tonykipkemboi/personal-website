@@ -1,61 +1,55 @@
-# Portfolio Blog Starter
+# tonykipkemboi.com
 
 [![CI](https://github.com/tonykipkemboi/personal-website/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/tonykipkemboi/personal-website/actions/workflows/ci.yml)
 
-> This project is a private fork of the [Vercel Blog Template](https://github.com/vercel/examples/tree/main/solutions/blog).
+My personal website and blog. Built with Next.js 16, Tailwind CSS v4, and deployed on Vercel.
 
-A modern portfolio site template with integrated blog functionality. Built with Next.js and optimized for performance.
+🔗 **[tonykipkemboi.com](https://tonykipkemboi.com)**
 
 ## Features
 
-- ✍️ MDX and Markdown support for blog posts
-- 🔍 SEO optimized (sitemap, robots.txt, JSON-LD schema)
-- 📡 RSS Feed support
-- 🖼️ Dynamic OG image generation
-- ✨ Syntax highlighting for code blocks
-- 🎨 Styled with Tailwind CSS v4
-- 📊 Vercel Speed Insights & Web Analytics integration
-- 🔤 Geist font integration
+- **Blog** — MDX-powered with syntax highlighting, reading time, and tag filtering
+- **Projects** — Showcase with live GitHub star counts (auto-updated weekly)
+- **Press** — Media appearances, talks, and podcast episodes
+- **Search** — Real-time blog post filtering
+- **SEO** — Sitemap, RSS feed, JSON-LD schema, dynamic OG images
+- **Accessibility** — WCAG compliant with focus-visible states, skip links, reduced motion support
+- **Easter Egg** — Try the Konami code ↑↑↓↓←→←→BA
 
-## Roadmap
+## Tech Stack
 
-- [ ] Add dark mode support
-- [ ] Implement comment system
-- [ ] Add search functionality
-- [ ] Create tag-based filtering for blog posts
-- [ ] Improve mobile responsiveness
-- [ ] Add social sharing buttons
-- [ ] Create API documentation
-- [ ] Add unit tests
-- [ ] Implement CI/CD pipeline
+- **Framework:** Next.js 16 (App Router)
+- **Styling:** Tailwind CSS v4
+- **Content:** MDX via next-mdx-remote
+- **Fonts:** IBM Plex Mono
+- **Analytics:** Vercel Analytics + Google Analytics
+- **CI/CD:** GitHub Actions + Vercel
 
-## Getting Started
-
-### Development
-
-1. Clone the repository
-2. Install dependencies:
+## Development
 
 ```bash
-pnpm install
+npm install
+npm run dev
 ```
 
-3. Start the development server:
+## Scripts
 
-```bash
-pnpm dev
-```
+| Command          | Description            |
+| ---------------- | ---------------------- |
+| `npm run dev`    | Start dev server       |
+| `npm run build`  | Production build       |
+| `npm run lint`   | ESLint (zero warnings) |
+| `npm run format` | Prettier formatting    |
+| `npm run check`  | Run all checks         |
 
-### Production
+## Automated Updates
 
-Deploy to Vercel for the best experience:
+GitHub Actions runs weekly to update:
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/vercel/examples/tree/main/solutions/blog&project-name=blog&repository-name=blog)
+- GitHub star counts on projects
+- YouTube video view counts
+- YouTube subscriber count
 
-## Credits
+## License
 
-This project is based on the [Vercel Blog Template](https://github.com/vercel/examples/tree/main/solutions/blog). Original deployment and documentation links have been preserved for reference.
-
-## Live Site
-
-[tonykipkemboi.com](https://tonykipkemboi.com)
+Content © Tony Kipkemboi. Code structure based on [Vercel's blog template](https://github.com/vercel/examples/tree/main/solutions/blog).
