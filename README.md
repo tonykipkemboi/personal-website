@@ -1,5 +1,7 @@
 # Portfolio Blog Starter
 
+[![CI](https://github.com/tonykipkemboi/personal-website/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/tonykipkemboi/personal-website/actions/workflows/ci.yml)
+
 > This project is a private fork of the [Vercel Blog Template](https://github.com/vercel/examples/tree/main/solutions/blog).
 
 A modern portfolio site template with integrated blog functionality. Built with Next.js and optimized for performance.
