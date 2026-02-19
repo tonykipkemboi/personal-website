@@ -15,7 +15,8 @@ export function Pre({
       (child.type === 'code' ||
         (typeof child.type === 'function' && child.type.name === 'Code'))
   )
-  const textContent = codeElement?.props?.children || ''
+  const textContent =
+    (codeElement?.props as { children?: string } | undefined)?.children || ''
 
   return (
     <div className="relative group">
