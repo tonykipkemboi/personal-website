@@ -17,9 +17,10 @@ export async function generateStaticParams() {
 export async function generateMetadata({
   params,
 }: {
-  params: { tag: string }
+  params: Promise<{ tag: string }>
 }) {
-  const tag = decodeURIComponent(params.tag).replace(/-/g, ' ')
+  const { tag: tagParam } = await params
+  const tag = decodeURIComponent(tagParam).replace(/-/g, ' ')
   const posts = await getBlogPostsByTag(tag)
 
   if (posts.length === 0) {
@@ -34,8 +35,13 @@ export async function generateMetadata({
   }
 }
 
-export default async function TagPage({ params }: { params: { tag: string } }) {
-  const tag = decodeURIComponent(params.tag).replace(/-/g, ' ')
+export default async function TagPage({
+  params,
+}: {
+  params: Promise<{ tag: string }>
+}) {
+  const { tag: tagParam } = await params
+  const tag = decodeURIComponent(tagParam).replace(/-/g, ' ')
   const posts = await getBlogPostsByTag(tag)
 
   if (posts.length === 0) {

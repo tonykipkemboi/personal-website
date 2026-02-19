@@ -13,14 +13,15 @@ export async function generateStaticParams() {
 }
 
 interface PageParams {
-  params: {
+  params: Promise<{
     slug: string
-  }
+  }>
 }
 
 export async function generateMetadata({ params }: PageParams) {
+  const { slug } = await params
   const posts = await getBlogPosts()
-  const post = posts.find((post) => post.slug === params.slug)
+  const post = posts.find((post) => post.slug === slug)
 
   if (!post) {
     return {}
@@ -84,8 +85,9 @@ export async function generateMetadata({ params }: PageParams) {
 }
 
 export default async function BlogPost({ params }: PageParams) {
+  const { slug } = await params
   const posts = await getBlogPosts()
-  const post = posts.find((post) => post.slug === params.slug)
+  const post = posts.find((post) => post.slug === slug)
 
   if (!post) {
     notFound()
