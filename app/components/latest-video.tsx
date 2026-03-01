@@ -6,8 +6,8 @@ export function PopularVideo() {
     videoId: 'ztBJqzBU5kc',
     description:
       'Learn how to build a powerful PDF chat system using Ollama and LangChain. This tutorial shows you how to create a Retrieval-Augmented Generation (RAG) system that runs completely on your local machine.',
-    views: '191K+ views',
-    subscribers: '8.2K',
+    views: '192K+ views',
+    subscribers: '8.22K',
   }
 
   return (
