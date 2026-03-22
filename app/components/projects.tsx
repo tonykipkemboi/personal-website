@@ -17,7 +17,7 @@ const projects: Project[] = [
     link: 'https://github.com/tonykipkemboi/ollama_pdf_rag',
     github: 'https://github.com/tonykipkemboi/ollama_pdf_rag',
     tech: ['Python', 'Ollama', 'LangChain', 'Streamlit', 'ChromaDB'],
-    stars: '496',
+    stars: '498',
   },
   {
     title: 'CrewAI Gmail Automation',
@@ -26,7 +26,7 @@ const projects: Project[] = [
     link: 'https://github.com/tonykipkemboi/crewai-gmail-automation',
     github: 'https://github.com/tonykipkemboi/crewai-gmail-automation',
     tech: ['Python', 'CrewAI', 'Gmail API', 'LangChain'],
-    stars: '181',
+    stars: '182',
   },
   {
     title: 'Resume Optimization Crew',
@@ -80,7 +80,7 @@ const projects: Project[] = [
     link: 'https://github.com/tonykipkemboi/crewai-streamlit-demo',
     github: 'https://github.com/tonykipkemboi/crewai-streamlit-demo',
     tech: ['Python', 'CrewAI', 'Streamlit'],
-    stars: '68',
+    stars: '69',
   },
   {
     title: 'Research Paper to Podcast',
@@ -98,7 +98,7 @@ const projects: Project[] = [
     link: 'https://github.com/tonykipkemboi/youtube_yapper_trapper',
     github: 'https://github.com/tonykipkemboi/youtube_yapper_trapper',
     tech: ['Python', 'YouTube API', 'Transcription'],
-    stars: '65',
+    stars: '66',
   },
   {
     title: 'Kaa Rada',
