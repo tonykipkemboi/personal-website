@@ -17,7 +17,7 @@ const projects: Project[] = [
     link: 'https://github.com/tonykipkemboi/ollama_pdf_rag',
     github: 'https://github.com/tonykipkemboi/ollama_pdf_rag',
     tech: ['Python', 'Ollama', 'LangChain', 'Streamlit', 'ChromaDB'],
-    stars: '498',
+    stars: '500',
   },
   {
     title: 'CrewAI Gmail Automation',
@@ -26,7 +26,7 @@ const projects: Project[] = [
     link: 'https://github.com/tonykipkemboi/crewai-gmail-automation',
     github: 'https://github.com/tonykipkemboi/crewai-gmail-automation',
     tech: ['Python', 'CrewAI', 'Gmail API', 'LangChain'],
-    stars: '182',
+    stars: '183',
   },
   {
     title: 'Resume Optimization Crew',
@@ -44,7 +44,7 @@ const projects: Project[] = [
     link: 'https://github.com/tonykipkemboi/trip_planner_agent',
     github: 'https://github.com/tonykipkemboi/trip_planner_agent',
     tech: ['Python', 'CrewAI', 'Streamlit', 'LangChain'],
-    stars: '139',
+    stars: '140',
   },
   {
     title: 'Streamlit Replicate Image App',
@@ -89,7 +89,7 @@ const projects: Project[] = [
     link: 'https://github.com/tonykipkemboi/research-paper-to-podcast',
     github: 'https://github.com/tonykipkemboi/research-paper-to-podcast',
     tech: ['Python', 'CrewAI', 'ElevenLabs'],
-    stars: '67',
+    stars: '68',
   },
   {
     title: 'YouTube Yapper Trapper',
@@ -98,7 +98,7 @@ const projects: Project[] = [
     link: 'https://github.com/tonykipkemboi/youtube_yapper_trapper',
     github: 'https://github.com/tonykipkemboi/youtube_yapper_trapper',
     tech: ['Python', 'YouTube API', 'Transcription'],
-    stars: '66',
+    stars: '67',
   },
   {
     title: 'Kaa Rada',
