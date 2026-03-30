@@ -100,20 +100,6 @@ const projects: Project[] = [
     tech: ['Python', 'YouTube API', 'Transcription'],
     stars: '67',
   },
-  {
-    title: 'Kaa Rada',
-    description:
-      'A modern Pomodoro web app to secure your focus and execute your tasks. Features a timer, music player (add YouTube tracks), task list, and live Hacker News feed. Built with Vercel v0.',
-    link: 'https://v0-kaa-rada-qohixj.vercel.app/',
-    tech: ['Next.js', 'Vercel v0', 'Pomodoro', 'YouTube', 'Hacker News'],
-  },
-  {
-    title: 'YouTube Thumbnail Extractor',
-    description:
-      'Extract high-quality thumbnails from any YouTube video. Simply paste the URL to get started.',
-    link: 'https://www.downloadthumbnails.com/',
-    tech: ['Next.js', 'YouTube', 'Web App'],
-  },
 ]
 
 export { projects }

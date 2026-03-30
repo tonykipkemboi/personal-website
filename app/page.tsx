@@ -1,8 +1,7 @@
 import { Suspense } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
-import { LatestPost } from './components/latest-post'
-import { LatestProject } from './components/latest-project'
+import { RecentPosts } from './components/recent-posts'
 import { PopularVideo } from './components/latest-video'
 import { ArrowIcon } from './components/icons'
 
@@ -84,46 +83,84 @@ export default async function Page() {
         </div>
       </section>
 
-      {/* Latest Post Section */}
+      {/* Writing Section */}
       <section>
         <div className="flex justify-between items-center mb-6">
           <h2 className="text-2xl font-medium text-neutral-900 dark:text-neutral-100">
-            Latest Post
+            Writing
           </h2>
           <Link
             href="/blog"
             className="text-neutral-600 hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-neutral-100 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-500 rounded"
           >
-            Read All
+            View All
           </Link>
         </div>
         <Suspense
           fallback={
-            <div className="rounded-lg border border-neutral-200 dark:border-neutral-800 p-5 animate-pulse">
-              <div className="h-4 w-24 bg-neutral-200 dark:bg-neutral-800 rounded mb-4"></div>
-              <div className="h-6 w-3/4 bg-neutral-200 dark:bg-neutral-800 rounded mb-2"></div>
-              <div className="h-4 w-full bg-neutral-200 dark:bg-neutral-800 rounded"></div>
+            <div className="space-y-3">
+              {[...Array(5)].map((_, i) => (
+                <div
+                  key={i}
+                  className="flex justify-between py-3 border-b border-neutral-100 dark:border-neutral-800"
+                >
+                  <div className="h-4 w-2/3 bg-neutral-200 dark:bg-neutral-800 rounded animate-pulse" />
+                  <div className="h-4 w-20 bg-neutral-200 dark:bg-neutral-800 rounded animate-pulse" />
+                </div>
+              ))}
             </div>
           }
         >
-          <LatestPost />
+          <RecentPosts />
         </Suspense>
       </section>
 
-      {/* Featured Project Section */}
+      {/* Shipped Apps */}
       <section>
-        <div className="flex justify-between items-center mb-6">
-          <h2 className="text-2xl font-medium text-neutral-900 dark:text-neutral-100">
-            Featured Project
-          </h2>
-          <Link
-            href="/projects"
-            className="text-neutral-600 hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-neutral-100 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-500 rounded"
+        <h2 className="text-2xl font-medium text-neutral-900 dark:text-neutral-100 mb-6">
+          Shipped Apps
+        </h2>
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          <a
+            href="https://v0-kaa-rada-qohixj.vercel.app/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="group flex flex-col p-5 rounded-lg border border-neutral-200 hover:border-neutral-400 dark:border-neutral-800 dark:hover:border-neutral-600 transition-all"
           >
-            See All
-          </Link>
+            <span className="font-medium text-neutral-900 dark:text-neutral-100 group-hover:text-neutral-600 dark:group-hover:text-neutral-300">
+              Kaa Rada
+            </span>
+            <span className="text-sm text-neutral-600 dark:text-neutral-400 mt-1">
+              Pomodoro app with music, tasks, and Hacker News
+            </span>
+          </a>
+          <a
+            href="https://www.downloadthumbnails.com/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="group flex flex-col p-5 rounded-lg border border-neutral-200 hover:border-neutral-400 dark:border-neutral-800 dark:hover:border-neutral-600 transition-all"
+          >
+            <span className="font-medium text-neutral-900 dark:text-neutral-100 group-hover:text-neutral-600 dark:group-hover:text-neutral-300">
+              Download Thumbnails
+            </span>
+            <span className="text-sm text-neutral-600 dark:text-neutral-400 mt-1">
+              Extract thumbnails from any YouTube video
+            </span>
+          </a>
+          <a
+            href="https://www.bienaimesol.com/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="group flex flex-col p-5 rounded-lg border border-neutral-200 hover:border-neutral-400 dark:border-neutral-800 dark:hover:border-neutral-600 transition-all"
+          >
+            <span className="font-medium text-neutral-900 dark:text-neutral-100 group-hover:text-neutral-600 dark:group-hover:text-neutral-300">
+              Bienaime Sol
+            </span>
+            <span className="text-sm text-neutral-600 dark:text-neutral-400 mt-1">
+              Fan site for Kenyan artist Bien Aime
+            </span>
+          </a>
         </div>
-        <LatestProject />
       </section>
 
       {/* Popular Video Section */}
