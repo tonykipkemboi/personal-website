@@ -9,32 +9,25 @@ tags: ['JavaScript', 'Developer Tools', 'Performance']
 keywords: 'pretext, text measurement javascript, dom reflow, text height calculation, cheng lou, react motion, virtualized list, canvas text layout'
 ---
 
-Calculating how tall a block of text will be when wrapped across multiple lines normally requires rendering it in the DOM and measuring the result. That is expensive. If you need to do it for hundreds of items (say, a virtualized list), it becomes a bottleneck.
+Came across [pretext](https://github.com/chenglou/pretext) on X this weekend and spent some time playing with it.
 
-[Pretext](https://github.com/chenglou/pretext) skips the DOM entirely. It measures text using the browser's font engine via an off-screen canvas, then emulates word-wrapping logic in pure JavaScript. Two functions:
+It solves a specific problem: calculating how tall a block of text will be at a given width, without rendering it in the DOM. Normally you'd have to put the text in a div, measure `offsetHeight`, and deal with the reflow cost. Pretext does it in pure JavaScript using the browser's font engine via an off-screen canvas.
 
-**`prepare(text, font)`** splits text into segments (words, emoji, non-latin sequences) and measures them. This is the expensive step. You do it once.
+Two functions. **`prepare(text, font)`** measures all the word segments once. **`layout(prepared, width, lineHeight)`** calculates the height at any width. The prepare step is the expensive one. The layout step runs in about 0.09ms for 500 texts, so you can call it on every resize without thinking about it.
 
-**`layout(prepared, width, lineHeight)`** takes the prepared measurements and calculates height at a given width. This is the cheap step. ~0.09ms for 500 texts. You call it on every resize, every width change, as many times as you want.
-
-Built by [Cheng Lou](https://github.com/chenglou), who also created react-motion. The library is a few KB, supports all languages (including RTL Arabic, CJK, emoji), and was validated against the Great Gatsby rendered across browsers.
+Built by [Cheng Lou](https://github.com/chenglou), who created react-motion. Few KB, supports all languages including RTL and CJK, validated against the Great Gatsby rendered across browsers.
 
 ## Try it
 
-Type text, drag the width slider, and watch pretext calculate the height in real time. The left number is the pretext calculation (no DOM). The right panel is the actual rendered text. They should match.
+Type something, drag the width slider, see the numbers update. Left side is pretext (no DOM). Right side is the actual rendered text.
 
 <PretextDemo />
 
-## When you would use this
+## Where this is useful
 
-- **Virtualized lists**: Know item heights before rendering so the scroll container is accurate
-- **Canvas or WebGL text**: No DOM available, need to know line breaks and height
-- **Preventing layout shift**: Calculate dimensions before painting to avoid CLS
-- **AI-driven UI testing**: Verify text layout without a browser
+Virtualized lists where you need item heights before rendering. Canvas or WebGL text where there is no DOM. Preventing layout shift by calculating dimensions before painting. AI-driven UI testing where you want to verify layout without a browser.
 
-## When you would not
-
-Static sites, server-rendered pages, or anywhere the text is already in the DOM and you can just read `offsetHeight`. If the DOM is already doing the work, let it.
+Where it is not useful: static sites, server-rendered pages, anything where the text is already in the DOM and you can just read `offsetHeight`.
 
 ## Install
 
@@ -49,5 +42,7 @@ const prepared = prepare('Your text here', '16px sans-serif')
 const result = layout(prepared, 400, 24) // width, lineHeight
 console.log(result.height) // pixel height
 ```
+
+Writing this mostly so I remember to reach for it next time I need text measurement in a project. If you are building anything with virtualized lists or canvas text, worth bookmarking.
 
 Source: [github.com/chenglou/pretext](https://github.com/chenglou/pretext)
