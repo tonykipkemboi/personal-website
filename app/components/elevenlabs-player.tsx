@@ -5,15 +5,9 @@ import { usePathname } from 'next/navigation'
 
 interface ElevenLabsPlayerProps {
   publicUserId: string
-  height?: string
-  width?: string
 }
 
-export function ElevenLabsPlayer({
-  publicUserId,
-  height = '90',
-  width = '100%',
-}: ElevenLabsPlayerProps) {
+export function ElevenLabsPlayer({ publicUserId }: ElevenLabsPlayerProps) {
   const pathname = usePathname()
 
   useEffect(() => {
@@ -25,21 +19,22 @@ export function ElevenLabsPlayer({
     return () => {
       document.body.removeChild(script)
     }
-  }, [pathname]) // Reinitialize on route change
+  }, [pathname])
 
   return (
-    <div className="my-6 not-prose">
+    <div className="my-4 not-prose">
       <div
         id="elevenlabs-audionative-widget"
         data-publicuserid={publicUserId}
         data-playerurl="https://elevenlabs.io/player/index.html"
-        data-height={height}
-        data-width={width}
+        data-small="true"
+        data-textcolor="rgba(0, 0, 0, 1)"
+        data-backgroundcolor="rgba(250, 250, 250, 1)"
+        data-height="44"
+        data-width="100%"
         data-frameborder="no"
         data-scrolling="no"
-      >
-        Loading audio player...
-      </div>
+      />
     </div>
   )
 }

@@ -1,0 +1,72 @@
+---
+title: 'The Case for One Company Harness (Not More Agents)'
+publishedAt: '2026-03-13'
+summary: 'You do not need a new agent for every use case. You need a harness flexible enough to serve different roles and skills as the configuration layer.'
+description: 'Why building custom agents for every workflow is giving way to a single company harness with skills and plugins as the configuration layer. A point-in-time view from someone who made the switch.'
+author: 'Tony Kipkemboi'
+category: 'AI Agents'
+tags: ['AI Agents', 'Enterprise AI', 'Claude Code', 'Cowork', 'Agent Harness', 'Skills']
+keywords: 'agent harness, claude cowork, agent skills, enterprise ai agents, custom agents vs skills, one company harness, ai workflow automation'
+---
+
+![A Swiss army knife standing upright surrounded by scattered individual tools, illustrating one harness replacing many single-purpose agents](/blog/one-company-harness-hero.png)
+
+I spend most of my time figuring out what needs automating inside the company. Stakeholders come to me with a workflow that's slow or manual or both, and we figure out whether to build or buy. Most of the time I end up building custom agents. Internal-facing, always aimed at making employees faster and automating the boring stuff.
+
+I started doing this late last year. Custom agents were the default for anything interesting. And for a while it made sense.
+
+The work starts before any code gets written. I meet with the person or team that owns the workflow and have them walk me through every single thing they do manually. We turn that into a PRD including an initial eval dataset. Sounds straightforward but it never is.
+
+People forget steps they make unconsciously because they've done it a thousand times. That context lives entirely in their head. Unless you pull it out and put it somewhere the agent can access, the agent fails. Not because the agent is bad but because it's missing pieces that nobody thought to write down.
+
+**This is one of the silent killers of agent projects.** You can bolt on every guardrail you want but if the context isn't there the agent is guessing. Getting that knowledge transfer right is the actual hard part.
+
+I came from the agent framework world so naturally that's where I started. But I felt the constraints almost immediately. You inherit the framework's opinions and sometimes those don't match what you need. I wrote about this shift on my [blog](/blog/agent-frameworks-getting-squeezed) if you're curious why.
+
+I tried a couple of SDKs and APIs, landed on one that fit the deployment environment. Agent backend on a cloud platform, chat frontend as the interface, observability bolted on for tracing and evals. The whole setup was solid for what it needed to be at the time.
+
+## Then December 2025 happened
+
+New model capabilities dropped with Opus 4.6 and everything shifted. Reasoning and tool use got dramatically better. Then [Cowork](https://claude.ai) launched with [skills and plugins](/blog/agent-skills-and-plugins-explained). A skill is a single recipe for the model to execute a given workflow. A plugin is the cookbook: a collection of recipes you pull from depending on what you need.
+
+That changed the math on everything I'd already built. The custom agents were rigid and slow to ship new features. Meanwhile the prompts, workflows, and data transformations I'd already written could be packaged as skills and suddenly scale in ways the custom agent couldn't.
+
+## The pivot
+
+Most of what lived inside my custom agents could be converted into skills. The prompts, the output logic, even custom scripts, all expressible as a skill or bundled into a plugin. [MCP](https://modelcontextprotocol.io) connectors let me bolt on new capabilities on demand without rewriting any code. Slack messages now send directly from the Claude harness, instead of needing a one-off integration.
+
+I can also set up scheduled tasks once and have them run on a regular cadence as long as my laptop stays on. It's not the most efficient setup, but it works for now. **Every custom integration I create is something I'm on the hook to maintain indefinitely.** Skills and plugins move that maintenance burden onto the platform instead.
+
+## The observability tradeoff
+
+On a custom agent, debugging a workflow, for example a bad sales forecast, means pulling a full trace, stepping through all the tool calls, and hunting for the one prompt or retrieval that went sideways.
+
+On Cowork, the same person tweaks the skill prompt, reruns it on a handful of deals, and sees within minutes whether the numbers finally match their spreadsheet. That's a great trade for content, ops, and reporting workflows but it's a bad one for payments, compliance reviews, or anything you may need to audit in detail later.
+
+## This isn't for everyone
+
+What I'm describing does not apply to every organization, industry, or use case. If your company already has the license and native connectors, teams like sales and marketing can build playbooks as skills and start moving faster immediately.
+
+But regulated industries, strict data residency, compliance-heavy environments: those aren't migrating to Cowork and calling it a day. Custom agents still make sense when the workflow needs deep proprietary integration, when you need granular control over every agent decision, or when audit requirements demand full stack ownership. What's changed is the bar.
+
+**The default should now be to ask whether an agent skill can handle it first.**
+
+## Case for the harness
+
+[Claude Code](https://code.claude.com) started as a developer tool. Terminal-based, built for engineers. [A harness, not a framework](/blog/agent-frameworks-vs-harnesses). But people used it for things well beyond coding. Anthropic saw that and built a new harness, Cowork, for the non-developers who don't want a terminal. Same model. Different harness. Different audience.
+
+That's the mental model. **You don't need a new agent for every use case. You need a harness flexible enough to serve different roles** and robust enough to support skills, plugins, scheduled tasks, and whatever comes next. The harness is the product. Skills and plugins are the configuration layer.
+
+The harness should get smaller over time. As models improve, things currently in the harness get trained into the model itself. So, theoretically, your harness code should be shrinking as more capable models are released.
+
+Prompts get shorter. Custom tools get replaced by native capabilities. The harness compresses toward the minimum viable wrapper around whatever the model can't yet do on its own. A company-owned harness also serves as a backup. It can swap models if a provider goes down. No single provider should be a single point of failure.
+
+## The people topic
+
+There are too many platforms. Every new tool is another tab, another login. Even for me it's a lot. The adoption unlock is bringing the workflow to where people already are (for example [Slack](https://slack.com)) rather than guiding them to yet another interface. Friction kills adoption.
+
+This is another argument for the single harness. One interface. The harness routes to the right skills and data behind the scenes. The user doesn't need to know which model is running or which plugin is active. They describe what they need and the harness figures it out.
+
+Everything here is a point-in-time view and a snapshot in time. Most of the specific tooling will look different in a few months. That's the job right now.
+
+You build while the ground moves and stay ready to throw things away when something better shows up.

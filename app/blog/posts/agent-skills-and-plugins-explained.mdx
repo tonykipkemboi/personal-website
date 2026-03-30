@@ -1,29 +1,25 @@
 ---
-title: 'The Complete Guide to AI Agent Skills and Plugins in 2026'
+title: 'AI Agent Skills and Plugins, Explained'
 publishedAt: '2026-03-27'
-summary: 'How skills and plugins work across Claude Code, Codex, Gemini, Copilot, Cursor, Windsurf, and others. They all use the same SKILL.md format.'
-description: 'How AI agent skills and plugins work across every major provider in 2026. Covers the SKILL.md format, plugin distribution, enterprise marketplaces, MCP, security, and lifecycle management.'
+summary: 'Skills are reusable instructions for AI tools. Plugins bundle them for distribution. Almost every major AI tool uses the same format.'
+description: 'What AI agent skills and plugins are, how they differ, when to use each, and why almost every major provider adopted the same SKILL.md format.'
 author: 'Tony Kipkemboi'
 category: 'AI Agents'
-tags: ['AI Agents', 'Agent Skills', 'Plugins', 'MCP', 'Claude Code', 'Enterprise AI', 'Codex', 'Gemini', 'Copilot', 'Cursor']
-keywords: 'ai agent skills, agent skills plugins, SKILL.md, claude code plugins, codex skills, gemini cli extensions, copilot skills, cursor plugins, mcp protocol, enterprise ai distribution, ai agent marketplace, agent skills standard 2026'
+tags: ['AI Agents', 'Agent Skills', 'Plugins', 'Enterprise AI']
+keywords: 'ai agent skills, agent skills plugins, SKILL.md, claude code plugins, enterprise ai distribution, agent skills standard 2026'
 ---
 
-Every major AI coding tool now supports "skills" and "plugins." Most of them use the same file format. This guide covers how they work, which providers support them, how organizations distribute them, and what to watch out for.
+![A recipe box labeled My Skills with colorful recipe cards for Daily Standup, Meeting Prep, Schedule, Get Todos, and Weekly Recall](/blog/skills-and-plugins-hero.jpeg)
 
-It is written for both technical and non-technical readers. If anything assumes knowledge you do not have, the explanation follows immediately.
+Two terms keep coming up in AI tooling conversations: skills and plugins. They sound similar. They are not.
 
-## What is a "skill" and why does it matter?
+A **skill** is a set of instructions that tells an AI tool how to do one specific task. A **plugin** bundles multiple skills (and other components) into a package you can install and share. Skill is the recipe. Plugin is the cookbook.
 
-A skill is a set of instructions that tells an AI tool how to do a specific task.
+Both matter because they change how organizations scale AI adoption. Instead of every person writing their own prompts from scratch, you write a skill once and everyone uses it.
 
-That sounds abstract, so here is a concrete example. Say you use an AI coding assistant and you regularly ask it to review pull requests. Every time, you type out the same kind of prompt: check for security issues, make sure the tests pass, flag anything that violates our style guide, leave comments on the PR.
+## What a skill looks like
 
-A skill turns that into a reusable recipe. You write the instructions once, save them in a specific format, and from that point on, the AI knows how to do that task whenever you or anyone on your team asks for it.
-
-The format is a single file called `SKILL.md`. It is plain text. No special programming language. Anyone who can write a document can write a skill.
-
-Here is what one looks like:
+A skill is a folder with one file: `SKILL.md`. Plain markdown. No programming required.
 
 ```yaml
 ---
@@ -34,289 +30,81 @@ description: Review a pull request for security, tests, and style violations
 # Pull Request Review
 
 1. Read the diff of the current pull request.
-2. Check for common security issues: SQL injection, XSS, exposed secrets.
-3. Verify that all new functions have corresponding tests.
-4. Flag any violations of the project style guide.
-5. Post review comments directly on the PR.
+2. Check for common security issues.
+3. Verify that new functions have tests.
+4. Flag style guide violations.
+5. Post review comments on the PR.
 ```
 
-The top section between the `---` markers is metadata. It tells the AI the skill's name and a short description of when to use it. The rest is the actual instructions the AI follows.
+The top section is metadata: a name and a description. The bottom is instructions the AI follows step by step. That is the entire format.
 
-That is the entire format. A folder with a `SKILL.md` file, optionally with some supporting docs, scripts, or examples alongside it.
+The AI reads the description to decide when to use it. When a skill matches what you asked for, it loads the full instructions. When nothing matches, it handles your request normally. You can also call a skill directly by name.
 
-## One format, everywhere
+## What a plugin looks like
 
-Almost every major AI tool uses the exact same skill format. <a href="https://code.claude.com">Claude Code</a> (built by Anthropic), <a href="https://developers.openai.com/codex">Codex CLI</a> (built by OpenAI), <a href="https://geminicli.com">Gemini CLI</a> (built by Google), <a href="https://github.com/features/copilot">GitHub Copilot</a>, <a href="https://cursor.com">Cursor</a>, and <a href="https://windsurf.com">Windsurf</a> all read the same `SKILL.md` files. Write a skill once and it works across all of them.
+A plugin wraps skills and other components into one installable package. It has a manifest file (`plugin.json`) with a name, version, and description.
 
-In December 2025, Anthropic released the <a href="https://agentskills.io">Agent Skills specification</a> as an open standard. OpenAI and Google adopted it shortly after. All three co-founded the <a href="https://www.linuxfoundation.org/press/linux-foundation-announces-the-formation-of-the-agentic-ai-foundation">Agentic AI Foundation</a> under the Linux Foundation, alongside Microsoft, AWS, Bloomberg, and Cloudflare, to govern the standard together.
+Beyond skills, a plugin can include:
 
-As of early 2026, over 30 AI tools support the format.
+- **Agents**: Specialized AI assistants tuned for specific jobs
+- **Hooks**: Automated actions triggered by events (like running a linter after every edit)
+- **MCP servers**: Connections to external tools like Slack, Jira, or a database
+- **Commands**: Custom slash commands that kick off workflows
 
-The reason it spread so fast is that skills are just markdown. There is no binary format, no compilation, no runtime dependency. A `SKILL.md` file is human-readable text. The barrier to adoption is essentially zero.
+You install a plugin with a single command. Everything inside it, including the external tool connections, comes with it. No separate setup.
 
-## How the AI knows which skill to use
+## When to use a skill vs a plugin
 
-Every tool handles this the same way, using a technique called progressive disclosure.
+**Use a skill** when you have one repeatable workflow. Deploying to staging. Reviewing a PR. Prepping for a sales call. Writing a status update in a specific format. If the task is self-contained and the instructions fit in one file, a skill is enough.
 
-When you start a session, the AI loads only the names and descriptions of all your available skills. That is a few words each, so it adds almost nothing to the AI's context.
+**Use a plugin** when you have a collection of related skills that should travel together, or when the workflow needs external tool connections. A "sales enablement" plugin might bundle skills for call prep, account research, and deal analysis, plus an MCP connection to your CRM. The plugin keeps all of that packaged and versioned as one thing.
 
-When you ask the AI to do something, it checks those descriptions against your request. If a skill matches, the AI loads the full instructions from the `SKILL.md` file. If nothing matches, it handles your request the normal way.
+**Use neither** when the task is genuinely one-off. Not everything needs to be a skill. If you are only going to do it once, just ask the AI directly.
 
-You can also invoke a skill directly. The syntax varies by tool:
+## The format is universal
 
-- Claude Code: `/skill-name`
-- Codex CLI: `$skill-name`
-- Windsurf: `@skill-name`
-- Gemini CLI: just ask it to use the skill by name
+This is the part worth knowing. Almost every major AI tool adopted the same `SKILL.md` format.
 
-Different prefix, same idea.
+[Claude Code](https://code.claude.com) (Anthropic), [Codex CLI](https://developers.openai.com/codex) (OpenAI), [Gemini CLI](https://geminicli.com) (Google), [GitHub Copilot](https://github.com/features/copilot), [Cursor](https://cursor.com), and [Windsurf](https://windsurf.com) all read the same files. Write a skill once and it works across all of them.
 
-Any supporting files in the skill folder (reference documentation, scripts, templates) are only loaded when the AI decides it needs them. A skill about deploying code might include a reference doc listing all your server environments. That doc sits in the folder untouched until the AI actually needs to look up an environment name. This keeps things fast. The AI is not reading 50 skill files every time you ask a question.
+Anthropic released the [Agent Skills specification](https://agentskills.io) as an open standard in December 2025. OpenAI and Google adopted it shortly after. All three co-founded the [Agentic AI Foundation](https://www.linuxfoundation.org/press/linux-foundation-announces-the-formation-of-the-agentic-ai-foundation) under the Linux Foundation to govern the standard. Over 30 tools support it now.
 
-## What is a plugin?
+**The reason it spread fast is that skills are just markdown.** No binary format, no compilation, no runtime. The barrier to adoption is zero.
 
-If a skill is a single recipe card, a plugin is the whole recipe box.
+Some tools that do not support the shared format (Amazon Q, JetBrains AI, Aider, Continue.dev) have their own customization systems, but those are siloed. You cannot take them across providers.
 
-A plugin bundles multiple skills together with other components into one installable package. Think of it as a distribution format. You create a plugin, version it, share it, and other people install it with a single command.
+## How companies distribute them
 
-Here is what a plugin can contain:
+Every provider supports a similar pattern for pushing skills and plugins to an organization.
 
-- **Skills**: The instructions described above.
-- **Agents**: Specialized AI assistants configured for specific jobs. A plugin might include a "code reviewer" agent with its own tools and constraints.
-- **Hooks**: Automated actions triggered by events. For example, running a linter every time the AI edits a file.
-- **MCP servers**: Connections to external tools and services. MCP stands for Model Context Protocol (more on this later). Think of it as the wiring that lets the AI talk to Slack, Jira, databases, or internal APIs.
-- **Commands**: Custom slash commands that trigger specific workflows. Type `/deploy` and it kicks off your deployment process.
+An admin creates a central repository (usually on GitHub) with a list of approved plugins. Employees get prompted to install them when they open a project. Admins control what gets installed: available for self-service, installed by default, required, or hidden for staging.
 
-Every plugin has a manifest file (usually called `plugin.json`) that lists its contents, version number, author, and description. This is how tools know what is inside without unpacking everything.
+Admins can also lock down which sources employees are allowed to install from. This matters because **[12-20% of skills on at least one public marketplace were found to be malicious](https://snyk.io/blog/toxicskills-malicious-ai-agent-skills-clawhub/)** in security audits. I wrote more about [the broader AI agent security landscape](/blog/ai-agent-security) separately.
 
-Plugins are namespaced to avoid conflicts. If you install two plugins that both happen to have a skill called "deploy," they appear as `plugin-a:deploy` and `plugin-b:deploy`. No collision.
+The governance model across all providers is the same: anyone can create a skill locally, sharing goes through version control, and org-wide deployment requires admin privileges. Low friction to experiment. Controlled friction to distribute.
 
-## The provider breakdown
+## How skills connect to external tools
 
-Not every AI tool supports every feature. Here is where things stand as of March 2026.
+Skills tell the AI what to do. But a skill that says "post the result to Slack" needs a way to actually reach Slack.
 
-### Full skill and plugin support
+There are a few ways to wire that up. Direct API calls work if your skill includes a script that hits an endpoint. Some plugins bundle custom tool integrations that call APIs directly. But the approach gaining the most traction is [MCP](https://modelcontextprotocol.io) (Model Context Protocol), an open standard for connecting AI tools to external services. Every major AI tool supports it now, and MCP servers can be bundled inside plugins so they install automatically.
 
-These tools all read the same `SKILL.md` format. A skill you write for one works in all of them.
+MCP is not the only option, but it is becoming the default because it is standardized. You write the connection once and it works across providers, rather than building separate integrations for each tool.
 
-**<a href="https://code.claude.com">Claude Code</a>** (Anthropic) originated the standard. Most mature plugin system.
+## The security side
 
-- Components: skills, agents, hooks, MCP servers, LSP servers, output styles
-- 24 hook event types
-- Manifest: `.claude-plugin/plugin.json`
-- Marketplace system for org distribution, plus a submission portal for publishing
+Three numbers worth knowing:
 
-**<a href="https://developers.openai.com/codex">Codex CLI</a>** (OpenAI) has a full skills and plugin architecture.
+- **12-20%** of skills on [ClawHub](https://openclaw.com) (a public marketplace) were [found to be malicious](https://snyk.io/blog/toxicskills-malicious-ai-agent-skills-clawhub/)
+- **1 in 8** enterprise security incidents now involve an AI agent system ([CrowdStrike 2025](https://www.crowdstrike.com/en-us/global-threat-report/))
+- **78%** of compromised agents had broader permissions than they needed
 
-- Skills location: `.agents/skills/`
-- Invocation: `$skill-name`
-- Built-in skills: `$skill-creator` (guided wizard), `$skill-installer`
-- Manifest: `.codex-plugin/plugin.json`
-- Three marketplace tiers: official curated, repo-level, personal
+The [OWASP Foundation](https://genai.owasp.org/resource/owasp-top-10-for-agentic-applications-for-2026/) published a top 10 for AI agent security. The top threats: goal hijacking, tool misuse, over-permissioned agents, supply chain attacks through malicious plugins, and unexpected code execution.
 
-**<a href="https://geminicli.com">Gemini CLI</a>** (Google) has a public extension gallery at <a href="https://geminicli.com/extensions">geminicli.com/extensions</a>.
+The practical version: install skills from trusted sources only, keep permissions tight, review skills like you review code, and pin your versions.
 
-- Bundles: skills, TOML commands, sub-agents, themes, MCP servers
-- Manifest: `gemini-extension.json` at the extension root
-- Supports remote sub-agents via Agent-to-Agent (A2A) protocol
-- Three release tracks: stable, preview, nightly
+## Where this is going
 
-**<a href="https://github.com/features/copilot">GitHub Copilot</a>** (Microsoft) has hierarchical distribution.
+Only [20% of companies](https://www.deloitte.com/us/en/what-we-do/capabilities/applied-artificial-intelligence/content/state-of-ai-in-the-enterprise.html) have a mature governance model for AI agents. The skills ecosystem went from nothing to hundreds of thousands of indexed skills in under four months. Over 30 products adopted the same format in the same period. 60,000+ GitHub repos use the cross-tool AGENTS.md instruction standard.
 
-- Skills location: `.github/skills/`
-- Custom agents: `.github/agents/`
-- Distribution: repo-level, org-level (`.github-private` repo), enterprise-level
-- <a href="https://github.com/features/copilot/extensions">Extensions marketplace</a> with Docker, Sentry, LaunchDarkly
-- Skillsets API for lightweight integrations (up to 5 endpoints)
-
-**<a href="https://cursor.com">Cursor</a>** bundles five primitives: skills, subagents, MCP servers, hooks, and rules.
-
-- <a href="https://cursor.com/blog/marketplace">Plugin Marketplace</a> launched February 2026
-- Partners: Amplitude, AWS, Cloudflare, Databricks, Figma, Hex, Linear, Snowflake, Stripe, Vercel
-- Team Marketplaces for enterprise added March 2026
-
-**<a href="https://windsurf.com">Windsurf</a>** (formerly Codeium) supports skills and rules.
-
-- Skills location: `.windsurf/skills/` or `.agents/skills/`
-- Rules: `.windsurf/rules/` (6,000 char/file limit, 12,000 total)
-- Four activation modes: Manual, Always On, Model Decision, Glob
-- Enterprise: RBAC, SSO/SCIM, FedRAMP High compliance
-
-### Rules and instructions only (no shared skill format)
-
-These tools have their own customization systems but do not support the `SKILL.md` standard:
-
-- **Amazon Q Developer** (AWS): Markdown rules in `.amazonq/rules/`. MCP governance via AWS console profiles with allow-lists.
-- **JetBrains AI Assistant**: Prompt Library in IDE settings. Supports `.aiignore` and `.aicontext`. No file-based skills, no distribution.
-- **Aider**: Open-source CLI. Uses `CONVENTIONS.md` as read-only context. No native skills (third-party `aider-skills` package exists).
-- **Continue.dev**: Uses `config.yaml` and a Continue Hub for sharing. No `SKILL.md` support.
-
-## The instruction file: your project's playbook
-
-Separate from skills, every AI tool supports a project-level instruction file. This is a markdown file you place in your project that tells the AI how your team works. Coding standards, naming conventions, testing requirements, architecture decisions, deployment procedures.
-
-The AI reads this file at the start of every session and follows the guidance throughout.
-
-The catch: every tool uses a different filename.
-
-- **Claude Code**: `CLAUDE.md`
-- **Codex CLI**: `AGENTS.md`
-- **Gemini CLI**: `GEMINI.md`
-- **Cursor**: `.cursor/rules/*.mdc`
-- **Windsurf**: `.windsurf/rules/*.md`
-- **Copilot**: `.github/copilot-instructions.md`
-
-<a href="https://agents.md">AGENTS.md</a> is emerging as a cross-tool standard. Over 60,000 repositories on GitHub already use it. Codex, Copilot, Cursor, and Windsurf all read it. It is managed by the same Linux Foundation group that governs the skills standard and MCP.
-
-Claude Code does not read `AGENTS.md` today. It uses its own `CLAUDE.md` file. If your team uses multiple tools, you may need both files in your repository for now.
-
-Gemini has a useful feature the others lack: `GEMINI.md` supports `@file.md` import syntax, letting you break a large instruction file into smaller modular pieces and compose them together.
-
-## How organizations distribute skills
-
-This is where it gets interesting for companies trying to roll AI tools out beyond a handful of early adopters.
-
-Every provider supports organizational distribution, but the mechanisms differ. The general pattern is the same across all of them.
-
-**Step 1: Create a central repository.** In Claude Code, this is a GitHub repo containing a `marketplace.json` file. That file lists every approved plugin, where to find it (a GitHub repo, a git URL, an npm package, or a local path), and its version. In Codex, a similar `marketplace.json` lives at the root of your project repo. In Gemini, admins configure a system-level settings file. In Copilot, a `.github-private` repository at the org or enterprise level holds shared agents. In Cursor, admins create Team Marketplaces through the settings panel.
-
-**Step 2: Control what gets installed.** Most providers support installation policies:
-
-- **Available**: Listed in the catalog. People install it if they want.
-- **Installed by default**: Automatically installed for everyone. People can uninstall.
-- **Required**: Force-installed. Cannot be uninstalled. For compliance-critical tooling.
-- **Not available**: Hidden. Useful for staging or deprecation.
-
-**Step 3: Lock down the sources.** Claude Code has a `strictKnownMarketplaces` setting. Codex uses policies in the marketplace JSON. Gemini uses system-level tool allowlisting. Amazon Q uses MCP governance through AWS console profiles. The pattern is the same: admins control the supply chain.
-
-## Who can do what
-
-The answer is the same across every provider.
-
-Anyone can create a skill. You write a `SKILL.md` file on your machine. No special permissions. This is how experimentation and prototyping happen.
-
-Sharing with your team goes through version control. Put a skill in a repository your team has access to, and they can use it. Standard access controls apply.
-
-Deploying organization-wide requires admin privileges. Adding a plugin to the company marketplace, setting installation policies, restricting sources. That is admin work.
-
-The design is intentional. Low friction to create and test. Controlled friction to distribute widely. This matches how most organizations already handle internal libraries and tools.
-
-## The lifecycle of a skill
-
-Someone writes it. A `SKILL.md` file, maybe with a few supporting docs or scripts.
-
-They test it locally. In Claude Code, you load it with `claude --plugin-dir ./my-plugin` without installing it. You run it, see if the instructions are clear enough for the AI to follow, and iterate. Gemini has `gemini extensions install <local-path>`. Codex reads directly from the `.agents/skills/` directory.
-
-They submit it for review. A pull request to the marketplace repository. Other people review the skill the same way they would review code. Is the description accurate? Are the instructions safe? Does it do what it claims?
-
-It gets published. Merged to the repo. Version number bumped in the manifest.
-
-Admins set the policy. Maybe it starts as "available" so early adopters can try it. If it proves useful, it gets promoted to "installed by default."
-
-People use it, and usage gets tracked. Install counts, invocation frequency, error rates.
-
-It gets updated. Someone improves the instructions. Bumps the version. Users update through the CLI. One important detail: if you do not bump the version number, caching prevents anyone from seeing your changes.
-
-Eventually, it gets retired. Set to "not available." Give people notice. Remove it.
-
-The lifecycle mirrors any internal tool or library. The difference is that the "code" is mostly plain English instructions, so the barrier to contribution is dramatically lower than traditional software.
-
-## MCP: the wiring behind skills
-
-MCP stands for Model Context Protocol. If skills tell the AI what to do, MCP gives the AI the ability to actually do it.
-
-A skill might include an instruction like "post the result to Slack." MCP is the protocol that connects the AI to Slack so that instruction can execute. Without MCP, the AI can only work with files and commands on your local machine. With MCP, it can talk to Jira, query a database, hit an internal API, or interact with practically any service that has an MCP server.
-
-Anthropic created MCP in November 2024 and released it as an open standard. In December 2025, they donated it to the Agentic AI Foundation under the Linux Foundation. Every major AI tool now supports it: Claude Code, Codex, Gemini, Copilot, Cursor, Windsurf, and JetBrains.
-
-MCP servers can be bundled inside plugins. When someone installs a plugin, the MCP connections come with it. No separate configuration.
-
-Three transport types exist depending on how the MCP server runs:
-
-- **stdio**: Local servers that run as a subprocess on your machine
-- **SSE** (Server-Sent Events): Remote servers that push data to the client
-- **Streamable HTTP**: Remote servers accessed over regular HTTP requests
-
-For organizations, MCP gateways add authentication, audit logging, and access controls on top. They sit between the AI tools and your internal services, ensuring that every tool call is authorized and recorded.
-
-An official <a href="https://registry.modelcontextprotocol.io">MCP Registry</a> catalogs publicly available MCP servers. A proposed standard called MCP Server Cards would let servers advertise their capabilities through a `.well-known/mcp/server-card.json` file, similar to how websites advertise their sitemap.
-
-## Security: what you need to know
-
-Skills and plugins are powerful, and that power comes with real security considerations.
-
-Three statistics worth knowing:
-
-Security researchers audited a public skills marketplace called ClawHub and found that **12-20% of the skills listed there were malicious**. Some exfiltrated data. Some injected instructions that hijacked the AI's behavior. Some ran unauthorized commands.
-
-CrowdStrike's 2025 threat report found that **1 in 8 enterprise security incidents** now involves an AI agent system. That number grew 340% year-over-year.
-
-Post-incident analysis of AI agent breaches showed that **78% of the compromised agents had significantly broader permissions** than their job required.
-
-The <a href="https://genai.owasp.org/resource/owasp-top-10-for-agentic-applications-for-2026/">OWASP Foundation published a top 10 for AI agent applications</a> in December 2025. The top five threats:
-
-1. **Agent Goal Hijack**: Someone alters what the agent is trying to do by poisoning its inputs.
-2. **Tool Misuse**: The agent uses its legitimate tools in unsafe ways because the instructions were ambiguous.
-3. **Identity and Privilege Abuse**: The agent operates with more permissions than it needs.
-4. **Supply Chain Vulnerabilities**: A malicious plugin, MCP server, or prompt template makes it into the agent's environment.
-5. **Unexpected Code Execution**: The agent generates or runs unsafe shell commands or scripts.
-
-The practical takeaways:
-
-- Install skills only from sources you trust
-- Keep permissions tight (use the `allowed-tools` frontmatter field)
-- Review skills the same way you review code
-- Pin your versions: skill version, MCP server version, model version
-- Model deprecation cycles are accelerating (sometimes 30-90 day windows), and a skill that worked with one model version may break with the next
-
-## Community marketplaces
-
-Several public marketplaces have appeared for discovering and sharing skills:
-
-<a href="https://skillsmp.com">SkillsMP</a> is the volume leader with over 351,000 indexed skills. It crawls GitHub for `SKILL.md` files and makes them searchable.
-
-<a href="https://skills.sh">Skills.sh</a> is Vercel's entry, launched January 2026. About 83,000 skills with over 8 million total installs across 18 supported AI tools. The install counts give you a signal about which skills people actually use versus which ones were just uploaded and forgotten.
-
-Anthropic's Skills Directory is a curated collection with partner-built skills from Canva, Notion, Figma, Atlassian, Stripe, and Zapier.
-
-For organizations, the recommendation is clear: maintain your own marketplace repo and treat third-party skills with the same caution you would treat any external dependency.
-
-## Where the industry stands
-
-A few numbers that frame the moment:
-
-Only 20% of companies have a mature governance model for AI agents (Deloitte, January 2026, surveying 3,000+ leaders across 24 countries). The other 80% are either winging it or have not started.
-
-51% of professional developers use AI tools daily, saving an average of 3.6 hours per week (Stack Overflow 2025).
-
-Over 30 AI agent products now support the SKILL.md standard. That number was essentially zero in November 2025.
-
-60,000+ GitHub repositories use AGENTS.md.
-
-The skills ecosystem grew from nothing to multiple marketplaces with hundreds of thousands of indexed skills in under four months.
-
-This is moving fast. The companies and individuals that figure out how to create, share, and govern AI skills are going to have a meaningful advantage over those still asking every person to figure out their own prompts from scratch.
-
-## Starting from zero
-
-Pick one team or project where you already use AI tools daily. Identify your top five repeatable workflows. Turn those into skills.
-
-Create a GitHub repo as your marketplace. A `marketplace.json` file, a `plugins/` folder, and a README explaining how to contribute. Use your provider's managed settings to push it to the team.
-
-Write a three-question review checklist: Does the skill do what it claims? Does it request only the permissions it needs? Is the description clear enough for the AI to match it correctly?
-
-Measure what happens. After a month, you will know which skills people actually use and which were a nice idea that nobody needed.
-
-Then let it grow. Other teams will see the results. They will want their own skills. The pattern spreads. The marketplace grows.
-
-The format is markdown. The barrier is low. The hardest part is identifying which workflows are worth standardizing, and the people doing the work already know the answer to that.
-
-## Quick reference
-
-- **Skill**: A `SKILL.md` file with a name, description, and instructions. Works across Claude Code, Codex, Gemini, Copilot, Cursor, and Windsurf.
-- **Plugin**: A package bundling skills, MCP connections, hooks, agents, and commands. Versioned with semver. Distributed through marketplaces.
-- **Marketplace**: A repository with a `marketplace.json` listing approved plugins. Pushed to users through settings.
-- **MCP** (Model Context Protocol): The standard protocol AI tools use to connect to external services. Supports stdio, SSE, and HTTP transports.
-- **SKILL.md**: The universal file format for skill instructions. YAML frontmatter for metadata, markdown body for instructions.
-- **CLAUDE.md / AGENTS.md / GEMINI.md**: Project-level instruction files that tell the AI how your team works. Different names per tool, same concept.
-- **AAIF** (Agentic AI Foundation): The Linux Foundation body governing MCP, Agent Skills, and AGENTS.md. Co-founded by Anthropic, OpenAI, and Google.
+**The companies that figure out how to create, share, and govern skills are going to move faster than those still asking every person to write their own prompts.** The format is markdown. The barrier is low. The hardest part is identifying which workflows are worth standardizing, and the people doing the work already know the answer to that.

@@ -1,0 +1,96 @@
+---
+title: 'Agent Frameworks Are Getting Squeezed'
+publishedAt: '2026-03-02'
+summary: 'Agent frameworks emerged in the gap between when models got good enough and when infrastructure caught up. That gap is closing from both directions.'
+description: 'AI labs are building down into orchestration. Automation platforms are building up into reasoning. Agent frameworks are caught in a compression event from both sides.'
+author: 'Tony Kipkemboi'
+category: 'Industry Insights'
+tags: ['AI Agents', 'Agent Frameworks', 'Enterprise AI', 'Automation', 'AI Infrastructure']
+keywords: 'agent frameworks, crewai, langchain, autogen, ai agent orchestration, zapier agents, claude cowork, openai frontier, enterprise ai agents, automation platforms'
+---
+
+![Timeline of agent frameworks from 2020 to 2026, showing the evolution from GPT-3 through framework genesis, explosion, enterprise push, the squeeze, and platform consolidation](/blog/agent-frameworks-timeline.png)
+
+When you look at what most agent frameworks actually do, it's workflow orchestration. You define tasks, chain them together, route data between steps, add conditional logic, call external APIs. The core mechanics look familiar because we've been doing this with automation platforms for over a decade.
+
+Agent frameworks emerged in 2023 when models became capable enough to reliably use tools and reason through multi-step tasks. They were built around LLMs and reasoning as first-class primitives. Automation platforms like [Zapier](https://zapier.com) and [Make](https://www.make.com) had been built around apps and triggers since the early 2010s. Both solve the same fundamental problem: coordinating work across multiple systems.
+
+For about two years, agent frameworks had a clear opening. Models were good enough to be useful, but the existing automation platforms hadn't adapted yet. Frameworks like [LangChain](https://www.langchain.com), [AutoGen](https://github.com/microsoft/autogen), [CrewAI](https://www.crewai.com), and others filled that gap with developer-friendly tools for building agentic workflows.
+
+By mid 2025 and into 2026, something happened. The market started closing in from both directions.
+
+## From Above: AI Labs
+
+More capable models have been released and products like [Claude Desktop](https://claude.ai) ships with Computer Use and multiple connectors. With something like Claude Cowork, you can connect to your data sources, spin up sub-agents for specific tasks, schedule tasks, and orchestrate everything from one command center. It runs on your desktop. The model, the orchestration, and the integrations all come from one place.
+
+[OpenAI](https://openai.com) is building similar capabilities and probably more with the recent acqui-hire of [OpenClaw](https://openclaw.com) founder. So is [Google with Gemini](https://gemini.google.com). **The AI labs aren't just providing models anymore. They're providing the entire agent runtime.**
+
+For enterprises, this matters. Most are already paying for these services. They have licenses for their employees to use Claude or OpenAI or Gemini and most instances all of them are provisioned. Why layer in a separate orchestration framework when the lab that built the model also built the agent infrastructure? The integration is tighter. The debugging is easier. The responsibility is clearer. And there's no additional vendor to manage or budget line to justify.
+
+The decision point is becoming harder to justify. Why add another framework to do something the existing tooling already handles? That cost conversation gets difficult fast, especially in enterprises where every new tool needs security review, procurement approval, and ongoing maintenance.
+
+Then came plugins and skills. Claude launched [agent skills and plugins](/blog/agent-skills-and-plugins-explained) that let organizations build and share domain-specific capabilities. Finance plugins. Legal plugins. Productivity plugins. You can add skills for evaluating NDAs, verifying contracts, processing specific workflows. These are shareable across the organization and built directly into the platform employees are already using.
+
+This hit the market hard. The announcement affected valuations for vertical AI companies because, in my opinion, it changed the pricing conversation. Enterprises can now argue they can do most of what specialized tools offer using Claude. That doesn't replace those companies outright, but it compresses what they can charge. Revenue expectations shift when the baseline capability is free with an existing license.
+
+## From Below: Automation Platforms
+
+[Zapier](https://zapier.com) launched Agents. [Make](https://www.make.com) launched AI Agents. [UiPath](https://www.uipath.com) calls it Agentic Automation. They already had thousands of pre-built connectors, OAuth handling, permission management, and enterprise governance. They just needed to add reasoning on top.
+
+And they did.
+
+These platforms spent over a decade building integration infrastructure. Adding LLM-based reasoning to existing workflow orchestration is straightforward compared to building thousands of enterprise integrations from scratch.
+
+## The Vendor Lock-In Question
+
+The strongest case for agent frameworks is model-agnostic flexibility. Build once, swap providers with a config change. No lock-in to a single lab's ecosystem.
+
+Recent events show why this matters. The Pentagon just designated Anthropic a supply chain risk over a dispute about autonomous weapons and surveillance guardrails. The company lost its $200 million contract, and military contractors can no longer use Claude for defense work. The situation is fluid and contained to government contracts for now, but it demonstrates the risk of platform dependence.
+
+What happens when an enterprise decides they can't use a specific lab anymore? Policy disagreements, pricing changes, compliance requirements. If you built everything on Claude or a similar single-vendor platform, you're ripping out infrastructure. If you built on a framework with swappable model providers, you're changing a config file.
+
+That's real value. But it's not the moat frameworks think it is.
+
+OpenAI [launched Frontier](https://openai.com/index/introducing-openai-frontier/) in February. An enterprise platform for building and managing AI agents with integrated access to business systems, data warehouses, and internal apps. It's open to agents built outside OpenAI's ecosystem. It has governance, permissions, and compliance tooling.
+
+![OpenAI Frontier architecture showing interfaces, agents, evaluation, execution, and business context layers with enterprise security and governance](/blog/openai-frontier-architecture.png)
+
+It's OpenAI's bid to become "the operating system of the enterprise." And it directly addresses the vendor lock-in concern by positioning itself as a control plane that can work across providers.
+
+Google will build their version. Microsoft already has paths through Azure. You can bet all the big labs are working hard to capture this enterprise market. They're all building platform layers that reduce single-vendor risk while keeping you in their ecosystem.
+
+The competition between labs actually gives enterprises options. Each lab will have different policies, different pricing, different compliance stances. That diversity is its own form of protection against lock-in. And most enterprises would rather manage relationships with two or three major labs than maintain a separate orchestration framework.
+
+Frameworks still have a role for teams that need code-level control or specific orchestration patterns. But the vendor lock-in argument gets weaker when the labs themselves are building multi-provider management platforms. The freedom frameworks offer comes with its own dependencies on integration layers, observability tools, and ecosystem partners.
+
+True portability requires discipline at the architecture level, not just picking the right vendor. And most enterprises will bet on the labs that own the models rather than add another layer to maintain.
+
+## The Middle Collapses
+
+Agent frameworks emerged in the gap between when models got good enough to be useful (2023) and when the infrastructure caught up (2025-2026). That gap is closing.
+
+The integration disadvantage that frameworks faced in 2023 and 2024 is gone. Companies like [Composio](https://composio.dev) and [Arcade.dev](https://arcade.dev) built integration layers specifically for agents. Most frameworks now use these external tool companies for connections.
+
+But solving integrations doesn't solve the squeeze. **AI labs are building down into orchestration. Automation platforms are building up into reasoning.** Agent frameworks are in the middle of a compression event from both sides.
+
+Frameworks still have an architectural advantage. They were designed with agents as the default primitive from day one. The developer experience is built for agentic workflows. That matters for prototyping and experimentation.
+
+As the underlying technology improves, architectural advantages compress. Models get better at reasoning and tool use. The abstraction layer matters less. The orchestration patterns start looking similar regardless of where they come from.
+
+There's also a learning curve problem. Agent frameworks are opinionated. You have to learn their language, understand how they structure things, adapt to their patterns. That's friction. Compare that to going to Claude and letting it figure things out. The path of least resistance wins in enterprise adoption.
+
+## Who Actually Uses Agent Frameworks?
+
+Fortune 500 companies might experiment with agent frameworks. Some are using them now. But there's a shelf life to that adoption. The cost justification gets harder when AI labs and automation platforms fill the capability gaps.
+
+The companies that stick with agent frameworks long-term are primarily consultancies. Large system integrators and boutique AI consulting firms build on these frameworks to deliver custom solutions faster than building from scratch. They white-label agentic transformation for enterprise clients, maintaining ongoing engagements through customization and integration work.
+
+That's a real market, but it's narrower than the original total addressable market frameworks were pitching. Consultancies are intermediaries, not end customers. And they'll switch frameworks as easily as they switch any other tooling if something better comes along.
+
+## Where Frameworks Go From Here
+
+Historically in infrastructure, value concentrates around integration points and operational tooling, not orchestration patterns. Orchestration logic is portable. Integrations are becoming portable too. The moats frameworks thought they had are evaporating.
+
+Agent frameworks had a moment between when models got good enough and when the infrastructure caught up. That window is closing. What's left is open source projects maintained by communities and niche tools for teams that need control over convenience.
+
+Some will pivot to agent management services for consultancies and small shops but most will settle into being developer tools for prototyping before production deployment elsewhere. Both paths are arguably profitable, but neither is the venture-scale platform play frameworks pitched in 2023.

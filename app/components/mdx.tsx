@@ -136,6 +136,8 @@ let components = {
   h5: createHeading(5),
   h6: createHeading(6),
   Image: RoundedImage,
+  // eslint-disable-next-line jsx-a11y/alt-text, @next/next/no-img-element
+  img: (props) => <img className="rounded-lg" {...props} />,
   a: CustomLink,
   code: Code,
   pre: Pre,
