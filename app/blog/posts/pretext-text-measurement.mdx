@@ -9,6 +9,10 @@ tags: ['JavaScript', 'Developer Tools', 'Performance']
 keywords: 'pretext, text measurement javascript, dom reflow, text height calculation, cheng lou, react motion, virtualized list, canvas text layout'
 ---
 
+<video autoPlay loop muted playsInline className="rounded-lg w-full">
+  <source src="/blog/pretext-demo.mp4" type="video/mp4" />
+</video>
+
 Came across [pretext](https://github.com/chenglou/pretext) on X this weekend and spent some time playing with it.
 
 It solves a specific problem: calculating how tall a block of text will be at a given width, without rendering it in the DOM. Normally you'd have to put the text in a div, measure `offsetHeight`, and deal with the reflow cost. Pretext does it in pure JavaScript using the browser's font engine via an off-screen canvas.
