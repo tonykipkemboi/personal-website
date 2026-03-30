@@ -4,6 +4,7 @@ import { MDXRemote } from 'next-mdx-remote/rsc'
 import { highlight } from 'sugar-high'
 import React from 'react'
 import { Pre } from './pre'
+import { PretextDemo } from './pretext-demo'
 
 function Table({ data }) {
   let headers = data.headers.map((header, index) => (
@@ -143,6 +144,7 @@ let components = {
   pre: Pre,
   Table,
   AiOutput,
+  PretextDemo,
 }
 
 export function CustomMDX(props) {

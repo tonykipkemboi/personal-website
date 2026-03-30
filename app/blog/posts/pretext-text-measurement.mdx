@@ -1,0 +1,53 @@
+---
+title: 'Pretext: Text Measurement Without the DOM'
+publishedAt: '2026-03-30'
+summary: 'A tiny JS library that calculates text height at any width without touching the DOM. Built by the creator of react-motion.'
+description: 'Pretext is a JavaScript library that measures multiline text height without DOM reflows. Built by Cheng Lou. Useful for virtualization, canvas rendering, and preventing layout shift.'
+author: 'Tony Kipkemboi'
+category: 'Developer Tools'
+tags: ['JavaScript', 'Developer Tools', 'Performance']
+keywords: 'pretext, text measurement javascript, dom reflow, text height calculation, cheng lou, react motion, virtualized list, canvas text layout'
+---
+
+Calculating how tall a block of text will be when wrapped across multiple lines normally requires rendering it in the DOM and measuring the result. That is expensive. If you need to do it for hundreds of items (say, a virtualized list), it becomes a bottleneck.
+
+[Pretext](https://github.com/chenglou/pretext) skips the DOM entirely. It measures text using the browser's font engine via an off-screen canvas, then emulates word-wrapping logic in pure JavaScript. Two functions:
+
+**`prepare(text, font)`** splits text into segments (words, emoji, non-latin sequences) and measures them. This is the expensive step. You do it once.
+
+**`layout(prepared, width, lineHeight)`** takes the prepared measurements and calculates height at a given width. This is the cheap step. ~0.09ms for 500 texts. You call it on every resize, every width change, as many times as you want.
+
+Built by [Cheng Lou](https://github.com/chenglou), who also created react-motion. The library is a few KB, supports all languages (including RTL Arabic, CJK, emoji), and was validated against the Great Gatsby rendered across browsers.
+
+## Try it
+
+Type text, drag the width slider, and watch pretext calculate the height in real time. The left number is the pretext calculation (no DOM). The right panel is the actual rendered text. They should match.
+
+<PretextDemo />
+
+## When you would use this
+
+- **Virtualized lists**: Know item heights before rendering so the scroll container is accurate
+- **Canvas or WebGL text**: No DOM available, need to know line breaks and height
+- **Preventing layout shift**: Calculate dimensions before painting to avoid CLS
+- **AI-driven UI testing**: Verify text layout without a browser
+
+## When you would not
+
+Static sites, server-rendered pages, or anywhere the text is already in the DOM and you can just read `offsetHeight`. If the DOM is already doing the work, let it.
+
+## Install
+
+```bash
+npm install @chenglou/pretext
+```
+
+```typescript
+import { prepare, layout } from '@chenglou/pretext'
+
+const prepared = prepare('Your text here', '16px sans-serif')
+const result = layout(prepared, 400, 24) // width, lineHeight
+console.log(result.height) // pixel height
+```
+
+Source: [github.com/chenglou/pretext](https://github.com/chenglou/pretext). Found via [Simon Willison](https://simonwillison.net/2026/Mar/29/pretext/).
