@@ -122,7 +122,7 @@ export default async function Page() {
         </h2>
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
           <a
-            href="https://v0-kaa-rada-qohixj.vercel.app/"
+            href="https://www.kaarada.me/"
             target="_blank"
             rel="noopener noreferrer"
             className="group flex flex-col p-5 rounded-lg border border-neutral-200 hover:border-neutral-400 dark:border-neutral-800 dark:hover:border-neutral-600 transition-all"
