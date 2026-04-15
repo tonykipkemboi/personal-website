@@ -1,10 +1,20 @@
+import Link from 'next/link'
+
 export default function Footer() {
   return (
     <footer className="mt-16 mb-8 pt-8 border-t border-neutral-200 dark:border-neutral-800">
       <div className="flex flex-col md:flex-row md:justify-between md:items-center gap-6">
-        {/* Copyright */}
-        <div className="text-neutral-600 dark:text-neutral-300">
-          © {new Date().getFullYear()} Tony Kipkemboi. All rights reserved.
+        {/* Copyright + Privacy */}
+        <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 text-neutral-600 dark:text-neutral-300">
+          <span>
+            © {new Date().getFullYear()} Tony Kipkemboi. All rights reserved.
+          </span>
+          <Link
+            href="/privacy"
+            className="text-sm hover:text-neutral-900 dark:hover:text-neutral-100 transition-colors"
+          >
+            Privacy Policy
+          </Link>
         </div>
 
         {/* Social Icons */}
