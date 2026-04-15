@@ -21,7 +21,7 @@ export function Pre({
   return (
     <div className="relative group">
       <pre
-        className="overflow-x-auto my-4 p-4 bg-neutral-900 rounded-lg"
+        className="overflow-x-auto my-4 p-3 sm:p-4 bg-neutral-900 rounded-lg text-xs sm:text-sm"
         style={{
           WebkitOverflowScrolling: 'touch',
           scrollbarWidth: 'thin',

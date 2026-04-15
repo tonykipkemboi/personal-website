@@ -5,23 +5,23 @@ export default function Footer() {
     <footer className="mt-16 mb-8 pt-8 border-t border-neutral-200 dark:border-neutral-800">
       <div className="flex flex-col md:flex-row md:justify-between md:items-center gap-6">
         {/* Copyright + Privacy */}
-        <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 text-neutral-600 dark:text-neutral-300">
+        <div className="flex flex-col gap-1 text-sm text-neutral-600 dark:text-neutral-300">
           <span>
             © {new Date().getFullYear()} Tony Kipkemboi. All rights reserved.
           </span>
           <Link
             href="/privacy"
-            className="text-sm hover:text-neutral-900 dark:hover:text-neutral-100 transition-colors"
+            className="hover:text-neutral-900 dark:hover:text-neutral-100 transition-colors w-fit"
           >
             Privacy Policy
           </Link>
         </div>
 
         {/* Social Icons */}
-        <div className="flex gap-6">
+        <div className="flex flex-wrap gap-4 md:gap-6">
           <a
             href="/llms-full.txt"
-            className="text-neutral-600 hover:text-emerald-600 dark:text-neutral-400 dark:hover:text-emerald-400 transition-colors"
+            className="p-2 -m-2 text-neutral-600 hover:text-emerald-600 dark:text-neutral-400 dark:hover:text-emerald-400 transition-colors"
             aria-label="Machine-readable version (for AI)"
             title="View machine-readable version"
             target="_blank"
@@ -37,7 +37,7 @@ export default function Footer() {
           </a>
           <a
             href="/rss"
-            className="text-neutral-600 hover:text-[#EE802F] dark:text-neutral-400 dark:hover:text-[#EE802F] transition-colors"
+            className="p-2 -m-2 text-neutral-600 hover:text-[#EE802F] dark:text-neutral-400 dark:hover:text-[#EE802F] transition-colors"
             aria-label="RSS Feed"
             target="_blank"
             rel="noopener noreferrer"
@@ -52,7 +52,7 @@ export default function Footer() {
           </a>
           <a
             href="https://github.com/tonykipkemboi"
-            className="text-neutral-600 hover:text-[#333] dark:text-neutral-400 dark:hover:text-white transition-colors"
+            className="p-2 -m-2 text-neutral-600 hover:text-[#333] dark:text-neutral-400 dark:hover:text-white transition-colors"
             aria-label="GitHub Profile"
             target="_blank"
             rel="noopener noreferrer"
@@ -71,7 +71,7 @@ export default function Footer() {
           </a>
           <a
             href="https://www.youtube.com/@tonykipkemboi"
-            className="text-neutral-600 hover:text-[#FF0000] dark:text-neutral-400 dark:hover:text-[#FF0000] transition-colors"
+            className="p-2 -m-2 text-neutral-600 hover:text-[#FF0000] dark:text-neutral-400 dark:hover:text-[#FF0000] transition-colors"
             aria-label="YouTube Channel"
             target="_blank"
             rel="noopener noreferrer"
@@ -89,7 +89,7 @@ export default function Footer() {
           </a>
           <a
             href="https://linkedin.com/in/tonykipkemboi"
-            className="text-neutral-600 hover:text-[#0A66C2] dark:text-neutral-400 dark:hover:text-[#0A66C2] transition-colors"
+            className="p-2 -m-2 text-neutral-600 hover:text-[#0A66C2] dark:text-neutral-400 dark:hover:text-[#0A66C2] transition-colors"
             aria-label="LinkedIn Profile"
             target="_blank"
             rel="noopener noreferrer"
@@ -104,7 +104,7 @@ export default function Footer() {
           </a>
           <a
             href="https://x.com/tonykipkemboi"
-            className="text-neutral-600 hover:text-black dark:text-neutral-400 dark:hover:text-white transition-colors"
+            className="p-2 -m-2 text-neutral-600 hover:text-black dark:text-neutral-400 dark:hover:text-white transition-colors"
             aria-label="X (Twitter) Profile"
             target="_blank"
             rel="noopener noreferrer"

@@ -142,7 +142,7 @@ export default function RootLayout({
           `}
         </Script>
       </head>
-      <body className="antialiased max-w-2xl flex flex-col mx-4 mt-8 lg:mx-auto">
+      <body className="antialiased max-w-3xl flex flex-col mx-4 mt-8 lg:mx-auto">
         <a
           href="#main-content"
           className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-neutral-900 focus:text-white focus:rounded-md dark:focus:bg-neutral-100 dark:focus:text-neutral-900"

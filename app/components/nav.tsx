@@ -32,7 +32,7 @@ export function Navbar() {
           className="flex flex-row items-start relative px-0 pb-0 md:overflow-auto scroll-pr-6 md:relative"
           id="nav"
         >
-          <div className="flex flex-row space-x-1 pr-10">
+          <div className="flex flex-row space-x-1 pr-4 sm:pr-6 md:pr-10">
             {links.map((link) => {
               const isActive =
                 link.href === '/'

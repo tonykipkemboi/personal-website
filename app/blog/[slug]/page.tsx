@@ -167,7 +167,7 @@ export default async function BlogPost({ params }: PageParams) {
           </div>
         )}
       </div>
-      <div className="flex items-center justify-end max-w-[650px]">
+      <div className="flex items-center justify-start md:justify-end max-w-[650px]">
         <ShareButton slug={post.slug} baseUrl={baseUrl} />
       </div>
       <article className="prose prose-quoteless prose-neutral dark:prose-invert">
