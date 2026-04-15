@@ -26,6 +26,9 @@ export const viewport: Viewport = {
 export const metadata: Metadata = {
   metadataBase: new URL(baseUrl),
   manifest: '/manifest.json',
+  other: {
+    'google-adsense-account': 'ca-pub-5929640898604287',
+  },
   title: {
     default: 'Tony Kipkemboi',
     template: '%s | Tony Kipkemboi',
