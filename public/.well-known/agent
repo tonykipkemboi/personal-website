@@ -1,0 +1,16 @@
+{
+  "v": "aid1",
+  "name": "Tony Kipkemboi",
+  "description": "AI engineer who bridges technical depth and executive communication. I build AI agents and automations, write about what's actually happening in the agent space, and help organizations figure out where AI fits in their workflows. US Army veteran. Speaker at PyCon US, ODSC, Harvard, and more.",
+  "url": "https://tonykipkemboi.com",
+  "protocol": "https",
+  "links": {
+    "blog": "https://tonykipkemboi.com/blog",
+    "github": "https://github.com/tonykipkemboi",
+    "youtube": "https://www.youtube.com/@tonykipkemboi",
+    "linkedin": "https://linkedin.com/in/tonykipkemboi",
+    "x": "https://x.com/tonykipkemboi",
+    "rss": "https://tonykipkemboi.com/rss",
+    "llms": "https://tonykipkemboi.com/llms.txt"
+  }
+}
