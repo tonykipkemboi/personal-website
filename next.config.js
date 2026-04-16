@@ -10,6 +10,16 @@ const nextConfig = {
     ],
   },
   allowedDevOrigins: ['10.0.0.249'],
+  async redirects() {
+    return [
+      {
+        source: '/:path*',
+        has: [{ type: 'host', value: 'www.tonykipkemboi.com' }],
+        destination: 'https://tonykipkemboi.com/:path*',
+        permanent: true,
+      },
+    ]
+  },
 }
 
 module.exports = nextConfig
