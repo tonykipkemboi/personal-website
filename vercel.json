@@ -3,5 +3,16 @@
     "env": {
       "NEXT_VERSION": "14.1.0"
     }
-  }
+  },
+  "headers": [
+    {
+      "source": "/.well-known/agent",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "application/json"
+        }
+      ]
+    }
+  ]
 }
