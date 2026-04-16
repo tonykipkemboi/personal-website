@@ -4,10 +4,60 @@ import Image from 'next/image'
 import { RecentPosts } from './components/recent-posts'
 import { PopularVideo } from './components/latest-video'
 import { ArrowIcon } from './components/icons'
+import { baseUrl } from './sitemap'
+
+const personJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: 'Tony Kipkemboi',
+  url: baseUrl,
+  image: `${baseUrl}/headshot.jpg`,
+  jobTitle: 'AI Engineer',
+  description:
+    'AI engineer who bridges technical depth and executive communication. Builds AI agents and automations, writes about the agent space, and helps organizations figure out where AI fits in their workflows.',
+  sameAs: [
+    'https://github.com/tonykipkemboi',
+    'https://linkedin.com/in/tonykipkemboi',
+    'https://x.com/tonykipkemboi',
+    'https://www.youtube.com/@tonykipkemboi',
+  ],
+}
+
+const websiteJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  name: 'Tony Kipkemboi',
+  url: baseUrl,
+  description:
+    'AI engineer and content creator building AI automations, agent systems, and sharing technical insights.',
+  author: {
+    '@type': 'Person',
+    name: 'Tony Kipkemboi',
+    url: baseUrl,
+  },
+  potentialAction: {
+    '@type': 'SearchAction',
+    target: {
+      '@type': 'EntryPoint',
+      urlTemplate: `${baseUrl}/blog?q={search_term_string}`,
+    },
+    'query-input': 'required name=search_term_string',
+  },
+}
 
 export default async function Page() {
   return (
     <div className="space-y-16">
+      <script
+        type="application/ld+json"
+        suppressHydrationWarning
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        suppressHydrationWarning
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }}
+      />
       {/* Hero Section */}
       <section className="space-y-6">
         <div className="flex items-center gap-5">
