@@ -17,7 +17,7 @@ const projects: Project[] = [
     link: 'https://github.com/tonykipkemboi/ollama_pdf_rag',
     github: 'https://github.com/tonykipkemboi/ollama_pdf_rag',
     tech: ['Python', 'Ollama', 'LangChain', 'Streamlit', 'ChromaDB'],
-    stars: '504',
+    stars: '511',
   },
   {
     title: 'CrewAI Gmail Automation',
@@ -26,7 +26,7 @@ const projects: Project[] = [
     link: 'https://github.com/tonykipkemboi/crewai-gmail-automation',
     github: 'https://github.com/tonykipkemboi/crewai-gmail-automation',
     tech: ['Python', 'CrewAI', 'Gmail API', 'LangChain'],
-    stars: '186',
+    stars: '187',
   },
   {
     title: 'Resume Optimization Crew',
@@ -35,7 +35,7 @@ const projects: Project[] = [
     link: 'https://github.com/tonykipkemboi/resume-optimization-crew',
     github: 'https://github.com/tonykipkemboi/resume-optimization-crew',
     tech: ['Python', 'CrewAI', 'AI Optimization'],
-    stars: '148',
+    stars: '149',
   },
   {
     title: 'Trip Planner Agent',
@@ -80,7 +80,7 @@ const projects: Project[] = [
     link: 'https://github.com/tonykipkemboi/crewai-streamlit-demo',
     github: 'https://github.com/tonykipkemboi/crewai-streamlit-demo',
     tech: ['Python', 'CrewAI', 'Streamlit'],
-    stars: '69',
+    stars: '71',
   },
   {
     title: 'Research Paper to Podcast',
