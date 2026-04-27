@@ -42,11 +42,32 @@ The same calculation as WER but at the *character* level. Edit distance of chara
 
 For English, WER and CER usually track each other. For Kalenjin — agglutinative, with inconsistent orthographic conventions — they diverge sharply. Three real examples from our eval data:
 
-**Example 1 — word-boundary split.** REF: `Chopchinkee`. PRED: `Chopchin gei`. The model heard the right sound but dropped a space in a different place. To a Kalenjin speaker listening back, these are the same. To WER, this is 100% error (one reference word, two "wrong" predicted words). To CER, 8 of the 11 characters match — about 25% error.
+**Example 1 — word-boundary split.**
 
-**Example 2 — orthographic variant.** REF: `ngokenik`. PRED: `ngogenik`. One letter different (`k` vs `g`). Sounds identical to a native ear; both spellings appear in Kalenjin writing. WER counts this as 100% wrong. CER counts it as 1 character off in 8 — about 12.5%.
+<div className="transcript-block">
+  <div className="transcript"><span className="transcript-label">REF</span><span><code>Chopchinkee</code></span></div>
+  <div className="transcript"><span className="transcript-label">PRED</span><span><code>Chopchin gei</code></span></div>
+</div>
 
-**Example 3 — proper noun.** REF: `Bosnia`. PRED: `Osinia`. The model heard the phonemes but chose a different spelling. WER: 100%. CER: 2 characters off in 6 — about 33%.
+The model heard the right sound but dropped a space in a different place. To a Kalenjin speaker listening back, these are the same. To WER, this is 100% error (one reference word, two "wrong" predicted words). To CER, 8 of the 11 characters match — about 25% error.
+
+**Example 2 — orthographic variant.**
+
+<div className="transcript-block">
+  <div className="transcript"><span className="transcript-label">REF</span><span><code>ngokenik</code></span></div>
+  <div className="transcript"><span className="transcript-label">PRED</span><span><code>ngogenik</code></span></div>
+</div>
+
+One letter different (`k` vs `g`). Sounds identical to a native ear; both spellings appear in Kalenjin writing. WER counts this as 100% wrong. CER counts it as 1 character off in 8 — about 12.5%.
+
+**Example 3 — proper noun.**
+
+<div className="transcript-block">
+  <div className="transcript"><span className="transcript-label">REF</span><span><code>Bosnia</code></span></div>
+  <div className="transcript"><span className="transcript-label">PRED</span><span><code>Osinia</code></span></div>
+</div>
+
+The model heard the phonemes but chose a different spelling. WER: 100%. CER: 2 characters off in 6 — about 33%.
 
 Across hundreds of clips, small orthographic mismatches add up to a WER floor we can't cross, even on predictions a native reader would call correct. CER floats below that floor and tracks closer to what a human ear perceives. For African agglutinative languages specifically, published work (Ali & Renals; "Advocating CER" 2024) finds CER correlates ~5 points better with human judgment than WER.
 
@@ -156,17 +177,17 @@ Over 100% because when the model hallucinates more tokens than the reference has
 
 <div className="transcript-block">
   <div className="transcript"><span className="transcript-label">REF</span><span><code>Ile nyanyawet ok ile mi barak ng'enda ketesyin chumbikab temisyet.</code></span></div>
-  <div className="transcript"><span className="transcript-label">PRD</span><span><code>njia njiawe ndo njiawe ndo njiawe ndo njiawe ndo njiawe ndo ...</code> <em>(50+ repetitions)</em></span></div>
+  <div className="transcript"><span className="transcript-label">PRED</span><span><code>njia njiawe ndo njiawe ndo njiawe ndo njiawe ndo njiawe ndo ...</code> <em>(50+ repetitions)</em></span></div>
 </div>
 
 <div className="transcript-block">
   <div className="transcript"><span className="transcript-label">REF</span><span><code>kabatishiet kokonu tuguk eng sabet</code></span></div>
-  <div className="transcript"><span className="transcript-label">PRD</span><span><code>Hvað væt í séttra ronu, tóku engðar veit?</code></span></div>
+  <div className="transcript"><span className="transcript-label">PRED</span><span><code>Hvað væt í séttra ronu, tóku engðar veit?</code></span></div>
 </div>
 
 <div className="transcript-block">
   <div className="transcript"><span className="transcript-label">REF</span><span><code>Much konyaa kora petet ap kawek che ipu cancer alak.</code></span></div>
-  <div className="transcript"><span className="transcript-label">PRD</span><span><code>Muzko njaka rafi ti tafkawi teipu kanta alak.</code> <em>(partial phonetic match; the model preserves the English loanword "cancer" as "kanta")</em></span></div>
+  <div className="transcript"><span className="transcript-label">PRED</span><span><code>Muzko njaka rafi ti tafkawi teipu kanta alak.</code> <em>(partial phonetic match; the model preserves the English loanword "cancer" as "kanta")</em></span></div>
 </div>
 
 Whisper is guessing. Loops, Icelandic, phonetic mush. The floor is the floor. Any reasonable fine-tune should demolish this baseline.
