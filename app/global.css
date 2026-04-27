@@ -95,13 +95,14 @@ html {
 }
 
 .prose code {
-  @apply px-1 py-0.5 rounded-lg;
+  @apply px-1.5 py-0.5 rounded-md bg-neutral-100 dark:bg-neutral-800 text-[0.9em];
 }
 
 .prose pre code {
-  @apply p-0;
+  @apply p-0 bg-transparent;
   border: initial;
   line-height: 1.5;
+  font-size: inherit;
 }
 
 .prose code span {
@@ -168,11 +169,154 @@ input[type='email'] {
   appearance: none;
 }
 
-table {
-  display: block;
-  max-width: fit-content;
+/* Tables — proper layout, cell padding, subtle borders, wraps on narrow viewports.
+   Wrap each table in <div className="table-wrap"> so it horizontally scrolls
+   on mobile without breaking the article column. */
+.table-wrap {
+  margin: 1.25rem 0;
   overflow-x: auto;
-  white-space: nowrap;
+  -webkit-overflow-scrolling: touch;
+  border: 1px solid rgb(229 229 229);
+  border-radius: 0.5rem;
+}
+
+@media (prefers-color-scheme: dark) {
+  .table-wrap {
+    border-color: rgb(38 38 38);
+  }
+}
+
+.table-wrap table {
+  display: table;
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+  white-space: normal;
+}
+
+.table-wrap thead {
+  background: rgb(250 250 250);
+}
+
+@media (prefers-color-scheme: dark) {
+  .table-wrap thead {
+    background: rgb(23 23 23);
+  }
+}
+
+.table-wrap th,
+.table-wrap td {
+  padding: 0.5rem 0.875rem;
+  text-align: left;
+  vertical-align: top;
+  border-bottom: 1px solid rgb(229 229 229);
+}
+
+@media (prefers-color-scheme: dark) {
+  .table-wrap th,
+  .table-wrap td {
+    border-bottom-color: rgb(38 38 38);
+  }
+}
+
+.table-wrap th {
+  font-weight: 600;
+  color: rgb(64 64 64);
+}
+
+@media (prefers-color-scheme: dark) {
+  .table-wrap th {
+    color: rgb(212 212 212);
+  }
+}
+
+.table-wrap tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.table-wrap tbody tr:hover {
+  background: rgba(0, 0, 0, 0.02);
+}
+
+@media (prefers-color-scheme: dark) {
+  .table-wrap tbody tr:hover {
+    background: rgba(255, 255, 255, 0.03);
+  }
+}
+
+.table-wrap code {
+  font-size: 0.85em;
+  padding: 0.1em 0.3em;
+  background: rgb(245 245 245);
+  border-radius: 0.25rem;
+}
+
+@media (prefers-color-scheme: dark) {
+  .table-wrap code {
+    background: rgb(38 38 38);
+  }
+}
+
+/* Transcript blocks — REF/PRED/T3/T4c rows aligned in a label/text grid.
+   Used in the baseline-examples section and the audio-listening section
+   so readers can scan each model's output against the reference at a glance. */
+.transcript-block {
+  margin: 1rem 0;
+  padding: 0.875rem 1rem;
+  background: rgb(250 250 250);
+  border-left: 3px solid rgb(229 229 229);
+  border-radius: 0 0.5rem 0.5rem 0;
+}
+
+@media (prefers-color-scheme: dark) {
+  .transcript-block {
+    background: rgb(23 23 23);
+    border-left-color: rgb(64 64 64);
+  }
+}
+
+.transcript {
+  display: grid;
+  grid-template-columns: 56px 1fr;
+  gap: 0 1rem;
+  align-items: baseline;
+  margin: 0;
+  padding: 0.25rem 0;
+  font-size: 0.92em;
+  line-height: 1.6;
+}
+
+.transcript + .transcript {
+  border-top: 1px dashed rgb(229 229 229);
+}
+
+@media (prefers-color-scheme: dark) {
+  .transcript + .transcript {
+    border-top-color: rgb(64 64 64);
+  }
+}
+
+.transcript-label {
+  font-size: 0.78em;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: rgb(38 128 141); /* brand teal */
+  text-align: right;
+  align-self: start;
+  padding-top: 0.35rem;
+}
+
+@media (prefers-color-scheme: dark) {
+  .transcript-label {
+    color: rgb(79 184 197);
+  }
+}
+
+.transcript code {
+  font-size: 1em;
+  padding: 0;
+  background: transparent;
 }
 
 .title {

@@ -38,6 +38,7 @@
     "postcss": "8.5.6",
     "react": "19.2.4",
     "react-dom": "19.2.4",
+    "remark-gfm": "^4.0.1",
     "sugar-high": "0.6.1",
     "supports-color": "10.2.2",
     "swr": "2.3.8",
