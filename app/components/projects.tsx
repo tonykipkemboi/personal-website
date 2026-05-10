@@ -17,7 +17,7 @@ const projects: Project[] = [
     link: 'https://github.com/tonykipkemboi/ollama_pdf_rag',
     github: 'https://github.com/tonykipkemboi/ollama_pdf_rag',
     tech: ['Python', 'Ollama', 'LangChain', 'Streamlit', 'ChromaDB'],
-    stars: '516',
+    stars: '519',
   },
   {
     title: 'CrewAI Gmail Automation',
@@ -44,7 +44,7 @@ const projects: Project[] = [
     link: 'https://github.com/tonykipkemboi/trip_planner_agent',
     github: 'https://github.com/tonykipkemboi/trip_planner_agent',
     tech: ['Python', 'CrewAI', 'Streamlit', 'LangChain'],
-    stars: '141',
+    stars: '142',
   },
   {
     title: 'Streamlit Replicate Image App',
@@ -80,7 +80,7 @@ const projects: Project[] = [
     link: 'https://github.com/tonykipkemboi/crewai-streamlit-demo',
     github: 'https://github.com/tonykipkemboi/crewai-streamlit-demo',
     tech: ['Python', 'CrewAI', 'Streamlit'],
-    stars: '70',
+    stars: '71',
   },
   {
     title: 'Research Paper to Podcast',
@@ -98,7 +98,7 @@ const projects: Project[] = [
     link: 'https://github.com/tonykipkemboi/youtube_yapper_trapper',
     github: 'https://github.com/tonykipkemboi/youtube_yapper_trapper',
     tech: ['Python', 'YouTube API', 'Transcription'],
-    stars: '67',
+    stars: '68',
   },
 ]
 
