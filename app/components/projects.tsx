@@ -35,7 +35,7 @@ const projects: Project[] = [
     link: 'https://github.com/tonykipkemboi/resume-optimization-crew',
     github: 'https://github.com/tonykipkemboi/resume-optimization-crew',
     tech: ['Python', 'CrewAI', 'AI Optimization'],
-    stars: '149',
+    stars: '151',
   },
   {
     title: 'Trip Planner Agent',
@@ -44,7 +44,7 @@ const projects: Project[] = [
     link: 'https://github.com/tonykipkemboi/trip_planner_agent',
     github: 'https://github.com/tonykipkemboi/trip_planner_agent',
     tech: ['Python', 'CrewAI', 'Streamlit', 'LangChain'],
-    stars: '142',
+    stars: '143',
   },
   {
     title: 'Streamlit Replicate Image App',
@@ -89,7 +89,7 @@ const projects: Project[] = [
     link: 'https://github.com/tonykipkemboi/research-paper-to-podcast',
     github: 'https://github.com/tonykipkemboi/research-paper-to-podcast',
     tech: ['Python', 'CrewAI', 'ElevenLabs'],
-    stars: '69',
+    stars: '70',
   },
   {
     title: 'YouTube Yapper Trapper',
