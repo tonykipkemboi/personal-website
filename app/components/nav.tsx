@@ -15,7 +15,7 @@ export function Navbar() {
 
   return (
     <header className="w-full">
-      <nav className="mx-auto flex w-full max-w-[1240px] items-center justify-between px-6 py-8 sm:px-10 lg:px-20">
+      <nav className="mx-auto flex w-full max-w-[1240px] items-center justify-between px-6 py-6 sm:px-10 sm:py-8 lg:px-20">
         <Link href="/" className="flex items-center gap-3">
           <Image
             src="/headshot.jpg"
@@ -25,12 +25,12 @@ export function Navbar() {
             className="rounded-full object-cover"
             priority
           />
-          <span className="text-[15px] font-medium tracking-tight text-[#0a0a0a]">
+          <span className="hidden text-[15px] font-medium tracking-tight text-[#0a0a0a] sm:inline">
             Tony Kipkemboi
           </span>
         </Link>
 
-        <div className="flex items-center gap-7 sm:gap-10">
+        <div className="flex items-center gap-5 sm:gap-7 lg:gap-10">
           {links.map((link) => {
             const isActive =
               link.href === '/'
@@ -54,7 +54,7 @@ export function Navbar() {
             href="https://linkedin.com/in/tonykipkemboi"
             target="_blank"
             rel="noopener noreferrer"
-            className="border-b border-[#0a0a0a] pb-0.5 text-sm text-[#0a0a0a] transition-opacity hover:opacity-60"
+            className="whitespace-nowrap border-b border-[#0a0a0a] pb-0.5 text-sm text-[#0a0a0a] transition-opacity hover:opacity-60"
           >
             Get in touch
           </a>
