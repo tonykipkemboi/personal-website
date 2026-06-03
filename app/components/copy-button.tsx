@@ -2,7 +2,13 @@
 
 import React from 'react'
 
-export function CopyButton({ text }: { text: string }) {
+export function CopyButton({
+  text,
+  className,
+}: {
+  text: string
+  className?: string
+}) {
   const [copied, setCopied] = React.useState(false)
 
   const copy = async () => {
@@ -14,7 +20,10 @@ export function CopyButton({ text }: { text: string }) {
   return (
     <button
       onClick={copy}
-      className="absolute right-2 top-2 rounded-md px-2 py-1 text-xs font-medium text-neutral-600 hover:bg-neutral-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-500 focus-visible:ring-offset-2 dark:text-neutral-400 dark:hover:bg-neutral-800"
+      className={
+        className ??
+        'absolute right-2 top-2 rounded-md px-2 py-1 text-xs font-medium text-neutral-600 hover:bg-neutral-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-500'
+      }
     >
       <span aria-live="polite">{copied ? 'Copied!' : 'Copy'}</span>
     </button>

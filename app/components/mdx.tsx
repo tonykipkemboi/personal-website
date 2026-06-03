@@ -36,7 +36,7 @@ function CustomLink(props) {
     return (
       <Link
         href={href}
-        className="text-blue-500 hover:text-blue-600 transition-colors"
+        className="text-blue-600 transition-colors hover:text-blue-700"
         {...props}
       >
         {props.children}
@@ -47,7 +47,7 @@ function CustomLink(props) {
   if (href.startsWith('#')) {
     return (
       <a
-        className="text-blue-500 hover:text-blue-600 transition-colors"
+        className="text-blue-600 transition-colors hover:text-blue-700"
         {...props}
       >
         {props.children}
@@ -59,7 +59,7 @@ function CustomLink(props) {
     <a
       target="_blank"
       rel="noopener noreferrer"
-      className="text-blue-500 hover:text-blue-600 transition-colors"
+      className="text-blue-600 transition-colors hover:text-blue-700"
       {...props}
     >
       {props.children}
@@ -71,9 +71,24 @@ function RoundedImage(props) {
   return <Image alt={props.alt} className="rounded-lg" {...props} />
 }
 
-function Code({ children, ...props }) {
-  let codeHTML = highlight(children)
-  return <code dangerouslySetInnerHTML={{ __html: codeHTML }} {...props} />
+function Code({ children, className, ...props }) {
+  // Only syntax-highlight fenced code blocks — they carry a `language-*` class.
+  // Inline code stays a single neutral color so it doesn't speckle the prose.
+  if (typeof children === 'string' && className?.startsWith('language-')) {
+    const codeHTML = highlight(children)
+    return (
+      <code
+        className={className}
+        dangerouslySetInnerHTML={{ __html: codeHTML }}
+        {...props}
+      />
+    )
+  }
+  return (
+    <code className={className} {...props}>
+      {children}
+    </code>
+  )
 }
 
 export function AiOutput({ children }) {
@@ -143,6 +158,9 @@ let components = {
   a: CustomLink,
   code: Code,
   pre: Pre,
+  // Section breaks (`---`) render as breathing room, not a visible rule —
+  // each section already has its own subtitle.
+  hr: () => <hr className="my-12 border-0" />,
   Table,
   AiOutput,
   PretextDemo,

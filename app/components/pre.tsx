@@ -7,7 +7,6 @@ export function Pre({
   children,
   ...props
 }: { children: React.ReactNode } & React.HTMLAttributes<HTMLPreElement>) {
-  // Extract the text content from the code element
   const childrenArray = React.Children.toArray(children)
   const codeElement = childrenArray.find(
     (child): child is React.ReactElement =>
@@ -15,23 +14,24 @@ export function Pre({
       (child.type === 'code' ||
         (typeof child.type === 'function' && child.type.name === 'Code'))
   )
-  const textContent =
-    (codeElement?.props as { children?: string } | undefined)?.children || ''
+  const codeProps = codeElement?.props as
+    | { children?: string; className?: string }
+    | undefined
+  const textContent = codeProps?.children || ''
+  const lang = (codeProps?.className || '').replace('language-', '')
 
   return (
-    <div className="relative group">
-      <pre
-        className="overflow-x-auto my-4 p-3 sm:p-4 bg-neutral-900 rounded-lg text-xs sm:text-sm"
-        style={{
-          WebkitOverflowScrolling: 'touch',
-          scrollbarWidth: 'thin',
-          scrollbarColor: 'rgba(156, 163, 175, 0.3) transparent',
-        }}
-        {...props}
-      >
-        <CopyButton text={textContent} />
-        <div className="min-w-max">{children}</div>
-      </pre>
+    <div className="group relative my-6 overflow-hidden rounded-xl border border-[#21262d] bg-[#0d1117]">
+      <div className="flex items-center justify-between border-b border-[#21262d] px-4 py-2.5">
+        <span className="font-mono text-xs text-[#8b949e]">
+          {lang || 'code'}
+        </span>
+        <CopyButton
+          text={textContent}
+          className="rounded-md px-2 py-1 font-mono text-xs text-[#8b949e] transition-colors hover:bg-white/5 hover:text-[#e6edf3] focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#30363d]"
+        />
+      </div>
+      <pre {...props}>{children}</pre>
     </div>
   )
 }

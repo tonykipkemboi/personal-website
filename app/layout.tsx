@@ -1,6 +1,6 @@
 import './global.css'
 import type { Metadata, Viewport } from 'next'
-import { IBM_Plex_Mono } from 'next/font/google'
+import { Geist, Geist_Mono } from 'next/font/google'
 import { Navbar } from './components/nav'
 import { Analytics } from '@vercel/analytics/react'
 import { SpeedInsights } from '@vercel/speed-insights/next'
@@ -9,10 +9,15 @@ import { KonamiCode } from './components/konami'
 import { baseUrl } from './sitemap'
 import Script from 'next/script'
 
-const ibmPlexMono = IBM_Plex_Mono({
-  weight: ['400', '500', '600', '700'],
+const geistSans = Geist({
   subsets: ['latin'],
-  variable: '--font-ibm-plex-mono',
+  variable: '--font-geist-sans',
+  display: 'swap',
+})
+
+const geistMono = Geist_Mono({
+  subsets: ['latin'],
+  variable: '--font-geist-mono',
   display: 'swap',
 })
 
@@ -118,8 +123,9 @@ export default function RootLayout({
     <html
       lang="en"
       className={cx(
-        'text-black bg-white dark:text-white dark:bg-[#111010]',
-        ibmPlexMono.variable
+        'bg-white text-[#0a0a0a]',
+        geistSans.variable,
+        geistMono.variable
       )}
     >
       <head>
@@ -145,24 +151,21 @@ export default function RootLayout({
           `}
         </Script>
       </head>
-      <body className="antialiased max-w-3xl flex flex-col mx-4 mt-8 lg:mx-auto">
+      <body className="antialiased min-h-screen flex flex-col">
         <a
           href="#main-content"
-          className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-neutral-900 focus:text-white focus:rounded-md dark:focus:bg-neutral-100 dark:focus:text-neutral-900"
+          className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-neutral-900 focus:text-white focus:rounded-md"
         >
           Skip to main content
         </a>
-        <main
-          id="main-content"
-          className="flex-auto min-w-0 mt-6 flex flex-col px-2 md:px-0"
-        >
-          <Navbar />
+        <Navbar />
+        <main id="main-content" className="flex-auto w-full">
           {children}
-          <Footer />
-          <KonamiCode />
-          <Analytics />
-          <SpeedInsights />
         </main>
+        <Footer />
+        <KonamiCode />
+        <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   )

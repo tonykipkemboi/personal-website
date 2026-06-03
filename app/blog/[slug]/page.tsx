@@ -1,7 +1,8 @@
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
+import Image from 'next/image'
 import { CustomMDX } from 'app/components/mdx'
-import { ShareButton } from 'app/components/share-button'
+import { Comments } from 'app/components/comments'
 import { formatDate, getBlogPosts, calculateReadingTime } from 'app/blog/utils'
 import { baseUrl } from 'app/sitemap'
 
@@ -46,40 +47,21 @@ export async function generateMetadata({ params }: PageParams) {
       type: 'article',
       publishedTime,
       url: `${baseUrl}/blog/${post.slug}`,
-      ...(image
-        ? {
-            images: [
-              {
-                url: image,
-                width: 1200,
-                height: 630,
-                alt: `${title} - Tony Kipkemboi's Blog`,
-              },
-            ],
-          }
-        : {
-            images: [
-              {
-                url: `${baseUrl}/og-image.png`,
-                width: 1200,
-                height: 630,
-                alt: 'Tony Kipkemboi - Developer Advocate and Community Builder',
-              },
-            ],
-          }),
+      images: [
+        {
+          url: image || `${baseUrl}/og-image.png`,
+          width: 1200,
+          height: 630,
+          alt: `${title} - Tony Kipkemboi`,
+        },
+      ],
     },
     twitter: {
       card: 'summary_large_image',
       title,
       description: description || summary,
       creator: '@tonykipkemboi',
-      ...(image
-        ? {
-            images: [image],
-          }
-        : {
-            images: [`${baseUrl}/og-image.png`],
-          }),
+      images: [image || `${baseUrl}/og-image.png`],
     },
   }
 }
@@ -94,6 +76,7 @@ export default async function BlogPost({ params }: PageParams) {
   }
 
   const readingTime = calculateReadingTime(post.content)
+  const category = post.metadata.category
 
   const jsonLd = {
     '@context': 'https://schema.org',
@@ -109,70 +92,87 @@ export default async function BlogPost({ params }: PageParams) {
       name: post.metadata.author || 'Tony Kipkemboi',
       url: baseUrl,
     },
-    publisher: {
-      '@type': 'Person',
-      name: 'Tony Kipkemboi',
-      url: baseUrl,
-    },
+    publisher: { '@type': 'Person', name: 'Tony Kipkemboi', url: baseUrl },
     mainEntityOfPage: {
       '@type': 'WebPage',
       '@id': `${baseUrl}/blog/${post.slug}`,
     },
     ...(post.metadata.keywords && { keywords: post.metadata.keywords }),
-    ...(post.metadata.category && { articleSection: post.metadata.category }),
+    ...(category && { articleSection: category }),
     wordCount: post.content.trim().split(/\s+/).length,
     timeRequired: `PT${readingTime}M`,
   }
 
   return (
-    <section>
+    <section className="mx-auto w-full max-w-[720px] px-6 pt-10 pb-20 sm:px-8">
       <script
         type="application/ld+json"
         suppressHydrationWarning
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify(jsonLd),
-        }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
-      <h1 className="text-2xl font-medium tracking-tighter max-w-[650px]">
+
+      <Link
+        href="/blog"
+        className="text-sm text-neutral-400 transition-colors hover:text-[#0a0a0a]"
+      >
+        ← All writing
+      </Link>
+
+      {category && (
+        <Link
+          href={`/blog/category/${category.toLowerCase().replace(/\s+/g, '-')}`}
+          className="mt-7 block text-xs font-medium uppercase tracking-[0.18em] text-neutral-400 transition-colors hover:text-[#0a0a0a]"
+        >
+          {category}
+        </Link>
+      )}
+
+      <h1 className="mt-4 text-[clamp(2rem,4vw,2.875rem)] font-medium leading-[1.1] tracking-[-0.03em] text-[#0a0a0a]">
         {post.metadata.title}
       </h1>
-      <div className="flex flex-col gap-2 mt-2 mb-8 text-sm max-w-[650px]">
-        <div className="flex items-center gap-3 text-neutral-600 dark:text-neutral-400">
-          <p>{formatDate(post.metadata.publishedAt)}</p>
-          <span>•</span>
-          <p>{readingTime} min read</p>
-          {post.metadata.category && (
-            <>
-              <span>•</span>
-              <Link
-                href={`/blog/category/${post.metadata.category.toLowerCase().replace(/\s+/g, '-')}`}
-                className="hover:text-neutral-900 dark:hover:text-neutral-100 transition-colors"
-              >
-                {post.metadata.category}
-              </Link>
-            </>
-          )}
-        </div>
-        {post.metadata.tags && post.metadata.tags.length > 0 && (
-          <div className="flex flex-wrap gap-2">
-            {post.metadata.tags.map((tag) => (
-              <Link
-                key={tag}
-                href={`/blog/tags/${tag.toLowerCase().replace(/\s+/g, '-')}`}
-                className="text-neutral-600 hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-neutral-100 transition-colors"
-              >
-                #{tag}
-              </Link>
-            ))}
-          </div>
-        )}
+
+      <div className="mt-6 flex items-center gap-3 text-sm text-neutral-500">
+        <Image
+          src="/headshot.jpg"
+          alt="Tony Kipkemboi"
+          width={28}
+          height={28}
+          className="rounded-full object-cover"
+        />
+        <span className="text-[#0a0a0a]">Tony Kipkemboi</span>
+        <span className="text-neutral-300">·</span>
+        <time dateTime={post.metadata.publishedAt}>
+          {formatDate(post.metadata.publishedAt)}
+        </time>
+        <span className="text-neutral-300">·</span>
+        <span>{readingTime} min read</span>
       </div>
-      <div className="flex items-center justify-start md:justify-end max-w-[650px]">
-        <ShareButton slug={post.slug} baseUrl={baseUrl} />
-      </div>
-      <article className="prose prose-quoteless prose-neutral dark:prose-invert">
+
+      <article className="prose mt-12">
         <CustomMDX source={post.content} />
       </article>
+
+      <div className="mt-12 flex items-center justify-between border-t border-neutral-200 pt-8">
+        <span className="text-sm text-neutral-400">Thanks for reading.</span>
+        <Link
+          href="/blog"
+          className="text-sm text-[#0a0a0a] transition-opacity hover:opacity-60"
+        >
+          ← All writing
+        </Link>
+      </div>
+
+      <div className="mt-16">
+        <div className="mb-6 flex items-end justify-between">
+          <h2 className="text-2xl font-medium tracking-tight text-[#0a0a0a]">
+            Discussion
+          </h2>
+          <span className="text-[13px] text-neutral-400">
+            via GitHub Discussions
+          </span>
+        </div>
+        <Comments />
+      </div>
     </section>
   )
 }

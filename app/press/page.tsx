@@ -18,6 +18,15 @@ export interface MediaAppearance {
 
 const appearancesData: MediaAppearance[] = [
   {
+    title: "Guest Lecture at Harvard Kennedy School — Prof. Hong Qu's class",
+    type: 'talk',
+    source: 'Harvard University',
+    date: '2026-03-15',
+    link: 'https://www.linkedin.com/posts/tonykipkemboi_back-at-harvard-kennedy-school-today-for-activity-7435380054898925568-IzQw',
+    description:
+      "Returned to Harvard Kennedy School as a guest lecturer for Professor Hong Qu's class, speaking on AI agents and how they reshape real-world workflows.",
+  },
+  {
     title: "O'Reilly AI Catalyst: Enterprise Agent Deployments",
     type: 'video',
     source: "O'Reilly Media",
@@ -153,14 +162,20 @@ const types: MediaAppearance['type'][] = ['talk', 'video', 'podcast', 'article']
 
 export default function PressPage() {
   return (
-    <section>
-      <h1 className="text-2xl font-medium mb-2 text-neutral-900 dark:text-neutral-100">
-        Online Footprint
+    <section className="mx-auto w-full max-w-[1240px] px-6 pt-10 pb-24 sm:px-10 lg:px-20">
+      <span className="text-xs font-medium uppercase tracking-[0.18em] text-neutral-400">
+        Press &amp; speaking
+      </span>
+      <h1 className="mt-5 text-[clamp(2.25rem,4.5vw,3.75rem)] font-medium leading-[1.05] tracking-[-0.035em] text-[#0a0a0a]">
+        Talks, features &amp; podcasts
       </h1>
-      <p className="text-neutral-600 dark:text-neutral-400 mb-6">
-        Podcasts, talks, articles, and videos.
+      <p className="mt-5 max-w-[560px] text-lg leading-relaxed text-neutral-500">
+        Where I&apos;ve spoken, taught, and been featured — on AI agents,
+        multi-agent systems, and putting them into production.
       </p>
-      <FilteredAppearances appearances={appearances} types={types} />
+      <div className="mt-10">
+        <FilteredAppearances appearances={appearances} types={types} />
+      </div>
     </section>
   )
 }
