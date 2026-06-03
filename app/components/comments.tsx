@@ -13,16 +13,10 @@ const categoryId = process.env.NEXT_PUBLIC_GISCUS_CATEGORY_ID
 const THEME = 'https://tonykipkemboi.com/giscus.css'
 
 export function Comments() {
-  // Until GitHub Discussions is enabled + the giscus app installed, show a note
-  // instead of a broken widget. Set the four NEXT_PUBLIC_GISCUS_* env vars to go live.
+  // If the giscus env vars aren't configured, render nothing (no dev-only note
+  // leaks to visitors). Set the four NEXT_PUBLIC_GISCUS_* vars to enable it.
   if (!repo || !repoId || !categoryId) {
-    return (
-      <p className="text-sm text-neutral-400">
-        Discussion runs on GitHub Discussions — set the{' '}
-        <code className="font-mono text-[0.85em]">NEXT_PUBLIC_GISCUS_*</code>{' '}
-        env vars to enable it.
-      </p>
-    )
+    return null
   }
 
   return (
