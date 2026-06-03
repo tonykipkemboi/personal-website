@@ -1,0 +1,26 @@
+/* Custom giscus theme: GitHub light theme + black primary button
+   to match the minimal site. Loaded by the giscus iframe via data-theme
+   (served over HTTPS in production). */
+@import url('https://giscus.app/themes/light.css');
+
+main {
+  --color-btn-primary-bg: #0a0a0a;
+  --color-btn-primary-hover-bg: #1f1f1f;
+  --color-btn-primary-active-bg: #000000;
+  --color-btn-primary-selected-bg: #000000;
+  --color-btn-primary-disabled-bg: #6e7681;
+  --color-btn-primary-border: #0a0a0a;
+  --color-btn-primary-hover-border: #1f1f1f;
+  --color-btn-primary-disabled-border: #6e7681;
+}
+
+/* Belt-and-suspenders: force the sign-in button black regardless of how
+   Primer names its variables across versions. */
+.btn-primary {
+  color: #ffffff !important;
+  background-color: #0a0a0a !important;
+  border-color: rgba(27, 31, 36, 0.15) !important;
+}
+.btn-primary:hover {
+  background-color: #1f1f1f !important;
+}

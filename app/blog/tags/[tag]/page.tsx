@@ -1,11 +1,6 @@
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
-import {
-  getBlogPostsByTag,
-  getAllTags,
-  formatDate,
-  calculateReadingTime,
-} from '../../utils'
+import { getBlogPostsByTag, getAllTags, formatDate } from '../../utils'
 
 export async function generateStaticParams() {
   const tags = await getAllTags()
@@ -49,56 +44,43 @@ export default async function TagPage({
   }
 
   return (
-    <section>
-      <h1 className="font-medium text-2xl mb-8 tracking-tighter">
-        Posts Tagged: {tag}
+    <section className="mx-auto w-full max-w-[1240px] px-6 pt-10 pb-24 sm:px-10 lg:px-20">
+      <Link
+        href="/blog"
+        className="text-sm text-neutral-400 transition-colors hover:text-[#0a0a0a]"
+      >
+        ← All writing
+      </Link>
+      <span className="mt-7 block text-xs font-medium uppercase tracking-[0.18em] text-neutral-400">
+        Tagged
+      </span>
+      <h1 className="mt-4 text-[clamp(2rem,4vw,3rem)] font-medium tracking-[-0.03em] text-[#0a0a0a]">
+        #{tag}
       </h1>
 
-      <div className="space-y-8">
-        {posts.map((post) => {
-          const readingTime = calculateReadingTime(post.content)
-          return (
-            <Link
-              key={post.slug}
-              href={`/blog/${post.slug}`}
-              className="block group"
+      <div className="mt-10">
+        {posts.map((post) => (
+          <Link
+            key={post.slug}
+            href={`/blog/${post.slug}`}
+            className="group flex items-center gap-6 border-t border-neutral-200 py-5"
+          >
+            <time
+              dateTime={post.metadata.publishedAt}
+              className="w-28 shrink-0 text-sm tabular-nums text-neutral-400"
             >
-              <div className="flex flex-col space-y-2">
-                <div className="flex justify-between items-baseline">
-                  <h2 className="text-neutral-900 dark:text-neutral-100 tracking-tight font-medium group-hover:text-neutral-600 dark:group-hover:text-neutral-400 transition-colors">
-                    {post.metadata.title}
-                  </h2>
-                  <p className="text-neutral-600 dark:text-neutral-400 text-sm whitespace-nowrap ml-4">
-                    {formatDate(post.metadata.publishedAt)}
-                  </p>
-                </div>
-                <p className="text-neutral-600 dark:text-neutral-400">
-                  {post.metadata.summary}
-                </p>
-                <div className="flex items-center gap-3 text-sm text-neutral-500">
-                  <span>{readingTime} min read</span>
-                  {post.metadata.category && (
-                    <>
-                      <span>•</span>
-                      <span className="text-neutral-500">
-                        {post.metadata.category}
-                      </span>
-                    </>
-                  )}
-                </div>
-              </div>
-            </Link>
-          )
-        })}
-      </div>
-
-      <div className="mt-12">
-        <Link
-          href="/blog"
-          className="text-neutral-600 hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-neutral-100 transition-colors"
-        >
-          ← Back to all posts
-        </Link>
+              {formatDate(post.metadata.publishedAt)}
+            </time>
+            <span className="flex-1 text-[18px] tracking-tight text-[#0a0a0a] transition-opacity group-hover:opacity-60">
+              {post.metadata.title}
+            </span>
+            {post.metadata.category && (
+              <span className="hidden shrink-0 text-right text-[13px] text-neutral-400 sm:block">
+                {post.metadata.category}
+              </span>
+            )}
+          </Link>
+        ))}
       </div>
     </section>
   )

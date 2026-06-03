@@ -1,68 +1,42 @@
 @import 'tailwindcss';
 
-* {
-  font-family: var(--font-ibm-plex-mono), monospace;
-}
-
-::selection {
-  background-color: #47a3f3;
-  color: #fefefe;
-}
-
 :root {
-  --sh-class: #2d5e9d;
-  --sh-identifier: #354150;
-  --sh-sign: #8996a3;
-  --sh-string: #007f7a;
-  --sh-keyword: #e02518;
-  --sh-comment: #a19595;
-  --sh-jsxliterals: #6266d1;
-  --sh-property: #e25a1c;
-  --sh-entity: #e25a1c;
+  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-mono:
+    var(--font-geist-mono), ui-monospace, 'SFMono-Regular', monospace;
+
+  /* Code highlighting — GitHub-dark, accurate per-token colors */
+  --sh-class: #d2a8ff; /* classes / types — violet */
+  --sh-identifier: #e6edf3; /* identifiers — near-white */
+  --sh-sign: #8b949e; /* punctuation — gray */
+  --sh-string: #a5d6ff; /* strings — light blue */
+  --sh-keyword: #ff7b72; /* keywords (from/import/return) — coral */
+  --sh-comment: #8b949e; /* comments — gray */
+  --sh-jsxliterals: #79c0ff; /* numbers / literals — blue */
+  --sh-property: #79c0ff; /* properties — blue */
+  --sh-entity: #d2a8ff; /* function calls — violet */
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --sh-class: #4c97f8;
-    --sh-identifier: white;
-    --sh-keyword: #f47067;
-    --sh-string: #0fa295;
-  }
-  html {
-    color-scheme: dark;
-  }
+* {
+  font-family: var(--font-sans);
 }
 
 html {
   min-width: 360px;
-  /* Subtle dotted mesh background */
-  background-image: radial-gradient(
-    circle,
-    rgba(0, 0, 0, 0.05) 1px,
-    transparent 1px
-  );
-  background-size: 20px 20px;
-  background-position:
-    0 0,
-    10px 10px;
-  background-attachment: fixed;
+  color-scheme: light;
 }
 
-@media (prefers-color-scheme: dark) {
-  html {
-    background-image: radial-gradient(
-      circle,
-      rgba(255, 255, 255, 0.03) 1px,
-      transparent 1px
-    );
-    background-size: 20px 20px;
-    background-position:
-      0 0,
-      10px 10px;
-    background-attachment: fixed;
-  }
+body {
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
 }
 
+::selection {
+  background-color: #0a0a0a;
+  color: #ffffff;
+}
+
+/* ---------- Article / prose ---------- */
 .prose .anchor {
   @apply absolute invisible no-underline;
 
@@ -78,11 +52,11 @@ html {
 }
 
 .prose a {
-  @apply underline transition-colors decoration-neutral-400 dark:decoration-neutral-600 underline-offset-2 decoration-[0.1em];
+  @apply underline transition-colors decoration-blue-300 underline-offset-2 decoration-[0.1em];
 }
 
 .prose .anchor:after {
-  @apply text-neutral-300 dark:text-neutral-700;
+  @apply text-neutral-300;
   content: '#';
 }
 
@@ -90,75 +64,102 @@ html {
   @apply visible;
 }
 
-.prose pre {
-  @apply bg-neutral-50 dark:bg-neutral-900 rounded-lg overflow-x-auto border border-neutral-200 dark:border-neutral-900 py-2 px-3 text-sm;
-}
-
-.prose code {
-  @apply px-1.5 py-0.5 rounded-md bg-neutral-100 dark:bg-neutral-800 text-[0.9em];
-}
-
-.prose pre code {
-  @apply p-0 bg-transparent;
-  border: initial;
-  line-height: 1.5;
-  font-size: inherit;
-}
-
-.prose code span {
-  @apply font-medium;
-}
-
 .prose img {
-  /* Don't apply styles to next/image */
   @apply m-0;
 }
 
 .prose p {
-  @apply my-4 text-neutral-800 dark:text-neutral-200;
+  @apply my-5 leading-relaxed text-neutral-700;
 }
 
 .prose h1 {
-  @apply text-4xl font-medium tracking-tight mt-6 mb-2 scroll-mt-20;
+  @apply text-4xl font-medium tracking-tight mt-8 mb-3 scroll-mt-24 text-neutral-900;
 }
 
 .prose h2 {
-  @apply text-2xl font-medium tracking-tight mt-8 mb-3 scroll-mt-20;
+  @apply text-2xl font-medium tracking-tight mt-10 mb-3 scroll-mt-24 text-neutral-900;
 }
 
 .prose h3 {
-  @apply text-xl font-medium tracking-tight mt-6 mb-2 scroll-mt-20;
+  @apply text-xl font-medium tracking-tight mt-8 mb-2 scroll-mt-24 text-neutral-900;
 }
 
 .prose h4 {
-  @apply text-lg font-medium tracking-tight mt-5 mb-2 scroll-mt-20;
+  @apply text-lg font-medium tracking-tight mt-6 mb-2 scroll-mt-24 text-neutral-900;
 }
 
 .prose strong {
-  @apply font-medium;
+  @apply font-medium text-neutral-900;
 }
 
 .prose ul {
-  @apply list-disc pl-6;
+  @apply list-disc pl-6 my-5 text-neutral-700;
 }
 
 .prose ol {
-  @apply list-decimal pl-6;
+  @apply list-decimal pl-6 my-5 text-neutral-700;
+}
+
+.prose blockquote {
+  @apply border-l-2 border-neutral-900 pl-5 my-6 text-neutral-900 not-italic;
 }
 
 .prose > :first-child {
-  /* Override removing top margin, causing layout shift */
-  margin-top: 1.25em !important;
-  margin-bottom: 1.25em !important;
+  margin-top: 0 !important;
+}
+
+/* ---------- Code blocks ---------- */
+.prose code {
+  font-family: var(--font-mono);
+  @apply px-1.5 py-0.5 rounded-md bg-neutral-100 text-neutral-800 text-[0.85em];
+}
+
+.prose pre {
+  font-family: var(--font-mono);
+  background: transparent;
+  overflow-x: auto;
+  padding: 1.125rem 1.25rem;
+  margin: 0;
+  font-size: 0.85rem;
+  line-height: 1.6;
+}
+
+.prose pre code {
+  font-family: var(--font-mono);
+  background: transparent;
+  padding: 0;
+  border: 0;
+  color: #e6edf3;
+  font-size: inherit;
+}
+
+/* Disable programming ligatures so tokens like <|startoftranscript|>
+   render literally instead of collapsing into arrow/triangle glyphs. */
+code,
+pre,
+kbd,
+samp,
+.prose code,
+.prose pre,
+.prose pre code,
+.prose pre code span {
+  font-variant-ligatures: none !important;
+  font-feature-settings:
+    'liga' 0,
+    'clig' 0,
+    'calt' 0,
+    'dlig' 0 !important;
 }
 
 pre::-webkit-scrollbar {
-  display: none;
+  height: 8px;
 }
-
-pre {
-  -ms-overflow-style: none; /* IE and Edge */
-  scrollbar-width: none; /* Firefox */
+pre::-webkit-scrollbar-thumb {
+  background: rgba(110, 118, 129, 0.4);
+  border-radius: 4px;
+}
+pre::-webkit-scrollbar-track {
+  background: transparent;
 }
 
 /* Remove Safari input shadow on mobile */
@@ -169,21 +170,13 @@ input[type='email'] {
   appearance: none;
 }
 
-/* Tables — proper layout, cell padding, subtle borders, wraps on narrow viewports.
-   Wrap each table in <div className="table-wrap"> so it horizontally scrolls
-   on mobile without breaking the article column. */
+/* ---------- Tables (used in articles) ---------- */
 .table-wrap {
-  margin: 1.25rem 0;
+  margin: 1.5rem 0;
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
-  border: 1px solid rgb(229 229 229);
+  border: 1px solid rgb(236 236 236);
   border-radius: 0.5rem;
-}
-
-@media (prefers-color-scheme: dark) {
-  .table-wrap {
-    border-color: rgb(38 38 38);
-  }
 }
 
 .table-wrap table {
@@ -198,36 +191,17 @@ input[type='email'] {
   background: rgb(250 250 250);
 }
 
-@media (prefers-color-scheme: dark) {
-  .table-wrap thead {
-    background: rgb(23 23 23);
-  }
-}
-
 .table-wrap th,
 .table-wrap td {
   padding: 0.5rem 0.875rem;
   text-align: left;
   vertical-align: top;
-  border-bottom: 1px solid rgb(229 229 229);
-}
-
-@media (prefers-color-scheme: dark) {
-  .table-wrap th,
-  .table-wrap td {
-    border-bottom-color: rgb(38 38 38);
-  }
+  border-bottom: 1px solid rgb(236 236 236);
 }
 
 .table-wrap th {
   font-weight: 600;
   color: rgb(64 64 64);
-}
-
-@media (prefers-color-scheme: dark) {
-  .table-wrap th {
-    color: rgb(212 212 212);
-  }
 }
 
 .table-wrap tbody tr:last-child td {
@@ -238,12 +212,6 @@ input[type='email'] {
   background: rgba(0, 0, 0, 0.02);
 }
 
-@media (prefers-color-scheme: dark) {
-  .table-wrap tbody tr:hover {
-    background: rgba(255, 255, 255, 0.03);
-  }
-}
-
 .table-wrap code {
   font-size: 0.85em;
   padding: 0.1em 0.3em;
@@ -251,28 +219,13 @@ input[type='email'] {
   border-radius: 0.25rem;
 }
 
-@media (prefers-color-scheme: dark) {
-  .table-wrap code {
-    background: rgb(38 38 38);
-  }
-}
-
-/* Transcript blocks — REF/PRED/T3/T4c rows aligned in a label/text grid.
-   Used in the baseline-examples section and the audio-listening section
-   so readers can scan each model's output against the reference at a glance. */
+/* ---------- Transcript blocks (Kalenjin post) ---------- */
 .transcript-block {
   margin: 1rem 0;
   padding: 0.875rem 1rem;
   background: rgb(250 250 250);
-  border-left: 3px solid rgb(229 229 229);
+  border-left: 3px solid rgb(236 236 236);
   border-radius: 0 0.5rem 0.5rem 0;
-}
-
-@media (prefers-color-scheme: dark) {
-  .transcript-block {
-    background: rgb(23 23 23);
-    border-left-color: rgb(64 64 64);
-  }
 }
 
 .transcript {
@@ -287,13 +240,7 @@ input[type='email'] {
 }
 
 .transcript + .transcript {
-  border-top: 1px dashed rgb(229 229 229);
-}
-
-@media (prefers-color-scheme: dark) {
-  .transcript + .transcript {
-    border-top-color: rgb(64 64 64);
-  }
+  border-top: 1px dashed rgb(236 236 236);
 }
 
 .transcript-label {
@@ -301,16 +248,10 @@ input[type='email'] {
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  color: rgb(38 128 141); /* brand teal */
+  color: rgb(38 128 141);
   text-align: right;
   align-self: start;
   padding-top: 0.35rem;
-}
-
-@media (prefers-color-scheme: dark) {
-  .transcript-label {
-    color: rgb(79 184 197);
-  }
 }
 
 .transcript code {
@@ -323,76 +264,7 @@ input[type='email'] {
   text-wrap: balance;
 }
 
-/* Add styles for code blocks in MDX */
-pre {
-  overflow-x: auto;
-  white-space: pre;
-  word-wrap: normal;
-  padding: 1rem;
-  border-radius: 0.5rem;
-  background-color: #f5f5f5;
-  margin: 1rem 0;
-}
-
-@media (prefers-color-scheme: dark) {
-  pre {
-    background-color: #1a1a1a;
-  }
-}
-
-pre code {
-  display: block;
-  min-width: 100%;
-  padding: 0;
-}
-
-.prose pre {
-  max-width: 100vw;
-  overflow-x: auto;
-}
-
-/* Scrollbar styles for code blocks */
-.overflow-x-auto::-webkit-scrollbar {
-  height: 6px;
-  background: transparent;
-}
-
-.overflow-x-auto::-webkit-scrollbar-thumb {
-  background: rgba(156, 163, 175, 0.3);
-  border-radius: 3px;
-}
-
-.overflow-x-auto::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-/* Syntax highlighting with better contrast */
-.sh__token--property {
-  color: #7dd3fc !important; /* Light blue with better contrast */
-}
-
-.sh__token--comment {
-  color: #94a3b8 !important; /* Slate-400 for better contrast */
-}
-
-.sh__line {
-  color: #e2e8f0 !important; /* Slate-200 for better base text contrast */
-}
-
-/* Ensure dark mode has sufficient contrast */
-.dark .sh__token--property {
-  color: #38bdf8 !important; /* Brighter blue for dark mode */
-}
-
-.dark .sh__token--comment {
-  color: #94a3b8 !important; /* Slate-400 for dark mode comments */
-}
-
-.dark .sh__line {
-  color: #f1f5f9 !important; /* Slate-100 for dark mode base text */
-}
-
-/* Konami Code - Retro Mode */
+/* ---------- Konami Code — Retro Mode ---------- */
 html.retro-mode,
 html.retro-mode body {
   background: #0a0a0a !important;
@@ -466,7 +338,7 @@ html.retro-mode main {
 .retro-text {
   background: transparent !important;
   background-color: transparent !important;
-  font-family: var(--font-ibm-plex-mono), monospace;
+  font-family: var(--font-mono);
   font-size: 13px;
   line-height: 1.6;
   color: #00ff41 !important;

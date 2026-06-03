@@ -1,9 +1,9 @@
 import Link from 'next/link'
 import { formatDate, getBlogPosts } from 'app/blog/utils'
 
-export async function RecentPosts() {
+export async function RecentPosts({ limit = 7 }: { limit?: number }) {
   const allBlogs = await getBlogPosts()
-  const recentPosts = allBlogs.slice(0, 5)
+  const recentPosts = allBlogs.slice(0, limit)
 
   if (!recentPosts.length) return null
 
@@ -13,17 +13,22 @@ export async function RecentPosts() {
         <Link
           key={post.slug}
           href={`/blog/${post.slug}`}
-          className="group flex justify-between items-baseline py-3 border-b border-neutral-100 dark:border-neutral-800 last:border-b-0 hover:bg-neutral-50 dark:hover:bg-neutral-900 -mx-2 px-2 rounded transition-colors"
+          className="group flex items-center gap-6 border-t border-neutral-200 py-5"
         >
-          <span className="font-medium text-neutral-900 dark:text-neutral-100 group-hover:text-neutral-600 dark:group-hover:text-neutral-300 transition-colors">
-            {post.metadata.title}
-          </span>
           <time
             dateTime={post.metadata.publishedAt}
-            className="text-sm text-neutral-500 dark:text-neutral-500 tabular-nums shrink-0 ml-4"
+            className="w-24 shrink-0 text-sm tabular-nums text-neutral-400"
           >
             {formatDate(post.metadata.publishedAt)}
           </time>
+          <span className="flex-1 text-[18px] tracking-tight text-[#0a0a0a] transition-opacity group-hover:opacity-60">
+            {post.metadata.title}
+          </span>
+          {post.metadata.category && (
+            <span className="hidden shrink-0 text-right text-[13px] text-neutral-400 sm:block">
+              {post.metadata.category}
+            </span>
+          )}
         </Link>
       ))}
     </div>

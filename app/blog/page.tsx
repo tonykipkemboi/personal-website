@@ -1,88 +1,55 @@
 import { Suspense } from 'react'
-import { getBlogPosts, getAllTags, calculateReadingTime } from './utils'
-import { TagFilter } from 'app/components/tag-filter'
+import { getBlogPosts } from './utils'
 import { BlogSearch } from 'app/components/blog-search'
 
 export const metadata = {
   title: 'Blog',
-  description: 'Thoughts on AI agents, automation, and building things.',
+  description: 'Field notes and essays on AI agents, models, and dev tools.',
 }
 
-async function TagFilterWrapper() {
-  const tags = await getAllTags()
-  return (
-    <div className="mb-6">
-      <TagFilter tags={tags} />
-    </div>
-  )
-}
+const SHELL = 'mx-auto w-full max-w-[1240px] px-6 sm:px-10 lg:px-20'
+const LABEL = 'text-xs font-medium uppercase tracking-[0.18em] text-neutral-400'
 
-async function BlogPostsWithSearch() {
+async function BlogList() {
   const posts = await getBlogPosts()
-  const postsWithReadingTime = posts.map((post) => ({
+  const data = posts.map((post) => ({
     slug: post.slug,
     metadata: post.metadata,
-    readingTime: calculateReadingTime(post.content),
   }))
-
-  return <BlogSearch posts={postsWithReadingTime} />
+  return <BlogSearch posts={data} />
 }
 
-function BlogSkeleton() {
+export default function Page() {
   return (
-    <div className="space-y-6">
-      <div className="h-10 w-full bg-neutral-200 dark:bg-neutral-800 rounded-lg animate-pulse"></div>
-      <div className="grid grid-cols-1 gap-6">
-        {[...Array(4)].map((_, i) => (
-          <div
-            key={i}
-            className="rounded-lg border border-neutral-200 dark:border-neutral-800 p-5 animate-pulse"
-          >
-            <div className="flex items-center justify-between mb-4">
-              <div className="h-4 w-24 bg-neutral-200 dark:bg-neutral-800 rounded"></div>
-              <div className="h-4 w-16 bg-neutral-200 dark:bg-neutral-800 rounded"></div>
-            </div>
-            <div className="h-6 w-3/4 bg-neutral-200 dark:bg-neutral-800 rounded mb-3"></div>
-            <div className="space-y-2">
-              <div className="h-4 w-full bg-neutral-200 dark:bg-neutral-800 rounded"></div>
-              <div className="h-4 w-5/6 bg-neutral-200 dark:bg-neutral-800 rounded"></div>
-            </div>
-            <div className="h-40 w-full bg-neutral-200 dark:bg-neutral-800 rounded mt-4"></div>
-          </div>
-        ))}
-      </div>
-    </div>
-  )
-}
-
-export default async function Page() {
-  return (
-    <section>
-      <h1 className="text-2xl font-medium mb-2 text-neutral-900 dark:text-neutral-100">
-        Writing
+    <section className={`${SHELL} pt-10 pb-24`}>
+      <span className={LABEL}>Writing</span>
+      <h1 className="mt-5 text-[clamp(2.25rem,4.5vw,3.75rem)] font-medium leading-[1.05] tracking-[-0.035em] text-[#0a0a0a]">
+        Field notes &amp; essays
       </h1>
-      <p className="text-neutral-600 dark:text-neutral-400 mb-6">
-        Thoughts on AI agents, automation, and building things.
+      <p className="mt-5 max-w-[560px] text-lg leading-relaxed text-neutral-500">
+        On building AI agents, fine-tuning models, and shipping developer tools.
+        Some tutorials, some opinions, occasionally both.
       </p>
 
-      <Suspense
-        fallback={
-          <div className="flex gap-2 mb-6">
-            {[...Array(3)].map((_, i) => (
-              <div
-                key={i}
-                className="h-7 w-20 bg-neutral-200 dark:bg-neutral-800 rounded-full animate-pulse"
-              ></div>
-            ))}
-          </div>
-        }
-      >
-        <TagFilterWrapper />
-      </Suspense>
-
-      <Suspense fallback={<BlogSkeleton />}>
-        <BlogPostsWithSearch />
-      </Suspense>
+      <div className="mt-10">
+        <Suspense
+          fallback={
+            <div className="space-y-3">
+              {[...Array(8)].map((_, i) => (
+                <div
+                  key={i}
+                  className="flex justify-between border-t border-neutral-200 py-5"
+                >
+                  <div className="h-4 w-2/3 animate-pulse rounded bg-neutral-100" />
+                  <div className="h-4 w-20 animate-pulse rounded bg-neutral-100" />
+                </div>
+              ))}
+            </div>
+          }
+        >
+          <BlogList />
+        </Suspense>
+      </div>
     </section>
   )
 }

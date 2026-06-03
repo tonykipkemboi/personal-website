@@ -32,7 +32,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   }))
 
   // Static pages
-  const routes = ['', '/blog', '/projects', '/press'].map((route) => ({
+  const routes = ['', '/blog', '/press'].map((route) => ({
     url: `${baseUrl}${route}`,
     lastModified: new Date().toISOString(),
     changeFrequency: 'weekly' as const,
