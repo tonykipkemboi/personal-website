@@ -56,8 +56,15 @@ export function Figure({
       'data-rehype-pretty-code-title' in (child.props as object)
   )
 
-  const preElement = childArray.find(
-    (child): child is React.ReactElement<{
+  // Everything that isn't the title caption is the body (the highlighted
+  // <pre>). Render it directly so the code ALWAYS shows, regardless of how the
+  // <pre> is typed/wrapped (a strict type check missed it and dropped the code).
+  const body = childArray.filter((child) => child !== caption)
+
+  const preElement = body.find(
+    (
+      child
+    ): child is React.ReactElement<{
       'data-language'?: string
       children?: React.ReactNode
     }> =>
@@ -67,7 +74,9 @@ export function Figure({
 
   const title = caption ? extractText(caption.props.children) : ''
   const lang = (preElement?.props['data-language'] as string) || ''
-  const codeText = preElement ? extractText(preElement.props.children) : ''
+  const codeText = (
+    preElement ? extractText(preElement.props.children) : extractText(body)
+  ).replace(/\n$/, '')
 
   return (
     <figure
@@ -79,11 +88,11 @@ export function Figure({
           {title || lang || 'code'}
         </span>
         <CopyButton
-          text={codeText.replace(/\n$/, '')}
+          text={codeText}
           className="rounded-md px-2 py-1 font-mono text-xs text-[#8b949e] transition-colors hover:bg-white/5 hover:text-[#e6edf3] focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#30363d]"
         />
       </div>
-      {preElement}
+      {body}
     </figure>
   )
 }
