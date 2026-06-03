@@ -5,16 +5,16 @@
   --font-mono:
     var(--font-geist-mono), ui-monospace, 'SFMono-Regular', monospace;
 
-  /* Code highlighting — muted, low-saturation (one calm theme, minimal clash) */
-  --sh-class: #aeb9d4; /* muted blue-gray */
-  --sh-identifier: #d4dae0; /* default light */
-  --sh-sign: #6e7681; /* dim gray */
-  --sh-string: #9bb0a4; /* muted sage */
-  --sh-keyword: #aeb9d4; /* muted blue-gray */
-  --sh-comment: #6e7681; /* dim gray */
-  --sh-jsxliterals: #9bb0a4; /* muted sage */
-  --sh-property: #d4dae0; /* default light */
-  --sh-entity: #aeb9d4; /* muted blue-gray */
+  /* Code highlighting — GitHub-dark, accurate per-token colors */
+  --sh-class: #d2a8ff; /* classes / types — violet */
+  --sh-identifier: #e6edf3; /* identifiers — near-white */
+  --sh-sign: #8b949e; /* punctuation — gray */
+  --sh-string: #a5d6ff; /* strings — light blue */
+  --sh-keyword: #ff7b72; /* keywords (from/import/return) — coral */
+  --sh-comment: #8b949e; /* comments — gray */
+  --sh-jsxliterals: #79c0ff; /* numbers / literals — blue */
+  --sh-property: #79c0ff; /* properties — blue */
+  --sh-entity: #d2a8ff; /* function calls — violet */
 }
 
 * {
@@ -129,7 +129,7 @@ body {
   background: transparent;
   padding: 0;
   border: 0;
-  color: #c9d1d9;
+  color: #e6edf3;
   font-size: inherit;
 }
 
