@@ -1,0 +1,15 @@
+/* Custom giscus theme: GitHub light theme + black primary button
+   to match the minimal site. Loaded by the giscus iframe via data-theme
+   (must be served over HTTPS in production). */
+@import url('https://giscus.app/themes/light.css');
+
+main {
+  --color-btn-primary-bg: #0a0a0a;
+  --color-btn-primary-hover-bg: #1f1f1f;
+  --color-btn-primary-active-bg: #000000;
+  --color-btn-primary-selected-bg: #000000;
+  --color-btn-primary-disabled-bg: #6e7681;
+  --color-btn-primary-border: #0a0a0a;
+  --color-btn-primary-hover-border: #1f1f1f;
+  --color-btn-primary-disabled-border: #6e7681;
+}

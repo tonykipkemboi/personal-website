@@ -7,6 +7,11 @@ const repoId = process.env.NEXT_PUBLIC_GISCUS_REPO_ID
 const category = process.env.NEXT_PUBLIC_GISCUS_CATEGORY
 const categoryId = process.env.NEXT_PUBLIC_GISCUS_CATEGORY_ID
 
+// Custom giscus theme (light + black primary button). Must be an absolute
+// HTTPS URL — the giscus iframe blocks http (mixed content), so we point at
+// the production origin; it serves the same CSS to preview/prod deploys.
+const THEME = 'https://tonykipkemboi.com/giscus.css'
+
 export function Comments() {
   // Until GitHub Discussions is enabled + the giscus app installed, show a note
   // instead of a broken widget. Set the four NEXT_PUBLIC_GISCUS_* env vars to go live.
@@ -31,7 +36,7 @@ export function Comments() {
       reactionsEnabled="1"
       emitMetadata="0"
       inputPosition="top"
-      theme="light"
+      theme={THEME}
       lang="en"
       loading="lazy"
     />
