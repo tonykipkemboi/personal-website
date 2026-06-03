@@ -2,9 +2,9 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { MDXRemote } from 'next-mdx-remote/rsc'
 import remarkGfm from 'remark-gfm'
-import { highlight } from 'sugar-high'
+import rehypePrettyCode from 'rehype-pretty-code'
 import React from 'react'
-import { Pre } from './pre'
+import { Figure } from './pre'
 import { PretextDemo } from './pretext-demo'
 
 function Table({ data }) {
@@ -72,18 +72,9 @@ function RoundedImage(props) {
 }
 
 function Code({ children, className, ...props }) {
-  // Only syntax-highlight fenced code blocks — they carry a `language-*` class.
+  // Fenced blocks are now highlighted by rehype-pretty-code at the rehype
+  // stage (this <code> just renders the Shiki token spans it produced).
   // Inline code stays a single neutral color so it doesn't speckle the prose.
-  if (typeof children === 'string' && className?.startsWith('language-')) {
-    const codeHTML = highlight(children)
-    return (
-      <code
-        className={className}
-        dangerouslySetInnerHTML={{ __html: codeHTML }}
-        {...props}
-      />
-    )
-  }
   return (
     <code className={className} {...props}>
       {children}
@@ -157,7 +148,9 @@ let components = {
   img: (props) => <img className="rounded-lg" {...props} />,
   a: CustomLink,
   code: Code,
-  pre: Pre,
+  // rehype-pretty-code wraps each fenced block in <figure>; we override it
+  // to render the dark card (header with title/lang + Copy button + body).
+  figure: Figure,
   // Section breaks (`---`) render as breathing room, not a visible rule —
   // each section already has its own subtitle.
   hr: () => <hr className="my-12 border-0" />,
@@ -174,6 +167,17 @@ export function CustomMDX(props) {
       options={{
         mdxOptions: {
           remarkPlugins: [remarkGfm],
+          rehypePlugins: [
+            [
+              rehypePrettyCode,
+              {
+                theme: 'github-dark',
+                // We paint our own #0d1117 card; let Shiki tokens sit on it.
+                keepBackground: false,
+                defaultLang: 'plaintext',
+              },
+            ],
+          ],
         },
       }}
     />
