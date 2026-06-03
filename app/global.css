@@ -4,17 +4,6 @@
   --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
   --font-mono:
     var(--font-geist-mono), ui-monospace, 'SFMono-Regular', monospace;
-
-  /* Code highlighting — GitHub-dark, accurate per-token colors */
-  --sh-class: #d2a8ff; /* classes / types — violet */
-  --sh-identifier: #e6edf3; /* identifiers — near-white */
-  --sh-sign: #8b949e; /* punctuation — gray */
-  --sh-string: #a5d6ff; /* strings — light blue */
-  --sh-keyword: #ff7b72; /* keywords (from/import/return) — coral */
-  --sh-comment: #8b949e; /* comments — gray */
-  --sh-jsxliterals: #79c0ff; /* numbers / literals — blue */
-  --sh-property: #79c0ff; /* properties — blue */
-  --sh-entity: #d2a8ff; /* function calls — violet */
 }
 
 * {
@@ -109,9 +98,17 @@ body {
 }
 
 /* ---------- Code blocks ---------- */
-.prose code {
+/* Inline code — neutral pill. Scoped with :not() so it never touches the
+   Shiki spans inside a fenced block (those live in figure > pre > code). */
+.prose code:not(pre code) {
   font-family: var(--font-mono);
   @apply px-1.5 py-0.5 rounded-md bg-neutral-100 text-neutral-800 text-[0.85em];
+}
+
+/* rehype-pretty-code emits <figure data-rehype-pretty-code-figure>; our
+   Figure component paints the #0d1117 card, so the figure itself is bare. */
+.prose figure[data-rehype-pretty-code-figure] {
+  margin: 0;
 }
 
 .prose pre {
@@ -129,8 +126,17 @@ body {
   background: transparent;
   padding: 0;
   border: 0;
-  color: #e6edf3;
   font-size: inherit;
+  /* Default text color for tokens Shiki leaves unstyled; per-token colors
+     come from the inline `color` Shiki sets on each <span>. */
+  color: #e6edf3;
+  display: grid; /* one row per line so [data-line] spans behave as rows */
+}
+
+/* Each source line is a <span data-line>. */
+.prose pre code [data-line] {
+  display: inline-block;
+  width: 100%;
 }
 
 /* Disable programming ligatures so tokens like <|startoftranscript|>
