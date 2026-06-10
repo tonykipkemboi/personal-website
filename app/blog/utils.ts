@@ -14,21 +14,47 @@ type Metadata = {
 }
 
 /**
- * Resolve the social-share (OG) image for a post, as an absolute URL:
- *   1. an explicit `image:` in frontmatter, else
- *   2. the post's first hero image (first markdown image in the body), else
- *   3. the site's default og-image.png.
- * Relative paths (e.g. /blog/foo-hero.jpg) are made absolute with baseUrl.
+ * The post's hero image as authored: an explicit `image:` in frontmatter, else
+ * the first markdown image in the body, else null. Path is returned verbatim
+ * (relative like `/blog/foo-hero.jpg`, or an absolute https URL).
+ */
+export function getPostHeroImage(post: {
+  metadata: Metadata
+  content: string
+}): string | null {
+  const firstBodyImage = post.content.match(/!\[[^\]]*\]\(\s*([^\s)]+)/)?.[1]
+  return post.metadata.image || firstBodyImage || null
+}
+
+/**
+ * The post's hero image as an absolute URL, falling back to the site default
+ * og-image.png. Used for JSON-LD (Google wants the real content image).
  */
 export function getPostOgImage(
   post: { metadata: Metadata; content: string },
   baseUrl: string
 ): string {
-  const firstBodyImage = post.content.match(/!\[[^\]]*\]\(\s*([^\s)]+)/)?.[1]
-  const raw = post.metadata.image || firstBodyImage
+  const raw = getPostHeroImage(post)
   if (!raw) return `${baseUrl}/og-image.png`
   if (/^https?:\/\//.test(raw)) return raw
   return `${baseUrl}${raw.startsWith('/') ? '' : '/'}${raw}`
+}
+
+/**
+ * The social-share card URL for a post: our dynamic /og route, which composites
+ * the post's hero into a pixel-perfect 1200x630 frame with the title overlaid
+ * (so feeds never letterbox or crop a mis-sized hero). Posts with no hero get a
+ * branded title-only card. Used for og:image and twitter:image.
+ */
+export function getPostOgCard(
+  post: { metadata: Metadata; content: string },
+  baseUrl: string
+): string {
+  const params = new URLSearchParams({ title: post.metadata.title })
+  const hero = getPostHeroImage(post)
+  if (hero) params.set('image', hero)
+  if (post.metadata.category) params.set('category', post.metadata.category)
+  return `${baseUrl}/og?${params.toString()}`
 }
 
 function parseFrontmatter(fileContent: string) {
