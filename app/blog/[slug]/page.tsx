@@ -8,6 +8,7 @@ import {
   getBlogPosts,
   calculateReadingTime,
   getPostOgImage,
+  getPostOgCard,
 } from 'app/blog/utils'
 import { baseUrl } from 'app/sitemap'
 
@@ -41,8 +42,8 @@ export async function generateMetadata({ params }: PageParams) {
     keywords,
   } = post.metadata
 
-  // Use the post's own hero image as the social card (falls back to default).
-  const ogImage = getPostOgImage(post, baseUrl)
+  // Composite the post's hero into a pixel-perfect 1200x630 social card.
+  const ogCard = getPostOgCard(post, baseUrl)
 
   return {
     title,
@@ -54,14 +55,21 @@ export async function generateMetadata({ params }: PageParams) {
       type: 'article',
       publishedTime,
       url: `${baseUrl}/blog/${post.slug}`,
-      images: [{ url: ogImage, alt: `${title} - Tony Kipkemboi` }],
+      images: [
+        {
+          url: ogCard,
+          width: 1200,
+          height: 630,
+          alt: `${title} - Tony Kipkemboi`,
+        },
+      ],
     },
     twitter: {
       card: 'summary_large_image',
       title,
       description: description || summary,
       creator: '@tonykipkemboi',
-      images: [ogImage],
+      images: [ogCard],
     },
   }
 }

@@ -38,5 +38,7 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-# Claude Code local worktrees/cache
-.claude/
+# Claude Code local worktrees/cache (but keep checked-in skills/commands)
+.claude/*
+!.claude/skills/
+!.claude/commands/
