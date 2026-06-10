@@ -3,7 +3,12 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { CustomMDX } from 'app/components/mdx'
 import { Comments } from 'app/components/comments'
-import { formatDate, getBlogPosts, calculateReadingTime } from 'app/blog/utils'
+import {
+  formatDate,
+  getBlogPosts,
+  calculateReadingTime,
+  getPostOgImage,
+} from 'app/blog/utils'
 import { baseUrl } from 'app/sitemap'
 
 export async function generateStaticParams() {
@@ -34,8 +39,10 @@ export async function generateMetadata({ params }: PageParams) {
     summary,
     description,
     keywords,
-    image,
   } = post.metadata
+
+  // Use the post's own hero image as the social card (falls back to default).
+  const ogImage = getPostOgImage(post, baseUrl)
 
   return {
     title,
@@ -47,21 +54,14 @@ export async function generateMetadata({ params }: PageParams) {
       type: 'article',
       publishedTime,
       url: `${baseUrl}/blog/${post.slug}`,
-      images: [
-        {
-          url: image || `${baseUrl}/og-image.png`,
-          width: 1200,
-          height: 630,
-          alt: `${title} - Tony Kipkemboi`,
-        },
-      ],
+      images: [{ url: ogImage, alt: `${title} - Tony Kipkemboi` }],
     },
     twitter: {
       card: 'summary_large_image',
       title,
       description: description || summary,
       creator: '@tonykipkemboi',
-      images: [image || `${baseUrl}/og-image.png`],
+      images: [ogImage],
     },
   }
 }
@@ -85,7 +85,7 @@ export default async function BlogPost({ params }: PageParams) {
     datePublished: post.metadata.publishedAt,
     dateModified: post.metadata.publishedAt,
     description: post.metadata.description || post.metadata.summary,
-    image: post.metadata.image || `${baseUrl}/og-image.png`,
+    image: getPostOgImage(post, baseUrl),
     url: `${baseUrl}/blog/${post.slug}`,
     author: {
       '@type': 'Person',

@@ -13,6 +13,24 @@ type Metadata = {
   image?: string
 }
 
+/**
+ * Resolve the social-share (OG) image for a post, as an absolute URL:
+ *   1. an explicit `image:` in frontmatter, else
+ *   2. the post's first hero image (first markdown image in the body), else
+ *   3. the site's default og-image.png.
+ * Relative paths (e.g. /blog/foo-hero.jpg) are made absolute with baseUrl.
+ */
+export function getPostOgImage(
+  post: { metadata: Metadata; content: string },
+  baseUrl: string
+): string {
+  const firstBodyImage = post.content.match(/!\[[^\]]*\]\(\s*([^\s)]+)/)?.[1]
+  const raw = post.metadata.image || firstBodyImage
+  if (!raw) return `${baseUrl}/og-image.png`
+  if (/^https?:\/\//.test(raw)) return raw
+  return `${baseUrl}${raw.startsWith('/') ? '' : '/'}${raw}`
+}
+
 function parseFrontmatter(fileContent: string) {
   let frontmatterRegex = /---\s*([\s\S]*?)\s*---/
   let match = frontmatterRegex.exec(fileContent)
