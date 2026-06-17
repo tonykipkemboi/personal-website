@@ -102,11 +102,11 @@ export async function GET() {
   // Build the full content
   let content = `# Tony Kipkemboi
 
-> AI Engineer and Content Creator specializing in AI automations, agent systems, and developer education. US Army veteran. Former CrewAI, Snowflake, Bloomberg, Booz Allen Hamilton.
+> AI engineer building practical agent systems, fine-tuning experiments, and developer tools, then sharing the lessons through field notes, courses, and talks. US Army veteran. Former CrewAI, Snowflake, Bloomberg, Booz Allen Hamilton.
 
-I build AI automations and agent systems that help teams work smarter. I create technical content about AI across social platforms including YouTube, where my most popular video on building PDF RAG systems with Ollama has 189K+ views.
+I build agent systems, model fine-tuning experiments, and developer tools with a bias for shipping. I write down what worked, what broke, and what I would try next.
 
-I've spoken at PyCon US, ODSC, Harvard Kennedy School, IBM TechXchange, MLOps World, and more. I'm passionate about open-source software, AI agents, and developer education.
+I've taught or spoken at PyCon US, ODSC, Harvard Kennedy School, IBM TechXchange, MLOps World, and more. I care about open-source software, practical AI systems, and developer education.
 
 ## Contact & Social
 
@@ -120,6 +120,7 @@ I've spoken at PyCon US, ODSC, Harvard Kennedy School, IBM TechXchange, MLOps Wo
 ## Expertise
 
 - AI Agents & Multi-Agent Systems (CrewAI, LangChain, LlamaIndex)
+- Fine-tuning and LoRA adapters
 - RAG (Retrieval-Augmented Generation)
 - Python, Streamlit, Next.js
 - Local LLMs (Ollama, Groq)

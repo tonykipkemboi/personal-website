@@ -45,9 +45,9 @@ export const courseCatalog: CourseMetadata[] = [
     slug: 'lora-101',
     title: 'LoRA 101',
     summary:
-      'A beginner-friendly guide to Low-Rank Adaptation for fine-tuning base models.',
+      'A plain-English guide to how Low-Rank Adaptation makes fine-tuning smaller, cheaper, and easier to swap.',
     description:
-      'Learn what LoRA is, why low-rank adapters work, how LoRA training differs from full fine-tuning, and when QLoRA or full fine-tuning makes more sense.',
+      'Start with the mental model, then learn why low-rank adapters work, how LoRA training differs from full fine-tuning, and when QLoRA or full fine-tuning makes more sense.',
     level: 'Beginner',
     status: 'First pass',
     publishedAt: '2026-06-17',

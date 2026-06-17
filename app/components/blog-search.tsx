@@ -61,7 +61,7 @@ export function BlogSearch({ posts }: { posts: BlogPost[] }) {
         <input
           type="text"
           name="search"
-          placeholder="Search posts…"
+          placeholder="Search field notes..."
           autoComplete="off"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
@@ -123,7 +123,7 @@ export function BlogSearch({ posts }: { posts: BlogPost[] }) {
 
         {filtered.length === 0 && (
           <p className="border-t border-neutral-200 py-10 text-center text-neutral-400">
-            No posts found.
+            No field notes found.
           </p>
         )}
       </div>

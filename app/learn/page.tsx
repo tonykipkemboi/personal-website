@@ -4,7 +4,7 @@ import { getCourseReadingTime, getCourses } from './utils'
 export const metadata = {
   title: 'Learn',
   description:
-    'Distilled notes, experiments, and field guides from Tony Kipkemboi on AI, fine-tuning, agents, and developer tools.',
+    'Distilled guides from what Tony Kipkemboi is learning and testing in AI agents, fine-tuning, and developer tools.',
 }
 
 const SHELL = 'mx-auto w-full max-w-[1240px] px-6 sm:px-10 lg:px-20'
@@ -17,12 +17,12 @@ export default async function Page() {
     <section className={`${SHELL} pt-10 pb-24`}>
       <span className={LABEL}>Learning</span>
       <h1 className="mt-5 text-[clamp(2.25rem,4.5vw,3.75rem)] font-medium leading-[1.05] tracking-[-0.035em] text-[#0a0a0a]">
-        Distilled notes &amp; field guides
+        Guides from what I am learning
       </h1>
       <p className="mt-5 max-w-[620px] text-lg leading-relaxed text-neutral-500">
-        Things I am learning, testing, and explaining back to myself. If it
-        helps me make sense of an idea, it lives here so I can revisit it and
-        other people can use it too.
+        These are the notes I wish I had at the start: small courses, mental
+        models, diagrams, and practical tradeoffs from things I am actively
+        learning or building.
       </p>
 
       <div className="mt-12">

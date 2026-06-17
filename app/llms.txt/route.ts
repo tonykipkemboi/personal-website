@@ -18,15 +18,15 @@ export async function GET() {
 
   let content = `# Tony Kipkemboi
 
-> AI Engineer and Content Creator. Building AI automations and agent systems. US Army veteran. Speaker at PyCon US, ODSC, Harvard. Former CrewAI, Snowflake, Bloomberg.
+> AI engineer building practical agent systems, fine-tuning experiments, and developer tools, then sharing the lessons through field notes, courses, and talks. US Army veteran. Speaker at PyCon US, ODSC, Harvard. Former CrewAI, Snowflake, Bloomberg.
 
 ## Links
 
 - [Website](${baseUrl})
-- [Blog](${baseUrl}/blog): Technical articles on AI agents and tutorials
-- [Learn](${baseUrl}/learn): Structured courses and field guides
+- [Blog](${baseUrl}/blog): Field notes on AI agents, fine-tuning, and developer tools
+- [Learn](${baseUrl}/learn): Distilled guides from what I am learning and building
 - [Projects](${baseUrl}/projects): Open source AI projects
-- [Press](${baseUrl}/press): Talks, podcasts, and media appearances
+- [Press](${baseUrl}/press): Talks, courses, podcasts, and features
 - [GitHub](https://github.com/tonykipkemboi)
 - [YouTube](https://www.youtube.com/@tonykipkemboi)
 - [LinkedIn](https://linkedin.com/in/tonykipkemboi)
@@ -65,7 +65,7 @@ export async function GET() {
   content += `
 ## Expertise
 
-AI Agents, CrewAI, LangChain, RAG, Python, Streamlit, Local LLMs (Ollama, Groq), Developer Education
+AI Agents, CrewAI, LangChain, RAG, Python, Streamlit, Local LLMs (Ollama, Groq), Fine-tuning, Developer Education
 `
 
   return new Response(content, {

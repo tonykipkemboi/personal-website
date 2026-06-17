@@ -4,7 +4,8 @@ import { BlogSearch } from 'app/components/blog-search'
 
 export const metadata = {
   title: 'Blog',
-  description: 'Field notes and essays on AI agents, models, and dev tools.',
+  description:
+    'Field notes from Tony Kipkemboi on building AI agents, fine-tuning models, and shipping developer tools.',
 }
 
 const SHELL = 'mx-auto w-full max-w-[1240px] px-6 sm:px-10 lg:px-20'
@@ -24,11 +25,12 @@ export default function Page() {
     <section className={`${SHELL} pt-10 pb-24`}>
       <span className={LABEL}>Writing</span>
       <h1 className="mt-5 text-[clamp(2.25rem,4.5vw,3.75rem)] font-medium leading-[1.05] tracking-[-0.035em] text-[#0a0a0a]">
-        Field notes &amp; essays
+        Field notes from the workbench
       </h1>
       <p className="mt-5 max-w-[560px] text-lg leading-relaxed text-neutral-500">
-        On building AI agents, fine-tuning models, and shipping developer tools.
-        Some tutorials, some opinions, occasionally both.
+        I write down what I am building, what broke, what surprised me, and the
+        mental models I want to keep. Some tutorials, some opinions,
+        occasionally both.
       </p>
 
       <div className="mt-10">

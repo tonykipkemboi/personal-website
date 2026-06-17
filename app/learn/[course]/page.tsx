@@ -96,12 +96,12 @@ export default async function CoursePage({ params }: PageParams) {
         href="/learn"
         className="text-sm text-neutral-400 transition-colors hover:text-[#0a0a0a]"
       >
-        ← All courses
+        ← All guides
       </Link>
 
       <div className="mt-10 grid gap-12 lg:grid-cols-[minmax(0,1fr)_320px]">
         <div>
-          <span className={LABEL}>Learning path</span>
+          <span className={LABEL}>Learning guide</span>
           <h1 className="mt-5 max-w-[760px] text-[clamp(2.25rem,5vw,4rem)] font-medium leading-[1.05] tracking-[-0.035em] text-[#0a0a0a]">
             {course.metadata.title}
           </h1>
@@ -114,7 +114,7 @@ export default async function CoursePage({ params }: PageParams) {
               href={`/learn/${course.metadata.slug}/${firstLesson.slug}`}
               className="mt-8 inline-flex border-b border-[#0a0a0a] pb-0.5 text-sm text-[#0a0a0a] transition-opacity hover:opacity-60"
             >
-              Start course →
+              Start guide →
             </Link>
           )}
         </div>
