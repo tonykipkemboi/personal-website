@@ -77,9 +77,15 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({ configured: false, upCount: 0 })
   }
 
-  const upCount = await getUpCount(courseSlug, lessonSlug)
+  try {
+    const upCount = await getUpCount(courseSlug, lessonSlug)
 
-  return NextResponse.json({ configured: true, upCount })
+    return NextResponse.json({ configured: true, upCount })
+  } catch (error) {
+    console.error('Could not read lesson feedback.', error)
+
+    return NextResponse.json({ configured: true, upCount: 0 })
+  }
 }
 
 export async function POST(request: NextRequest) {
@@ -144,11 +150,18 @@ export async function POST(request: NextRequest) {
   if (!response.ok) {
     return NextResponse.json(
       { error: 'Could not save lesson feedback.' },
-      { status: 500 }
+      { status: 503 }
     )
   }
 
-  const upCount = await getUpCount(courseSlug, lessonSlug)
+  let upCount = 0
+
+  try {
+    upCount = await getUpCount(courseSlug, lessonSlug)
+  } catch (error) {
+    console.error('Could not read lesson feedback after saving.', error)
+  }
+
   const result = NextResponse.json({ ok: true, upCount })
 
   if (!existingAnonymousId) {
