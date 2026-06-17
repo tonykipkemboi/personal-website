@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { CustomMDX } from 'app/components/mdx'
+import { LessonFeedback } from 'app/learn/components/lesson-feedback'
 import { baseUrl } from 'app/sitemap'
 import { courseCatalog, getCourseLessons, getLesson } from '../../utils'
 
@@ -189,6 +190,11 @@ export default async function LessonPage({ params }: PageParams) {
                 </Link>
               )}
             </div>
+
+            <LessonFeedback
+              courseSlug={course.metadata.slug}
+              lessonSlug={lesson.slug}
+            />
 
             <p className="mt-8 text-sm text-neutral-400">
               © 2026 Tony Kipkemboi. All rights reserved.

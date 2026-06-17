@@ -179,6 +179,15 @@ export default async function CoursePage({ params }: PageParams) {
         </div>
       </div>
 
+      <div className="mt-16 border-t border-neutral-200 pt-6">
+        <span className={LABEL}>Feedback</span>
+        <p className="mt-3 max-w-[680px] text-base leading-relaxed text-neutral-500">
+          Each lesson has a quick usefulness check. I only show the public
+          useful count; written notes stay private and help shape future
+          revisions.
+        </p>
+      </div>
+
       {course.metadata.sources && course.metadata.sources.length > 0 && (
         <div className="mt-16">
           <span className={LABEL}>Sources</span>
