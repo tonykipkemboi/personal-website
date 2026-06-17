@@ -54,7 +54,7 @@ body {
 }
 
 .prose img {
-  @apply m-0;
+  @apply m-0 h-auto max-w-full;
 }
 
 .prose p {

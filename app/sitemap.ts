@@ -1,5 +1,6 @@
 import { MetadataRoute } from 'next'
 import { getBlogPosts, getAllTags, getAllCategories } from './blog/utils'
+import { getCourses } from './learn/utils'
 
 export const baseUrl = 'https://tonykipkemboi.com'
 
@@ -31,13 +32,37 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.7,
   }))
 
+  // Learning paths
+  const courses = await getCourses()
+  const coursePages = courses.map((course) => ({
+    url: `${baseUrl}/learn/${course.metadata.slug}`,
+    lastModified: new Date(course.metadata.updatedAt).toISOString(),
+    changeFrequency: 'monthly' as const,
+    priority: 0.8,
+  }))
+  const lessonPages = courses.flatMap((course) =>
+    course.lessons.map((lesson) => ({
+      url: `${baseUrl}/learn/${course.metadata.slug}/${lesson.slug}`,
+      lastModified: new Date(lesson.metadata.updatedAt).toISOString(),
+      changeFrequency: 'monthly' as const,
+      priority: 0.75,
+    }))
+  )
+
   // Static pages
-  const routes = ['', '/blog', '/press'].map((route) => ({
+  const routes = ['', '/blog', '/learn', '/press'].map((route) => ({
     url: `${baseUrl}${route}`,
     lastModified: new Date().toISOString(),
     changeFrequency: 'weekly' as const,
     priority: route === '' ? 1.0 : 0.9,
   }))
 
-  return [...routes, ...blogs, ...tagPages, ...categoryPages]
+  return [
+    ...routes,
+    ...blogs,
+    ...coursePages,
+    ...lessonPages,
+    ...tagPages,
+    ...categoryPages,
+  ]
 }

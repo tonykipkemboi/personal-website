@@ -3,6 +3,7 @@ import Link from 'next/link'
 import { RecentPosts } from './components/recent-posts'
 import { HeroBackdrop } from './components/hero-backdrop'
 import { baseUrl } from './sitemap'
+import { getCourseReadingTime, getCourses } from './learn/utils'
 
 const personJsonLd = {
   '@context': 'https://schema.org',
@@ -85,7 +86,9 @@ const recognition = [
 const SHELL = 'mx-auto w-full max-w-[1240px] px-6 sm:px-10 lg:px-20'
 const LABEL = 'text-xs font-medium uppercase tracking-[0.18em] text-neutral-400'
 
-export default function Page() {
+export default async function Page() {
+  const courses = await getCourses()
+
   return (
     <div>
       <script
@@ -158,6 +161,41 @@ export default function Page() {
         >
           <RecentPosts limit={7} />
         </Suspense>
+      </section>
+
+      {/* Learning paths */}
+      <section className={`${SHELL} pb-20`}>
+        <div className="mb-5 flex items-end justify-between">
+          <span className={LABEL}>Learning paths</span>
+          <Link
+            href="/learn"
+            className="border-b border-neutral-300 pb-0.5 text-sm text-[#0a0a0a] transition-opacity hover:opacity-60"
+          >
+            All courses ↗
+          </Link>
+        </div>
+        <div>
+          {courses.map((course) => (
+            <Link
+              key={course.metadata.slug}
+              href={`/learn/${course.metadata.slug}`}
+              className="group flex flex-col gap-3 border-t border-neutral-200 py-6 md:flex-row md:items-center md:justify-between md:gap-10"
+            >
+              <div className="flex flex-col gap-1.5 md:max-w-[680px]">
+                <span className="text-[19px] tracking-tight text-[#0a0a0a] transition-opacity group-hover:opacity-60">
+                  {course.metadata.title}
+                </span>
+                <span className="text-sm leading-relaxed text-neutral-500">
+                  {course.metadata.summary}
+                </span>
+              </div>
+              <div className="flex shrink-0 items-center gap-5 text-sm text-neutral-400">
+                <span>{course.lessons.length} lessons</span>
+                <span>{getCourseReadingTime(course)} min</span>
+              </div>
+            </Link>
+          ))}
+        </div>
       </section>
 
       {/* Experiments */}
