@@ -10,6 +10,9 @@ const nextConfig = {
     ],
   },
   allowedDevOrigins: ['10.0.0.249'],
+  turbopack: {
+    root: __dirname,
+  },
 }
 
 module.exports = nextConfig

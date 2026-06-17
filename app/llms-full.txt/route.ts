@@ -1,6 +1,7 @@
 import { baseUrl } from 'app/sitemap'
 import { getBlogPosts } from 'app/blog/utils'
 import { projects } from 'app/components/projects'
+import { getCourses } from 'app/learn/utils'
 
 const mediaAppearances = [
   {
@@ -96,6 +97,7 @@ const mediaAppearances = [
 
 export async function GET() {
   const allBlogs = await getBlogPosts()
+  const courses = await getCourses()
 
   // Build the full content
   let content = `# Tony Kipkemboi
@@ -166,6 +168,57 @@ ${project.github ? `- GitHub: ${project.github}` : ''}
 - Link: ${appearance.link}
 
 ${appearance.description}
+
+`
+  }
+
+  // Add learning paths with full lesson content
+  content += `---
+
+## Learning Paths
+
+`
+
+  for (const course of courses) {
+    content += `### ${course.metadata.title}
+
+- Level: ${course.metadata.level}
+- Status: ${course.metadata.status}
+- URL: ${baseUrl}/learn/${course.metadata.slug}
+- Tags: ${course.metadata.tags.join(', ')}
+
+${course.metadata.description}
+
+`
+
+    for (const lesson of course.lessons) {
+      content += `#### ${lesson.metadata.title}
+
+- URL: ${baseUrl}/learn/${course.metadata.slug}/${lesson.slug}
+- Updated: ${lesson.metadata.updatedAt}
+
+${lesson.metadata.summary}
+
+##### Full Lesson Content
+
+${lesson.content}
+
+`
+    }
+
+    if (course.metadata.sources && course.metadata.sources.length > 0) {
+      content += `#### Sources
+
+`
+
+      for (const source of course.metadata.sources) {
+        content += `- [${source.title}](${source.href}): ${source.description}\n`
+      }
+
+      content += '\n'
+    }
+
+    content += `---
 
 `
   }

@@ -1,9 +1,11 @@
 import { baseUrl } from 'app/sitemap'
 import { getBlogPosts } from 'app/blog/utils'
 import { projects } from 'app/components/projects'
+import { getCourses } from 'app/learn/utils'
 
 export async function GET() {
   const allBlogs = await getBlogPosts()
+  const courses = await getCourses()
   const topProjects = projects.slice(0, 5) // Top 5 by stars
 
   const sortedBlogs = allBlogs
@@ -22,6 +24,7 @@ export async function GET() {
 
 - [Website](${baseUrl})
 - [Blog](${baseUrl}/blog): Technical articles on AI agents and tutorials
+- [Learn](${baseUrl}/learn): Structured courses and field guides
 - [Projects](${baseUrl}/projects): Open source AI projects
 - [Press](${baseUrl}/press): Talks, podcasts, and media appearances
 - [GitHub](https://github.com/tonykipkemboi)
@@ -33,6 +36,15 @@ export async function GET() {
 
 - [Complete AI-readable content](${baseUrl}/llms-full.txt): Full machine-readable version with all blog posts, projects, and details
 
+## Learning Paths
+
+`
+
+  for (const course of courses) {
+    content += `- [${course.metadata.title}](${baseUrl}/learn/${course.metadata.slug}): ${course.metadata.summary}\n`
+  }
+
+  content += `
 ## Latest Blog Posts
 
 `
