@@ -1,0 +1,102 @@
+---
+title: 'In the Trenches: The Context Extraction Problem'
+publishedAt: '2026-06-17'
+summary: 'Useful enterprise AI starts with pulling enough real context out of the workflow before you build.'
+description: 'A practical note from inside enterprise AI work on why users struggle to explain their workflows, why observation matters, and what helps before building agents.'
+author: 'Tony Kipkemboi'
+category: 'AI Agents'
+tags: ['AI Agents', 'Enterprise AI', 'Agent Workflows', 'Context Engineering']
+keywords: 'enterprise ai, ai agents, context extraction, workflow discovery, forward deployed engineer, palantir fde, agent adoption'
+---
+
+![Two Tony mascots pulling hidden workflow context out of a rough prototype before the real AI build](/blog/in-the-trenches-context-extraction-hero.png)
+
+This is the first note in what I am calling the trenches series.
+
+I spent time at [CrewAI](https://www.crewai.com) as a founding developer advocate, which meant I was usually on the outside of the enterprise. I was helping teams understand agents, build their first systems, and get from idea to something real. That seat was useful. You see a lot of patterns quickly.
+
+Over time, I kept noticing a pattern with some teams. A company would get excited. They would buy the tool or start the pilot. The first demos looked good. Then sometimes usage would flatten, or the project would quietly drift.
+
+At some point I wanted to see the other side of it from inside a company actually trying to use AI to make work better. That is the seat I am in now. Seven months in, the lesson keeps coming back in a pretty plain way: useful agent work starts with getting enough real context from the people who know the workflow before anyone builds.
+
+I have been calling this the context extraction problem.
+
+## People forget what they know
+
+Most work lives messier than the doc.
+
+People often think it is. There might be a process doc somewhere. There might be a checklist. There might be a spreadsheet everyone has agreed is "the source of truth." Then you sit with the person who actually owns the workflow and realize half the job lives in their head.
+
+They know which customer names are weird, which spreadsheet columns are listed as optional and still matter, when to ignore the official rule because this one team always does things differently, and which Slack thread usually explains what the ticket is really asking.
+
+If you ask them, "What are the steps?" they will usually give you the clean version. They are being honest. The hidden parts just stop feeling like steps after a while. They have done the work so many times that parts of it became muscle memory.
+
+That is where agent projects start to break. You build against the described workflow. Then the user tries it and says, "This is close. Something is missing."
+
+That missing piece is where all the useful context lives.
+
+## Observation keeps coming up for a reason
+
+This is why observation is such a big deal.
+
+Meta took a very aggressive version of this recently. According to [The Verge](https://www.theverge.com/tech/916681/meta-ai-agents-employee-tracking), Meta started using employee computer activity to help train AI agents, including mouse movements, clicks, keystrokes, and occasional screenshots inside work apps and websites.
+
+That approach raises obvious privacy and trust problems. The reason behind it is still easy to understand. If you want agents that can do computer work, you need examples of how people actually use computers: how they move through tabs, copy data, check a value, jump back to Slack, fix a mistake, and keep going.
+
+That difference matters. The written version of a workflow is usually too clean. The real version is messy and full of little recoveries.
+
+Recording every click is impractical, and honestly I would hate for that to become the default anyway. The point is simpler: asking only gets you so far. You need a way to get closer to the actual work.
+
+## Palantir understood this early
+
+This is also why I keep thinking about Palantir's forward deployed model.
+
+Whatever you think of Palantir, they understood something important about enterprise software: customers often cannot fully explain what they need until they see something working. So they put technical people close to the customer, close enough to see the workflow itself.
+
+Palantir has long described its engineering setup around roles like [Devs and Deltas](https://blog.palantir.com/dev-versus-delta-demystifying-engineering-roles-at-palantir-ad44c2a6e87), and its [careers page](https://www.palantir.com/careers/) also talks about Echos, Deltas, and Devs as intentionally overlapping roles. The language changes depending on where you read. The point is simple: one part of the team understands the customer and the domain, and another part can build.
+
+That pairing matters. A builder without enough domain context can ship something technically clean that misses the real problem. A domain person without enough builder support can understand the problem and still struggle to move fast enough. The useful thing is the overlap. Someone has to sit close enough to the work to notice the weird details, and someone has to be able to turn those details into a working system quickly.
+
+That is the part I think a lot of enterprise AI teams underestimate. Discovery has to keep happening while you build.
+
+## What has helped me so far
+
+I am still figuring out a perfect system for this. A few things have helped.
+
+The first one is asking people to map the workflow before we meet. A plain list of actual steps is more useful than a polished PRD or a slide. What starts the workflow? What do you look at first? What systems do you open? What do you copy? What do you check manually? What tells you the output is good? What makes you stop and ask someone else?
+
+This sounds basic. It changes the conversation. Once the workflow is written down, people start noticing the parts they skipped. They remember exceptions. They point to the handoffs. They show you the spreadsheet they forgot to mention.
+
+The second thing is asking users to spend time with Claude or ChatGPT before the first real build conversation. The point is to use the model to talk through the workflow. Ask it to turn the rough process into steps. Ask it what information it would need. Ask it where an agent might fail.
+
+This can even become a skill inside the company. Something that interviews the person about the workflow, asks for edge cases, pushes on missing inputs, and helps them turn the idea into a spec that an engineering or AI enablement team can actually use.
+
+The bigger unlock is getting users to build a rough prototype first.
+
+It can be scrappy. A small internal POC. A basic HTML mockup. A rough Claude artifact. A simple version of the workflow that shows what they think should happen.
+
+That process forces the context out.
+
+When someone tries to build the first version, they hit the kinks immediately. They realize a field is missing. They remember an approval step. They notice the output needs to change depending on the account type. They find the edge cases because the prototype makes the workflow concrete.
+
+By the time that person comes to me, the conversation is completely different. Instead of starting from a vague idea, they can show me something. They can demo the POC. They can walk me through the spec. I can poke around, ask questions, and see where the thing is still fuzzy.
+
+That is a much better starting point than a blank meeting.
+
+## The real job
+
+I used to think of enterprise AI work as mostly building agents. Seven months in, I think of it more as translation.
+
+You are translating messy human work into something a model can operate on. You are translating habits into instructions. You are translating edge cases into evals. You are translating "I just know" into context the system can actually use.
+
+That is slower than people want it to be. Skipping it is why so many agent projects feel impressive in the demo and disappointing in production. The model can only reason over what you give it. If the workflow context is missing, the model is guessing.
+
+Sometimes that gets you through a demo. A real workflow needs more than a lucky guess.
+
+So the takeaway for me is simple: before you ask a team to automate the workflow, ask the user to try building the first version of it.
+
+Have them map the steps. Have them talk it through with an agent. Have them make the rough prototype, even if it is ugly. Especially if it is ugly. The goal is to arrive with the real work already surfaced.
+
+Sometimes the most useful prototype never becomes the product.
+
+Sometimes the best prototype is the one that teaches everyone what the product actually needs to be.
