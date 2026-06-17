@@ -57,7 +57,7 @@ export function Navbar() {
             rel="noopener noreferrer"
             className="whitespace-nowrap border-b border-[#0a0a0a] pb-0.5 text-sm text-[#0a0a0a] transition-opacity hover:opacity-60"
           >
-            Get in touch
+            Say hello
           </a>
         </div>
       </nav>

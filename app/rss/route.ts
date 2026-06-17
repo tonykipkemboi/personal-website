@@ -29,7 +29,7 @@ export async function GET() {
     <channel>
         <title>Tony Kipkemboi</title>
         <link>${baseUrl}</link>
-        <description>AI engineer and content creator sharing technical insights on AI automations, agent systems, and software development.</description>
+        <description>Field notes from Tony Kipkemboi on building AI agents, fine-tuning models, and shipping developer tools.</description>
         ${itemsXml}
     </channel>
   </rss>`

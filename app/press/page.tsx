@@ -3,7 +3,8 @@ import { FilteredAppearances } from '../components/press-filter'
 
 export const metadata: Metadata = {
   title: 'Press',
-  description: 'Media appearances, talks, and press coverage.',
+  description:
+    'Talks, courses, podcasts, and features from Tony Kipkemboi on AI agents, fine-tuning, and production AI systems.',
 }
 
 export interface MediaAppearance {
@@ -167,11 +168,11 @@ export default function PressPage() {
         Press &amp; speaking
       </span>
       <h1 className="mt-5 text-[clamp(2.25rem,4.5vw,3.75rem)] font-medium leading-[1.05] tracking-[-0.035em] text-[#0a0a0a]">
-        Talks, features &amp; podcasts
+        Talks, courses &amp; conversations
       </h1>
       <p className="mt-5 max-w-[560px] text-lg leading-relaxed text-neutral-500">
-        Where I&apos;ve spoken, taught, and been featured — on AI agents,
-        multi-agent systems, and putting them into production.
+        Places I have taught or talked through agent systems, fine-tuning, and
+        the practical work of getting AI into production.
       </p>
       <div className="mt-10">
         <FilteredAppearances appearances={appearances} types={types} />

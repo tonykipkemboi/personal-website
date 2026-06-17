@@ -39,11 +39,11 @@ export const metadata: Metadata = {
     template: '%s | Tony Kipkemboi',
   },
   description:
-    'AI engineer and content creator building AI automations, agent systems, and sharing technical insights across social platforms.',
+    'AI engineer building practical agent systems, fine-tuning experiments, and developer tools, then sharing the lessons through field notes, courses, and talks.',
   openGraph: {
     title: 'Tony Kipkemboi',
     description:
-      'AI engineer and content creator building AI automations, agent systems, and sharing technical insights across social platforms.',
+      'AI engineer building practical agent systems, fine-tuning experiments, and developer tools, then sharing the lessons through field notes, courses, and talks.',
     url: baseUrl,
     siteName: 'Tony Kipkemboi',
     images: [
@@ -61,7 +61,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'Tony Kipkemboi',
     description:
-      'AI engineer and content creator building AI automations, agent systems, and sharing technical insights across social platforms.',
+      'AI engineer building practical agent systems, fine-tuning experiments, and developer tools, then sharing the lessons through field notes, courses, and talks.',
     creator: '@tonykipkemboi',
     images: ['/og-image.png'],
   },

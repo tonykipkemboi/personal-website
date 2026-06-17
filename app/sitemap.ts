@@ -32,7 +32,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.7,
   }))
 
-  // Learning paths
+  // Learning guides
   const courses = await getCourses()
   const coursePages = courses.map((course) => ({
     url: `${baseUrl}/learn/${course.metadata.slug}`,

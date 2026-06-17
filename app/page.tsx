@@ -13,7 +13,7 @@ const personJsonLd = {
   image: `${baseUrl}/headshot.jpg`,
   jobTitle: 'AI Engineer',
   description:
-    'AI engineer who builds AI agents, automations, and developer tools, writes about the agent space, and helps organizations figure out where AI fits in their workflows.',
+    'AI engineer who builds practical agent systems, model fine-tuning experiments, and developer tools, then turns the lessons into writing, courses, and talks.',
   sameAs: [
     'https://github.com/tonykipkemboi',
     'https://linkedin.com/in/tonykipkemboi',
@@ -28,7 +28,7 @@ const websiteJsonLd = {
   name: 'Tony Kipkemboi',
   url: baseUrl,
   description:
-    'AI engineer and content creator building AI agents, automations, and developer tools.',
+    'Field notes, courses, and experiments from Tony Kipkemboi on AI agents, model fine-tuning, and developer tools.',
   author: { '@type': 'Person', name: 'Tony Kipkemboi', url: baseUrl },
 }
 
@@ -42,7 +42,7 @@ const experiments = [
   {
     title: 'Whisper × Kalenjin — a $25 LoRA',
     description:
-      "Taught OpenAI's Whisper a 100th language on a weekend GPU budget. Open weights + write-up.",
+      "Taught OpenAI's Whisper to hear Kalenjin on a weekend GPU budget. Open weights, real numbers, and the full write-up.",
     links: [
       { text: 'Website ↗', href: 'https://chamgei.com' },
       {
@@ -55,7 +55,7 @@ const experiments = [
   {
     title: 'Rekody — dictation in your terminal',
     description:
-      'A fast CLI dictation tool in Rust + Tauri. Like Wispr Flow, but it lives where I work.',
+      'A fast CLI dictation tool in Rust and Tauri. Like Wispr Flow, but it lives where I actually write and build.',
     links: [
       { text: 'Website ↗', href: 'https://rekody.com' },
       { text: 'GitHub ↗', href: 'https://github.com/rekody/rekody' },
@@ -64,7 +64,7 @@ const experiments = [
   {
     title: 'Kalenjin text LoRA — translation',
     description:
-      'An adapter exploring Kalenjin ↔ English / Swahili translation. Early, ongoing.',
+      'A small adapter exploring Kalenjin, English, and Swahili translation. Early, useful, still learning.',
     links: [
       { text: 'Website ↗', href: 'https://chamgei.com' },
       { text: 'Hugging Face ↗', href: 'https://huggingface.co/Tonykip' },
@@ -107,14 +107,15 @@ export default async function Page() {
         <HeroBackdrop />
         <div className={`${SHELL} pt-12 pb-24`}>
           <div className="flex max-w-[820px] flex-col items-start gap-8">
-            <span className={LABEL}>AI Engineer · United States</span>
+            <span className={LABEL}>AI engineer · builder · writer</span>
             <h1 className="text-[clamp(2.5rem,5.5vw,4.5rem)] font-medium leading-[1.04] tracking-[-0.035em] text-[#0a0a0a]">
-              I build AI agents and the tools around them.
+              I make things, learn in public, and mostly use AI to do it.
             </h1>
             <p className="max-w-[540px] text-lg leading-relaxed text-neutral-500">
-              Agents, automations, and developer tools — with a bias for
-              shipping. Previously CrewAI, Snowflake &amp; Bloomberg. US Army
-              veteran. I write, speak, and teach about building with AI agents.
+              This is where I keep what I&apos;m building, learning, and
+              thinking through: agents, fine-tuning, small tools, field notes,
+              talks, and the experiments I want to remember. Previously CrewAI,
+              Snowflake, and Bloomberg. US Army veteran.
             </p>
             <div className="flex flex-wrap items-center gap-6 pt-1">
               {socialLinks.map((l) => (
@@ -133,15 +134,15 @@ export default async function Page() {
         </div>
       </section>
 
-      {/* Selected writing */}
+      {/* Recent field notes */}
       <section className={`${SHELL} pb-20`}>
         <div className="mb-5 flex items-end justify-between">
-          <span className={LABEL}>Selected writing</span>
+          <span className={LABEL}>Recent field notes</span>
           <Link
             href="/blog"
             className="border-b border-neutral-300 pb-0.5 text-sm text-[#0a0a0a] transition-opacity hover:opacity-60"
           >
-            All posts ↗
+            All writing ↗
           </Link>
         </div>
         <Suspense
@@ -163,15 +164,15 @@ export default async function Page() {
         </Suspense>
       </section>
 
-      {/* Learning paths */}
+      {/* Learning guides */}
       <section className={`${SHELL} pb-20`}>
         <div className="mb-5 flex items-end justify-between">
-          <span className={LABEL}>Learning paths</span>
+          <span className={LABEL}>Guides I am building</span>
           <Link
             href="/learn"
             className="border-b border-neutral-300 pb-0.5 text-sm text-[#0a0a0a] transition-opacity hover:opacity-60"
           >
-            All courses ↗
+            All guides ↗
           </Link>
         </div>
         <div>
@@ -201,14 +202,14 @@ export default async function Page() {
       {/* Experiments */}
       <section className={`${SHELL} pb-20`}>
         <div className="mb-5 flex items-end justify-between">
-          <span className={LABEL}>Experiments I&apos;m running</span>
+          <span className={LABEL}>Current experiments</span>
           <a
             href="https://github.com/tonykipkemboi"
             target="_blank"
             rel="noopener noreferrer"
             className="border-b border-neutral-300 pb-0.5 text-sm text-[#0a0a0a] transition-opacity hover:opacity-60"
           >
-            All on GitHub ↗
+            More on GitHub ↗
           </a>
         </div>
         <div>
@@ -247,7 +248,7 @@ export default async function Page() {
       <section className={`${SHELL} pb-24`}>
         <div className="flex flex-col gap-6 md:flex-row md:gap-20">
           <span className={`${LABEL} md:w-48 md:shrink-0 md:pt-1`}>
-            Spoken at &amp; featured
+            Taught, spoken &amp; featured
           </span>
           <p className="max-w-[760px] text-2xl leading-snug tracking-tight text-[#0a0a0a]">
             {recognition}
