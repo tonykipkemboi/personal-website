@@ -1,0 +1,100 @@
+---
+title: 'In the Trenches: The Shrinking Middle'
+publishedAt: '2026-06-18'
+summary: 'A calm note on the middle layer between end users and builders getting smaller, more technical, and closer to production.'
+description: 'What happens when business users can build rough prototypes with agents, and the technical middle layer shifts toward hardening, security, deployment, and production readiness.'
+author: 'Tony Kipkemboi'
+category: 'AI Agents'
+tags: ['AI Agents', 'Enterprise AI', 'Future of Work', 'AI Prototypes']
+keywords: 'enterprise ai, ai agents, future of work, citizen developers, ai prototypes, production readiness, software engineering'
+---
+
+![Two-panel sketch comparing old handoffs with a new prototype-first workflow where separate technical teams harden the build](/blog/in-the-trenches-shrinking-middle-hero-v2.png)
+
+This is the second note in the trenches series.
+
+I want to stay calm about this one because the jobs conversation gets loud very quickly. I am trying to describe a shape I keep seeing inside enterprise AI work.
+
+The layer between the person with the problem and the person who can ship the solution is getting smaller.
+
+I see it most weeks now. Someone on a business team has an idea, opens Claude or ChatGPT, and comes in with a working draft of the thing they want. Maybe it is a simple HTML mockup. Maybe it is a Claude artifact. Maybe it is a rough internal tool that only works with fake data. It is usually messy, and that is fine. The useful part is that they can point at something.
+
+Before, that idea usually had to travel through a few people first. A product manager. A business analyst. A solutions architect. Someone who knew how to translate the messy business problem into something a technical team could understand.
+
+That work still matters. The shape of it is changing.
+
+## The First Version Is Moving Closer To The User
+
+The old low-code version of this was called citizen development. Gartner describes citizen application development platforms as tools that let people outside traditional IT create simple applications for their own workflows. That idea has been around for a while.
+
+AI makes it feel different.
+
+The person with the problem can now have a conversation with a model and get a first version back. They can ask for changes. They can test the idea against their own workflow. They can see what feels wrong before a technical team has spent weeks trying to guess.
+
+That changes the first meeting.
+
+The person can show the rough thing. They can say, "Here is what I tried. This part works. This part is wrong. This is where the workflow gets weird." That is a much better place to start from than a vague request.
+
+This is the part I think companies should encourage more. Let people build the rough version. Let them use the agent to think through the workflow. Let the prototype be ugly. The ugliness is useful because it exposes the missing pieces. That is connected to [the context extraction problem](/blog/in-the-trenches-context-extraction-problem) I wrote about yesterday: the rough prototype pulls details out of the workflow faster than a clean meeting does.
+
+## The Middle Is Becoming A Smaller Loop
+
+The middle layer is turning into a smaller loop between three things: the user, the agent, and the deployment environment.
+
+The user knows the workflow. The agent helps them turn the idea into something concrete. Then the technical teams get involved earlier and with more to react to.
+
+From there, the questions get practical.
+
+Someone has to ask whether the prototype should become an application. Someone has to check the data path. IT, security, DevOps, engineering, platform, and AI teams still have to think about [permissions](/blog/agent-authentication-rbac), logging, [security](/blog/ai-agent-security), uptime, evals, edge cases, rollback plans, and the boring things that only become interesting when they break.
+
+The roles stay separate. IT still has work. Security still has work. DevOps, engineering, platform, and AI teams still have work. The number of rough prototypes may even create more demand for people who know how to make things safe, maintainable, and production-ready. The part shrinking is the long translation path before technical people get something concrete to inspect.
+
+The important part is that this layer sits closer to production than it used to.
+
+## The Translation Work Is Shifting
+
+A lot of the old middle work was translation. The user had the problem. The builder had the tools. Someone in the middle carried intent from one side to the other.
+
+Agents are starting to take on some of that early translation. They can turn a rough description into a screen. They can turn a workflow into steps. They can ask decent follow-up questions. They can make the idea visible.
+
+That changes what is valuable for the people in the middle.
+
+If your value was only taking a vague request and turning it into a slightly clearer document, that work is going to feel pressure. If your value is understanding the business problem and knowing how to shape the build so it can hold up, your value probably goes up.
+
+That is the reskilling part I keep thinking about.
+
+The people in the middle have an opening here. They already know how to talk to the business. They understand the domain. They know where the weird process lives. Now the question is whether they can get technical enough to guide the thing into production.
+
+They can stay close to the business and still understand the shape of software more deeply. How data moves. Where security risk shows up. What makes a prototype fragile. What a good handoff to engineering looks like. How to use agents themselves to inspect, test, and improve the build.
+
+That is a very different job from writing intake docs.
+
+## The Technical Work Still Matters
+
+The easiest way to misunderstand this shift is to treat a prototype like production.
+
+A prototype misses a lot of the boring important stuff. Compliance requirements. The source-of-truth system. The team that uses a field differently than everyone else. Traffic. Permissions. Audit logs. Retries. Failure modes. The person who gets paged when something breaks.
+
+That is why the technical layer still matters.
+
+LinkedIn's 2026 Jobs on the Rise list still shows momentum around AI engineering and adjacent AI roles. The U.S. Bureau of Labor Statistics projects 15% growth for software developers, QA analysts, and testers from 2024 to 2034, and 29% growth for information security analysts over the same period. That lines up with what this feels like from the inside. The work is moving toward the parts of the system where judgment, reliability, security, and production ownership matter.
+
+I read the shrinking middle as a pressure to move closer to the build.
+
+## What I Would Tell Teams
+
+If you lead a team, I would stop routing every small idea through one central queue.
+
+Give people room to make the rough first version. Let them use agents to map the workflow, create the mockup, and find the obvious holes. Then put your technical people on hardening, security review, data access, evals, deployment, and the systems the prototype has to connect to.
+
+If you sit in the middle today, I would get more technical.
+
+Learn enough to inspect the prototype. Learn enough to ask better questions about the data. Learn enough to understand why something that works in a demo might fail in production. Learn how to use agents to make yourself sharper, because everyone else is going to be using them too.
+
+The middle is shrinking. I keep seeing it.
+
+The opportunity is to become the person who can move between the user, the agent, and production without getting lost.
+
+That person is going to be very useful.
+
+Sources: [Gartner on citizen application development platforms](https://www.gartner.com/en/documents/6379243), [LinkedIn Jobs on the Rise 2026](https://www.linkedin.com/pulse/linkedin-jobs-rise-2026-25-fastest-growing-roles-us-linkedin-news-dlb1c), [BLS software developers](https://www.bls.gov/ooh/computer-and-information-technology/software-developers.htm), [BLS information security analysts](https://www.bls.gov/ooh/computer-and-information-technology/information-security-analysts.htm).
