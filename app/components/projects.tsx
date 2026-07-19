@@ -89,7 +89,7 @@ const projects: Project[] = [
     link: 'https://github.com/tonykipkemboi/research-paper-to-podcast',
     github: 'https://github.com/tonykipkemboi/research-paper-to-podcast',
     tech: ['Python', 'CrewAI', 'ElevenLabs'],
-    stars: '69',
+    stars: '68',
   },
   {
     title: 'YouTube Yapper Trapper',
