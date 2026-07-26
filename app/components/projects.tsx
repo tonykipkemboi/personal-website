@@ -17,7 +17,7 @@ const projects: Project[] = [
     link: 'https://github.com/tonykipkemboi/ollama_pdf_rag',
     github: 'https://github.com/tonykipkemboi/ollama_pdf_rag',
     tech: ['Python', 'Ollama', 'LangChain', 'Streamlit', 'ChromaDB'],
-    stars: '529',
+    stars: '532',
   },
   {
     title: 'CrewAI Gmail Automation',
