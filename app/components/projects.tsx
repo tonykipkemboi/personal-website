@@ -17,7 +17,7 @@ const projects: Project[] = [
     link: 'https://github.com/tonykipkemboi/ollama_pdf_rag',
     github: 'https://github.com/tonykipkemboi/ollama_pdf_rag',
     tech: ['Python', 'Ollama', 'LangChain', 'Streamlit', 'ChromaDB'],
-    stars: '533',
+    stars: '539',
   },
   {
     title: 'CrewAI Gmail Automation',
@@ -62,7 +62,7 @@ const projects: Project[] = [
     link: 'https://github.com/tonykipkemboi/groq_streamlit_demo',
     github: 'https://github.com/tonykipkemboi/groq_streamlit_demo',
     tech: ['Python', 'Groq', 'Streamlit', 'LLM'],
-    stars: '85',
+    stars: '84',
   },
   {
     title: 'Ollama Streamlit Demos',
