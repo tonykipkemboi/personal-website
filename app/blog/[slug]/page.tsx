@@ -105,6 +105,20 @@ export default async function BlogPost({ params }: PageParams) {
       '@type': 'WebPage',
       '@id': `${baseUrl}/blog/${post.slug}`,
     },
+    ...(post.metadata.videoId && {
+      video: {
+        '@type': 'VideoObject',
+        name: post.metadata.videoTitle || post.metadata.title,
+        description:
+          post.metadata.videoDescription ||
+          post.metadata.description ||
+          post.metadata.summary,
+        thumbnailUrl: `https://i.ytimg.com/vi/${post.metadata.videoId}/maxresdefault.jpg`,
+        uploadDate: post.metadata.videoUploadDate || post.metadata.publishedAt,
+        embedUrl: `https://www.youtube.com/embed/${post.metadata.videoId}`,
+        contentUrl: `https://www.youtube.com/watch?v=${post.metadata.videoId}`,
+      },
+    }),
     ...(post.metadata.keywords && { keywords: post.metadata.keywords }),
     ...(category && { articleSection: category }),
     wordCount: post.content.trim().split(/\s+/).length,

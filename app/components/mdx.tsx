@@ -6,6 +6,7 @@ import rehypePrettyCode from 'rehype-pretty-code'
 import React from 'react'
 import { Figure } from './pre'
 import { PretextDemo } from './pretext-demo'
+import { YouTube } from './youtube'
 
 function Table({ data }) {
   let headers = data.headers.map((header, index) => (
@@ -157,6 +158,7 @@ let components = {
   Table,
   AiOutput,
   PretextDemo,
+  YouTube,
 }
 
 export function CustomMDX(props) {

@@ -1,0 +1,60 @@
+---
+title: 'Why I bought an NVIDIA DGX Spark'
+publishedAt: '2026-08-30'
+summary: "Every AI experiment I've wanted to run has started with the same question: how much is this going to cost me. I bought an NVIDIA DGX Spark to stop asking it."
+description: "Why I bought an NVIDIA DGX Spark, what the machine does, and the first model I'm running on it. A plain introduction to running open-weight AI models at home on hardware you own."
+author: 'Tony Kipkemboi'
+category: 'AI Infrastructure'
+tags: ['NVIDIA DGX Spark', 'Local AI', 'Self-Hosting', 'Hardware']
+keywords: 'nvidia dgx spark, why buy dgx spark, local ai, run ai models at home, private ai, self-hosted llm, dgx spark review, ai computer for home'
+videoId: 'Mj7A5OdTXz0'
+videoTitle: "i bought NVIDIA's DGX Spark (unboxing a desktop AI Supercomputer)"
+videoUploadDate: '2026-08-29'
+---
+
+Every AI experiment I've wanted to run in the last couple of years has started with the same question. How much is this going to cost me?
+
+I bought an NVIDIA DGX Spark to stop asking it.
+
+<YouTube
+  id="Mj7A5OdTXz0"
+  title="i bought NVIDIA's DGX Spark (unboxing a desktop AI Supercomputer)"
+/>
+
+## Why I bought it
+
+Most of my work is with AI models. Testing them, fine-tuning them on my own data, building things on top of them.
+
+That usually means renting a GPU by the hour from a cloud provider. It works. But the meter is always running, and I've skipped experiments I was curious about because I didn't want to pay.
+
+I want two things out of this machine.
+
+The first is a place to run open-weight models that belongs to me. Not everything moves here. I'll keep using cloud providers for plenty of work. But when I want to pull down an open model and take it apart, I'd rather do that on hardware I own, with my data staying where it already is.
+
+The second is that I learn this stuff by doing it. Fine-tuning, hosting a model myself, keeping it running. I want to know what that takes for one person, and what the same problem looks like for a lab doing it at a scale I'll never touch. Reading about it only gets me so far.
+
+## What it does
+
+It runs the model on my desk instead of in somebody else's data center.
+
+Memory is what makes that possible. A graphics card in a gaming PC has its own memory, usually somewhere between 8 and 32 GB, and if a model doesn't fit in there you can't run it.
+
+The Spark has 128 GB, and the whole machine shares it. **Models a gaming PC can't even open fit here with room left over.**
+
+It cost about $5,000 delivered. That's expensive. I've also already spent over $1,000 on Modal this year renting GPUs for training runs, and that number was only going up. This one is paid for.
+
+## What I'm running on it first
+
+Qwen3.8, a 27 billion parameter model. Something that size normally sits behind an API where you pay per token.
+
+It's slower than ChatGPT. You can watch it type.
+
+What I get back is that everything stays on the box. My prompts, my logs, all of it. Running it more costs me electricity and nothing else.
+
+I also put it on Tailscale, which is a private network between my own devices. So I can open it from my phone in any country and it's still the machine in my house answering. More on how that works in the next post.
+
+## What's next
+
+The real reason I bought it is [my Kalenjin language work](/blog/fine-tuning-whisper-kalenjin). Kalenjin is my first language, and it wasn't one of the languages most speech models were trained on. Getting a model to understand it means running the same training job again and again, changing one thing each time. Every one of those runs costs money when you're renting.
+
+Give it a few months and I should have a real answer on whether buying this beats renting. I'll write it up as I go.

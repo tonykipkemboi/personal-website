@@ -11,6 +11,14 @@ type Metadata = {
   tags?: string[]
   keywords?: string
   image?: string
+  /** YouTube video id, e.g. `Mj7A5OdTXz0`. Enables VideoObject structured data. */
+  videoId?: string
+  /** Exact YouTube title, used for the VideoObject `name`. */
+  videoTitle?: string
+  /** ISO date the video was published, e.g. `2026-08-29`. */
+  videoUploadDate?: string
+  /** Optional VideoObject description; falls back to the post description. */
+  videoDescription?: string
 }
 
 /**
