@@ -154,28 +154,62 @@ export default async function CoursePage({ params }: PageParams) {
         </div>
 
         <div>
-          {course.lessons.map((lesson) => (
-            <Link
-              key={lesson.slug}
-              href={`/learn/${course.metadata.slug}/${lesson.slug}`}
-              className="group flex flex-col gap-3 border-t border-neutral-200 py-6 sm:flex-row sm:items-start sm:gap-8"
-            >
-              <span className="w-12 shrink-0 text-sm tabular-nums text-neutral-400">
-                {String(lesson.metadata.order).padStart(2, '0')}
-              </span>
-              <div className="flex-1">
-                <h2 className="text-xl font-medium tracking-tight text-[#0a0a0a] transition-opacity group-hover:opacity-60">
-                  {lesson.metadata.title}
-                </h2>
-                <p className="mt-2 max-w-[680px] text-sm leading-relaxed text-neutral-500">
-                  {lesson.metadata.summary}
-                </p>
-              </div>
-              <span className="shrink-0 text-sm text-neutral-400">
-                {lesson.readingTime} min
-              </span>
-            </Link>
-          ))}
+          {course.lessons.map((lesson) => {
+            const row = (
+              <>
+                <span className="w-12 shrink-0 text-sm tabular-nums text-neutral-400">
+                  {String(lesson.metadata.order).padStart(2, '0')}
+                </span>
+                <div className="flex-1">
+                  <h2
+                    className={
+                      lesson.metadata.comingSoon
+                        ? 'text-xl font-medium tracking-tight text-neutral-400'
+                        : 'text-xl font-medium tracking-tight text-[#0a0a0a] transition-opacity group-hover:opacity-60'
+                    }
+                  >
+                    {lesson.metadata.title}
+                  </h2>
+                  <p
+                    className={`mt-2 max-w-[680px] text-sm leading-relaxed ${
+                      lesson.metadata.comingSoon
+                        ? 'text-neutral-400'
+                        : 'text-neutral-500'
+                    }`}
+                  >
+                    {lesson.metadata.summary}
+                  </p>
+                </div>
+                <span className="shrink-0 text-sm text-neutral-400">
+                  {lesson.metadata.comingSoon
+                    ? 'Coming soon'
+                    : `${lesson.readingTime} min`}
+                </span>
+              </>
+            )
+
+            if (lesson.metadata.comingSoon) {
+              return (
+                <div
+                  key={lesson.slug}
+                  aria-disabled="true"
+                  className="flex cursor-default flex-col gap-3 border-t border-neutral-200 py-6 opacity-60 sm:flex-row sm:items-start sm:gap-8"
+                >
+                  {row}
+                </div>
+              )
+            }
+
+            return (
+              <Link
+                key={lesson.slug}
+                href={`/learn/${course.metadata.slug}/${lesson.slug}`}
+                className="group flex flex-col gap-3 border-t border-neutral-200 py-6 sm:flex-row sm:items-start sm:gap-8"
+              >
+                {row}
+              </Link>
+            )
+          })}
         </div>
       </div>
 

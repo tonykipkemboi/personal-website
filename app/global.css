@@ -380,3 +380,20 @@ html.retro-mode main {
     animation: none !important;
   }
 }
+
+/* Inline SVG diagrams in MDX lessons. Raw JSX in MDX has its `style` attribute
+   stripped, so sizing has to come from a class. min-width keeps labels legible
+   on narrow screens; the wrapper scrolls sideways instead of shrinking text. */
+.diagram-scroll {
+  margin: 2rem 0;
+  max-width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.diagram-scroll svg {
+  display: block;
+  width: 100%;
+  min-width: 600px;
+  height: auto;
+}

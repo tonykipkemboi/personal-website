@@ -148,6 +148,13 @@ let components = {
   // eslint-disable-next-line jsx-a11y/alt-text, @next/next/no-img-element
   img: (props) => <img className="rounded-lg" {...props} />,
   a: CustomLink,
+  // Markdown tables render bare otherwise; .table-wrap supplies the borders,
+  // header shading and horizontal scroll defined in global.css.
+  table: (props) => (
+    <div className="table-wrap">
+      <table {...props} />
+    </div>
+  ),
   code: Code,
   // rehype-pretty-code wraps each fenced block in <figure>; we override it
   // to render the dark card (header with title/lang + Copy button + body).

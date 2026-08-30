@@ -1,0 +1,195 @@
+---
+title: 'Why Memory Decides Everything'
+summary: 'The machine reads fast and writes slowly, and one number explains both. Meet memory bandwidth.'
+description: 'Why generating each word requires reading the entire model, what memory bandwidth means, how to predict a model speed with simple arithmetic, and why long prompts are fast while long answers are slow.'
+order: 3
+updatedAt: '2026-08-30'
+---
+
+In the last lesson you learned the Spark has one big pool of memory. This lesson is about how fast that pool can be read, because that single number decides almost everything about how the machine feels to use.
+
+## The fact that explains everything
+
+To produce **one token**, a model reads **every number it needs for that token**.
+
+For most models it needs the entire file. Then to produce the next token, it reads the entire file again.
+
+A 27 billion parameter model squeezed down to about 16 GB is reading all 16 GB to give you one token. Then all 16 GB again for the next one. (Lesson four explains how 27 billion numbers become 16 GB.)
+
+> Writing a sentence of twenty tokens means reading the whole model twenty times.
+
+That is how these models work rather than a flaw in them, and once you accept it the machine's behavior stops being mysterious.
+
+## So the speed question is a reading question
+
+If producing a token means reading the whole file, then how fast the machine writes depends on **how fast it can read from memory**.
+
+That reading speed has a name: **memory bandwidth**. It is measured in gigabytes per second, and it means what it sounds like, how much data can move out of memory each second.
+
+The DGX Spark has about **273 GB/s**.
+
+Now the arithmetic writes itself:
+
+```
+tokens per second  ≈  memory bandwidth ÷ bytes read per token
+
+273 GB/s ÷ 16 GB  ≈  17 tokens per second
+```
+
+### What that misses at first
+
+The model reads one more thing per token, and it grows.
+
+Alongside the weights it re-reads its notes on the conversation so far, which lesson four covers under the name **KV cache**. Early in a chat those notes are tiny and the sum above holds. Deep into a long document they can rival the weights themselves.
+
+The same 70B model, same machine, at two conversation lengths:
+
+| Conversation so far | Weights | Notes | Read per token | Speed ceiling |
+|---|---|---|---|---|
+| short, 4,000 tokens | 42 GB | 1 GB | 43 GB | about 6 per second |
+| long, 131,000 tokens | 42 GB | 40 GB | 82 GB | about 3 per second |
+
+Same model, half the speed, and nothing broke.
+
+This is worth knowing before it happens to you, because the machine appears to get slower the longer you talk to it, and people go hunting for a fault that is not there.
+
+Seventeen is the ceiling. Measured speed on a real machine is around **12.6 tokens per second**, about 74% of the theoretical number. The gap is overhead the arithmetic ignores. That ratio is not a law, and small models sit further from it than big ones, so treat it as a sanity check rather than a target.
+
+You can run this for any model on any machine, which makes it the most useful calculation in the course.
+
+### One important exception
+
+Some models do not read the whole file per token. They are called **mixture-of-experts** models, and instead of one big network they hold many smaller sub-networks. For each token a router picks a few and ignores the rest.
+
+`gpt-oss-120b` holds 117 billion parameters and uses about 5 billion of them for any given token. Its file is around 63 GB, but it is only reading a slice of that each time, and it measures at roughly 59 tokens per second on a Spark. Judging it by its file size would have you expecting 4.
+
+Do not try to derive 59 from the arithmetic above. Routing a token to the right experts costs time that the simple sum ignores, so these models land well under what their active size alone suggests. The number to take away is that they are far faster than their file size implies, and slower than a pure calculation would promise.
+
+So the honest version of the rule is: **divide bandwidth by the bytes read per token.** Ordinary models read the whole file, which is why the shortcut works. For a mixture-of-experts model, look for "active parameters" on its page, and treat any figure you calculate as an optimistic ceiling.
+
+## The trade you made
+
+Here is where the Spark's design shows its cost.
+
+<div className="diagram-scroll">
+<svg viewBox="0 0 720 300" role="img" aria-label="Two bar charts sharing baselines. The first compares memory size: a gaming GPU at 32 GB and a DGX Spark at 128 GB, four times larger. The second compares reading speed: the gaming GPU at 1800 GB per second and the Spark at 273, about six and a half times slower.">
+  <rect x="0" y="0" width="720" height="300" fill="#ffffff" />
+
+  <text x="16" y="24" fontFamily="ui-monospace, monospace" fontSize="13" fill="#6b7280">HOW MUCH IT HOLDS</text>
+  <text x="16" y="52" fontFamily="ui-monospace, monospace" fontSize="12" fill="#1a1a1a">gaming GPU</text>
+  <rect x="150" y="38" width="75" height="20" rx="3" fill="#f3f4f6" stroke="#9ca3af" />
+  <text x="235" y="53" fontFamily="ui-monospace, monospace" fontSize="12" fill="#6b7280">32 GB</text>
+  <text x="16" y="86" fontFamily="ui-monospace, monospace" fontSize="12" fill="#1a1a1a">DGX Spark</text>
+  <rect x="150" y="72" width="300" height="20" rx="3" fill="#ccfbf1" stroke="#0f766e" />
+  <text x="460" y="87" fontFamily="ui-monospace, monospace" fontSize="12" fill="#0f766e">128 GB, four times more</text>
+
+  <line x1="16" y1="122" x2="704" y2="122" stroke="#e5e7eb" strokeWidth="1" />
+
+  <text x="16" y="156" fontFamily="ui-monospace, monospace" fontSize="13" fill="#6b7280">HOW FAST IT READS</text>
+  <text x="16" y="184" fontFamily="ui-monospace, monospace" fontSize="12" fill="#1a1a1a">gaming GPU</text>
+  <rect x="150" y="170" width="450" height="20" rx="3" fill="#f3f4f6" stroke="#9ca3af" />
+  <text x="610" y="185" fontFamily="ui-monospace, monospace" fontSize="12" fill="#6b7280">1800 GB/s</text>
+  <text x="16" y="218" fontFamily="ui-monospace, monospace" fontSize="12" fill="#1a1a1a">DGX Spark</text>
+  <rect x="150" y="204" width="68" height="20" rx="3" fill="#ccfbf1" stroke="#0f766e" />
+  <text x="228" y="219" fontFamily="ui-monospace, monospace" fontSize="12" fill="#0f766e">273 GB/s, about six times slower</text>
+
+  <text x="16" y="266" fontFamily="ui-monospace, monospace" fontSize="12" fill="#1a1a1a">Room and speed pull in opposite directions. The Spark chose room.</text>
+  <text x="16" y="286" fontFamily="ui-monospace, monospace" fontSize="11" fill="#6b7280">Bars share a starting line, so lengths are directly comparable within each chart.</text>
+</svg>
+</div>
+
+A high-end gaming card reads at roughly 1,800 GB/s, nearly seven times faster. On a model that fits in its 32 GB, it will bury the Spark.
+
+But a 70 billion parameter model needs about 42 GB, and 42 will never go into 32. You can force it by keeping part of the model on the slower system memory, and then you are looking at one or two tokens per second, which nobody would sit through.
+
+> The Spark buys you room, and pays for it in speed.
+
+Say that to anyone who asks whether it beats a gaming PC. The question has no single answer until you say which model.
+
+## Why reading is fast and writing is slow
+
+Now the strangest behavior you will notice, and the reason it happens.
+
+Paste in a long document and the machine chews through it quickly. Then the answer comes out at a crawl.
+
+Measured on a real Spark:
+
+| What it is doing | Speed |
+|---|---|
+| Reading your prompt | 825 tokens per second |
+| Writing the answer | 12.6 tokens per second |
+
+It reads about **66 times faster than it writes**. That is expected, and here is the reason.
+
+**Reading can happen all at once.** When you hand the model a thousand tokens, it can look at all of them at once. Those thousands of tiny GPU workers each take a piece. One pass over the model handles the entire prompt.
+
+**Writing cannot.** The model has to produce token one before it can produce token two, because token two depends on how token one turned out. Each token needs its own full pass over the model. A single answer cannot be split up, though a server answering ten people at once can carry all ten along the same pass, which is why busy servers are so much more efficient than idle ones.
+
+<div className="diagram-scroll">
+<svg viewBox="0 0 720 260" role="img" aria-label="Two process diagrams. Reading a prompt shows many words entering at once in a single pass over the model. Writing an answer shows one word produced at a time, each requiring its own full pass over the model.">
+  <rect x="0" y="0" width="720" height="260" fill="#ffffff" />
+
+  <text x="16" y="24" fontFamily="ui-monospace, monospace" fontSize="13" fill="#6b7280">READING: all at once</text>
+
+  <rect x="16" y="40" width="26" height="40" rx="3" fill="#ccfbf1" stroke="#0f766e" />
+  <rect x="48" y="40" width="26" height="40" rx="3" fill="#ccfbf1" stroke="#0f766e" />
+  <rect x="80" y="40" width="26" height="40" rx="3" fill="#ccfbf1" stroke="#0f766e" />
+  <rect x="112" y="40" width="26" height="40" rx="3" fill="#ccfbf1" stroke="#0f766e" />
+  <rect x="144" y="40" width="26" height="40" rx="3" fill="#ccfbf1" stroke="#0f766e" />
+  <rect x="176" y="40" width="26" height="40" rx="3" fill="#ccfbf1" stroke="#0f766e" />
+
+  <line x1="210" y1="60" x2="270" y2="60" stroke="#0f766e" strokeWidth="1.5" />
+  <polygon points="270,60 262,56 262,64" fill="#0f766e" />
+
+  <rect x="274" y="36" width="150" height="48" rx="6" fill="#f3f4f6" stroke="#d1d5db" />
+  <text x="349" y="65" textAnchor="middle" fontFamily="ui-monospace, monospace" fontSize="12" fill="#1a1a1a">one pass over 16 GB</text>
+
+  <text x="440" y="58" fontFamily="ui-monospace, monospace" fontSize="12" fill="#6b7280">1000 tokens read in</text>
+  <text x="440" y="76" fontFamily="ui-monospace, monospace" fontSize="12" fill="#6b7280">roughly one second</text>
+
+  <line x1="16" y1="112" x2="704" y2="112" stroke="#e5e7eb" strokeWidth="1" />
+
+  <text x="16" y="146" fontFamily="ui-monospace, monospace" fontSize="13" fill="#6b7280">WRITING: one at a time</text>
+
+  <rect x="16" y="162" width="120" height="34" rx="6" fill="#f3f4f6" stroke="#d1d5db" />
+  <text x="76" y="184" textAnchor="middle" fontFamily="ui-monospace, monospace" fontSize="11" fill="#1a1a1a">full pass</text>
+  <line x1="140" y1="179" x2="164" y2="179" stroke="#b91c1c" strokeWidth="1.5" />
+  <polygon points="164,179 156,175 156,183" fill="#b91c1c" />
+  <rect x="168" y="162" width="26" height="34" rx="3" fill="#fee2e2" stroke="#b91c1c" />
+
+  <rect x="212" y="162" width="120" height="34" rx="6" fill="#f3f4f6" stroke="#d1d5db" />
+  <text x="272" y="184" textAnchor="middle" fontFamily="ui-monospace, monospace" fontSize="11" fill="#1a1a1a">full pass</text>
+  <line x1="336" y1="179" x2="360" y2="179" stroke="#b91c1c" strokeWidth="1.5" />
+  <polygon points="360,179 352,175 352,183" fill="#b91c1c" />
+  <rect x="364" y="162" width="26" height="34" rx="3" fill="#fee2e2" stroke="#b91c1c" />
+
+  <rect x="408" y="162" width="120" height="34" rx="6" fill="#f3f4f6" stroke="#d1d5db" />
+  <text x="468" y="184" textAnchor="middle" fontFamily="ui-monospace, monospace" fontSize="11" fill="#1a1a1a">full pass</text>
+  <line x1="532" y1="179" x2="556" y2="179" stroke="#b91c1c" strokeWidth="1.5" />
+  <polygon points="556,179 548,175 548,183" fill="#b91c1c" />
+  <rect x="560" y="162" width="26" height="34" rx="3" fill="#fee2e2" stroke="#b91c1c" />
+  <text x="620" y="184" fontFamily="ui-monospace, monospace" fontSize="14" fill="#6b7280">and on</text>
+
+  <text x="16" y="228" fontFamily="ui-monospace, monospace" fontSize="12" fill="#6b7280">each token needs its own complete read of the model, so they cannot overlap</text>
+</svg>
+</div>
+
+## What this means for how you use it
+
+This asymmetry is genuinely useful once you plan around it.
+
+**The machine is good at jobs that read a lot and write a little.** Summarizing a pile of documents, pulling structured data out of messy text, answering questions about your own files, classifying things. In all of these the input is huge and the output is small.
+
+**It is poor at generating volume.** Asking it to write fifty long articles will take all night, and you will watch every word appear.
+
+A concrete example. Feeding it two hundred video transcripts, roughly a million tokens, takes a bit under **half an hour** of reading. Asking it to write a detailed essay about each one would run all night.
+
+Same machine. Same model. Completely different experience, decided entirely by which direction the words are flowing.
+
+## Check your understanding
+
+You have an ordinary 8 GB model and a machine with 273 GB/s of bandwidth. Roughly how many tokens per second should you expect?
+
+273 divided by 8 is about 34, so the ceiling is around 34 tokens per second, and something near 25 in practice.
+
+Notice what that tells you: **a smaller model is a faster model on this hardware.** Not because it is simpler, but because there are fewer bytes to read for every single word. That fact drives the whole next lesson.

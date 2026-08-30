@@ -26,6 +26,8 @@ export type LessonMetadata = {
   order: number
   updatedAt: string
   image?: string
+  /** Listed on the course page but not yet published; renders greyed out. */
+  comingSoon?: boolean
 }
 
 export type Lesson = {
@@ -41,6 +43,37 @@ export type Course = {
 }
 
 export const courseCatalog: CourseMetadata[] = [
+  {
+    slug: 'dgx-spark-101',
+    title: 'DGX Spark 101',
+    summary:
+      'A plain-English guide to the NVIDIA DGX Spark: what it is, how its memory works, why that decides its speed, and which models actually fit.',
+    description:
+      'Start with what a DGX Spark is, then learn how its unified memory differs from a normal graphics card, why memory bandwidth rather than raw compute decides how fast it answers, and how to work out which models fit in 128 GB. Four lessons published, two more on running and serving a model in progress.',
+    level: 'Beginner',
+    status: 'First pass',
+    publishedAt: '2026-08-30',
+    updatedAt: '2026-08-30',
+    tags: ['DGX Spark', 'Local AI', 'GB10', 'Unified Memory', 'llama.cpp'],
+    sources: [
+      {
+        title: 'NVIDIA DGX Spark User Guide',
+        href: 'https://docs.nvidia.com/dgx/dgx-spark/',
+        description:
+          'Official setup, first boot, and known issues documentation.',
+      },
+      {
+        title: 'DGX Spark Playbooks',
+        href: 'https://build.nvidia.com/spark',
+        description: 'NVIDIA walkthroughs for running workloads on the Spark.',
+      },
+      {
+        title: 'llama.cpp',
+        href: 'https://github.com/ggml-org/llama.cpp',
+        description: 'The inference engine used throughout this course.',
+      },
+    ],
+  },
   {
     slug: 'lora-101',
     title: 'LoRA 101',

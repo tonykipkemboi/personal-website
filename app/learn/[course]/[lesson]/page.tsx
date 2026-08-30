@@ -17,10 +17,12 @@ export async function generateStaticParams() {
     courseCatalog.map(async (course) => {
       const lessons = await getCourseLessons(course.slug)
 
-      return lessons.map((lesson) => ({
-        course: course.slug,
-        lesson: lesson.slug,
-      }))
+      return lessons
+        .filter((lesson) => !lesson.metadata.comingSoon)
+        .map((lesson) => ({
+          course: course.slug,
+          lesson: lesson.slug,
+        }))
     })
   )
 
@@ -71,7 +73,7 @@ export default async function LessonPage({ params }: PageParams) {
   const { course: courseSlug, lesson: lessonSlug } = await params
   const result = await getLesson(courseSlug, lessonSlug)
 
-  if (!result) {
+  if (!result || result.lesson.metadata.comingSoon) {
     notFound()
   }
 

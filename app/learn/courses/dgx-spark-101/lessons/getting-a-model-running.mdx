@@ -1,0 +1,232 @@
+---
+title: 'Getting a Model Running'
+summary: 'The practical path from a fresh machine to a working model, and the three things that will break on the way.'
+description: 'First boot, the arm64 and sm_121 gotchas, choosing between Ollama, llama.cpp and vLLM, building llama.cpp with CUDA, and serving your first model on a DGX Spark.'
+order: 5
+updatedAt: '2026-08-30'
+comingSoon: true
+---
+
+The practical lesson, and the point where the course starts typing commands.
+
+**If you do not own a Spark, keep reading anyway.** The three things that break here tell you more about how this machine works than any spec sheet, and none of it requires the hardware to understand.
+
+## First, what a terminal is
+
+If you have never used one, nobody explains this part.
+
+A **terminal** is a window where you type instructions instead of clicking things. Ubuntu, the operating system on the Spark, is normally driven this way. It looks unfriendly and it is mostly just typing a word and pressing enter.
+
+Two ways to get one.
+
+**Plug a monitor, keyboard and mouse into the Spark.** It boots to a desktop like any computer. Open the app called Terminal.
+
+**Or reach it from your own laptop**, which is what most people end up doing. Open Terminal on a Mac, or PowerShell on Windows, and type:
+
+```bash
+ssh yourname@spark-1234.local
+```
+
+`ssh` means "secure shell," and it gives you a terminal on the other machine as though you were sitting at it. `yourname` is the account you made during setup. The `spark-1234.local` part is the name your Spark announced on your network, which NVIDIA's setup app shows you. Its network address works too.
+
+### How to read the command blocks in this course
+
+Worth stating once, because it trips up everyone:
+
+- A line starting with `$` is something **you type**. Do not type the `$` itself.
+- Lines underneath with no `$` are what the machine **printed back**.
+- A `\` at the end of a line means the command keeps going on the next line. Copy the whole block.
+- Anything in `<angle brackets>` is a placeholder. Replace it, brackets and all.
+
+## Three things that break
+
+Knowing them in advance turns each from an afternoon into a minute.
+
+### Gotcha one: reboot before you panic
+
+On first boot, the standard GPU command may fail like this:
+
+```bash
+$ nvidia-smi
+Failed to initialize NVML: Driver/library version mismatch
+```
+
+This looks alarming and is almost always harmless. It happens on any Linux machine after a graphics driver update: the new driver files are in place, but the running system still has the old one loaded. They disagree, so the tool refuses.
+
+```bash
+sudo reboot
+```
+
+Afterwards you should see the real thing:
+
+```bash
+$ nvidia-smi --query-gpu=name,driver_version,compute_cap --format=csv,noheader
+NVIDIA GB10, 580.173.02, 12.1
+```
+
+Note that last number, `12.1`. It matters in a moment.
+
+### Gotcha two: this is not an Intel machine
+
+The Grace CPU is **ARM**, the same family of chip as your phone or a modern Mac. The architecture is called **aarch64** or **arm64**.
+
+Nearly all servers and desktops are a different architecture called **x86_64**. Software is compiled for one or the other, and something built only for x86 will not run here.
+
+This bites in two places.
+
+**Docker images.** Many published images only exist for x86. To check *before* pulling one, ask the registry what it offers:
+
+```bash
+docker manifest inspect <image-name> | grep architecture
+```
+
+If `arm64` is not in that list, there is no native build for this machine. It may still run under emulation, but emulated containers cannot reach the GPU, which defeats the point.
+
+`docker image inspect` will not answer this. It only reads images you have already downloaded, and on an ARM machine it reports `arm64` for anything multi-platform regardless.
+
+**Python packages.** Normally `pip install` downloads a prebuilt binary called a wheel. If no arm64 wheel exists, pip tries to compile the package from source on your machine instead. A five second install becomes twenty minutes, and often fails on a missing compiler.
+
+If you have seen people online complain about ARM machines, this is usually what they mean. It is real, and it is survivable.
+
+### Gotcha three: sm_121
+
+That `12.1` from earlier is the chip's **compute capability**, a version number NVIDIA gives each GPU generation. Written in code as `sm_121`.
+
+Software that runs on GPUs is often compiled ahead of time for specific compute capabilities. `sm_121` is new, so some projects have no support for it yet.
+
+This single number decides your software stack, so it is worth understanding before you pick tools.
+
+<div className="diagram-scroll">
+<svg viewBox="0 0 720 300" role="img" aria-label="A three-column comparison of inference software for a DGX Spark. Ollama is easiest but lags on new model architectures. llama.cpp requires building from source but supports the hardware and new models. vLLM is fastest for many simultaneous users but needs NVIDIA's CUDA 13 container image on this chip. llama.cpp is the recommended starting point for one person.">
+  <rect x="0" y="0" width="720" height="300" fill="#ffffff" />
+  <text x="16" y="24" fontFamily="ui-monospace, monospace" fontSize="13" fill="#6b7280">CHOOSING WHAT RUNS YOUR MODEL</text>
+
+  <rect x="16" y="44" width="210" height="200" rx="8" fill="#f3f4f6" stroke="#d1d5db" />
+  <text x="121" y="74" textAnchor="middle" fontFamily="ui-monospace, monospace" fontSize="14" fill="#1a1a1a">Ollama</text>
+  <text x="32" y="106" fontFamily="ui-monospace, monospace" fontSize="11" fill="#0f766e">+ easiest to start</text>
+  <text x="32" y="126" fontFamily="ui-monospace, monospace" fontSize="11" fill="#0f766e">+ no building</text>
+  <text x="32" y="152" fontFamily="ui-monospace, monospace" fontSize="11" fill="#b91c1c">- can lag on models</text>
+  <text x="32" y="168" fontFamily="ui-monospace, monospace" fontSize="11" fill="#b91c1c">  it did not launch with</text>
+  <text x="32" y="210" fontFamily="ui-monospace, monospace" fontSize="11" fill="#6b7280">good for: your very</text>
+  <text x="32" y="226" fontFamily="ui-monospace, monospace" fontSize="11" fill="#6b7280">first afternoon</text>
+
+  <rect x="254" y="44" width="210" height="200" rx="8" fill="#ccfbf1" stroke="#0f766e" strokeWidth="2" />
+  <text x="359" y="74" textAnchor="middle" fontFamily="ui-monospace, monospace" fontSize="14" fill="#1a1a1a">llama.cpp (start here)</text>
+  <text x="270" y="106" fontFamily="ui-monospace, monospace" fontSize="11" fill="#0f766e">+ supports sm_121</text>
+  <text x="270" y="126" fontFamily="ui-monospace, monospace" fontSize="11" fill="#0f766e">+ newest models</text>
+  <text x="270" y="146" fontFamily="ui-monospace, monospace" fontSize="11" fill="#0f766e">+ full control</text>
+  <text x="270" y="172" fontFamily="ui-monospace, monospace" fontSize="11" fill="#b91c1c">- must build it</text>
+  <text x="270" y="210" fontFamily="ui-monospace, monospace" fontSize="11" fill="#6b7280">good for: one person,</text>
+  <text x="270" y="226" fontFamily="ui-monospace, monospace" fontSize="11" fill="#6b7280">most of the time</text>
+
+  <rect x="492" y="44" width="210" height="200" rx="8" fill="#f3f4f6" stroke="#d1d5db" />
+  <text x="597" y="74" textAnchor="middle" fontFamily="ui-monospace, monospace" fontSize="14" fill="#1a1a1a">vLLM</text>
+  <text x="508" y="106" fontFamily="ui-monospace, monospace" fontSize="11" fill="#0f766e">+ best with many</text>
+  <text x="508" y="122" fontFamily="ui-monospace, monospace" fontSize="11" fill="#0f766e">  users at once</text>
+  <text x="508" y="148" fontFamily="ui-monospace, monospace" fontSize="11" fill="#b91c1c">- needs the CUDA 13</text>
+  <text x="508" y="164" fontFamily="ui-monospace, monospace" fontSize="11" fill="#b91c1c">  image, not plain pip</text>
+  <text x="508" y="190" fontFamily="ui-monospace, monospace" fontSize="11" fill="#b91c1c">- wants big files</text>
+  <text x="508" y="210" fontFamily="ui-monospace, monospace" fontSize="11" fill="#6b7280">good for: serving a</text>
+  <text x="508" y="226" fontFamily="ui-monospace, monospace" fontSize="11" fill="#6b7280">team, later</text>
+
+  <text x="16" y="278" fontFamily="ui-monospace, monospace" fontSize="12" fill="#6b7280">one person chatting = llama.cpp. a crowd hitting it at once = vLLM.</text>
+</svg>
+</div>
+
+The short version: **vLLM is a restaurant kitchen built for a dinner rush. llama.cpp is a home kitchen.** If you are one person asking one question at a time, a home kitchen is what you want.
+
+## Building llama.cpp
+
+You need to compile it yourself so it targets your specific chip. The machine already has the compiler.
+
+```bash
+git clone --depth 1 https://github.com/ggml-org/llama.cpp.git
+cd llama.cpp
+
+cmake -B build \
+  -DCMAKE_BUILD_TYPE=Release \
+  -DGGML_CUDA=ON \
+  -DCMAKE_CUDA_ARCHITECTURES=121
+
+cmake --build build --config Release -j 20
+```
+
+`-DGGML_CUDA=ON` is the line that matters. It says build the GPU version.
+
+`-DCMAKE_CUDA_ARCHITECTURES=121` pins the build to your exact chip. llama.cpp detects it on its own when you build on the machine itself, so this is belt and braces rather than required. It matters if you ever build somewhere the GPU is not visible.
+
+You will see it print `Replacing 121 with 121a`. That is correct and not an error. The `a` version carries Blackwell's four-bit instructions.
+
+It takes about twenty minutes. Then confirm it found the hardware:
+
+```bash
+$ ./build/bin/llama-server --list-devices
+Available devices:
+  CUDA0: NVIDIA GB10 (124610 MiB, 78190 MiB free)
+```
+
+There is your one shared pool from lesson two, seen from the software's side.
+
+## Where models come from
+
+The course has talked about model files for four lessons without saying where you get one. Here it is.
+
+Almost every open model lives on **Hugging Face**, at `huggingface.co`. It works like a code-sharing site, except the things being shared are those giant files of numbers.
+
+You want a specific packaging called **GGUF**. It puts an entire model into one single file, which is the format llama.cpp reads. Without it you get a folder of many pieces meant for different software.
+
+So search Hugging Face for the model name plus GGUF, for example `gemma-3-27b GGUF`. Open a result and you will see a file list with names like:
+
+```
+gemma-3-27b-it-Q4_K_M.gguf     16.5 GB
+gemma-3-27b-it-Q8_0.gguf       28.7 GB
+```
+
+Those suffixes are the quantization levels from lesson four. `Q4_K_M` is the sensible default.
+
+Download it straight onto the Spark:
+
+```bash
+mkdir -p ~/models
+cd ~/models
+curl -L -o model.gguf "<paste the download link here>"
+```
+
+Right-click the download arrow on Hugging Face and copy the link address to get that URL. A 16 GB file takes about five minutes on a fast connection and considerably longer on weak wifi, and there is no progress bar worth watching.
+
+## Serving a model
+
+With a model file downloaded, one command starts a server:
+
+```bash
+./build/bin/llama-server \
+  --model /path/to/your-model.gguf \
+  --host 0.0.0.0 \
+  --port 8080 \
+  --ctx-size 32768
+```
+
+Two flags, and both earn their place:
+
+- `--host 0.0.0.0` lets other devices on your network reach it, instead of only the machine itself. It also means anyone on your network can use it, so lesson six adds a password.
+- `--ctx-size 32768` is the conversation length from lesson four. Its memory cost depends on the model, so check yours.
+
+Guides online often add `--n-gpu-layers 999`, `--jinja` and `--flash-attn auto`. Those were all necessary once and are now the defaults, so they change nothing. llama.cpp already offloads everything it can, already uses the model's own chat template, and already turns on flash attention where the hardware allows.
+
+Then open `http://<your-machine>:8080` in a browser. llama.cpp ships its own chat interface, so you need nothing else installed to start talking to it.
+
+## Two settings worth knowing
+
+**Model cards are not decoration.** Many models publish recommended settings, things like temperature and repetition penalty. These often matter a great deal, and the defaults in most tools are wrong for a specific model. Read the card.
+
+**Watch out for tools that keep models loaded.** Some servers hold a model in memory for hours after you stop using it. On a machine where memory is one shared pool, that is space nobody else can use. Find the setting and turn it down.
+
+## If something goes wrong
+
+Three checks, in order:
+
+1. `nvidia-smi` shows the GPU, and if it does not, reboot.
+2. `free -h` shows the memory you expect. If used memory is high, something is still loaded.
+3. `docker image inspect` says `arm64` on anything you are pulling.
+
+Those three cover most of what goes wrong on this machine.

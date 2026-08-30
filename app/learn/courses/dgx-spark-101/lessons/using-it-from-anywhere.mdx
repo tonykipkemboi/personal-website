@@ -1,0 +1,169 @@
+---
+title: 'Using It From Anywhere'
+summary: 'Reach your machine from your phone in another country, keep it running through reboots, and see what it is doing.'
+description: 'How to make a local model server survive reboots, reach it privately from anywhere with Tailscale, add an API key, and monitor tokens per second and memory with Prometheus and Grafana.'
+order: 6
+updatedAt: '2026-08-30'
+comingSoon: true
+---
+
+A model you can only use while sitting at the machine is a demo. This lesson turns it into a tool.
+
+Four things, in the order they matter.
+
+## Make it survive a reboot
+
+If you started the server by typing a command in a terminal, it dies when you close that terminal. The fix on Linux is a **service**, a job the operating system starts on its own and restarts if it crashes.
+
+You do not need administrator rights for this. A user-level service works fine.
+
+Create a file at `~/.config/systemd/user/llama-server.service`:
+
+```ini
+[Unit]
+Description=llama.cpp server
+
+[Service]
+Type=simple
+ExecStart=/home/you/llama.cpp/build/bin/llama-server \
+  --model /home/you/models/your-model.gguf \
+  --host 0.0.0.0 --port 8080 --ctx-size 32768
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=default.target
+```
+
+Then turn it on:
+
+```bash
+systemctl --user daemon-reload
+systemctl --user enable --now llama-server
+loginctl enable-linger $USER
+```
+
+You might expect a line telling it to wait for the network. There isn't one, because the per-user part of systemd has no network target to wait on. `Restart=on-failure` covers it instead: if the network is not ready, the server exits and gets started again five seconds later.
+
+People miss that last line. **`enable-linger` lets your service run when you are not logged in**, which includes after a reboot when nobody has signed in yet. Without it the model does not come back, and nothing tells you why.
+
+From then on:
+
+```bash
+systemctl --user status llama-server    # is it alive
+systemctl --user restart llama-server   # after changing settings
+systemctl --user stop llama-server      # free the memory
+```
+
+## Reach it from anywhere
+
+Your machine sits on your home network. Your phone, when you leave the house, does not.
+
+The old answer was opening ports on your router, which is fiddly and exposes things to the whole internet. The modern answer is a **mesh VPN**, and the easiest one is Tailscale.
+
+A mesh VPN builds a small private network out of your own devices. Your laptop, your phone, and the Spark all join it. Most of the time they connect straight to each other, and when a network blocks that, Tailscale relays the traffic through its own servers instead. Either way it works, and either way it is encrypted end to end so the relay cannot read it.
+
+```bash
+curl -fsSL https://tailscale.com/install.sh | sh
+sudo tailscale up
+```
+
+That first line downloads Tailscale's installer and runs it immediately. If you have ever been told not to run scripts off the internet, that instinct is a good one. What makes this acceptable is that the address is Tailscale's own domain over an encrypted connection, and you can paste that URL into a browser and read the script first if you would rather see it.
+
+That prints a link. Open it, sign in, and the machine joins. Install the app on your phone, sign in with the same account, and you can reach the model at a permanent address from anywhere with internet.
+
+**One benefit worth calling out.** Home networks hand out addresses that change, and local names sometimes stop resolving. A Tailscale address stays with the machine for as long as it stays registered. Remove it from your account, reinstall Tailscale, or wipe the disk and it gets a new one, but nothing you do on your router will move it. That removes a whole category of "it worked yesterday" problems.
+
+<div className="diagram-scroll">
+<svg viewBox="0 0 720 300" role="img" aria-label="A network diagram. A phone in another country and a laptop in a coffee shop both connect directly to a DGX Spark at home. A dashed boundary encloses all three, labelled private network. A separate note warns the Spark must stay powered on and online at home.">
+  <rect x="0" y="0" width="720" height="300" fill="#ffffff" />
+  <text x="16" y="24" fontFamily="ui-monospace, monospace" fontSize="13" fill="#6b7280">YOUR OWN PRIVATE NETWORK</text>
+
+  <rect x="10" y="44" width="700" height="170" rx="12" fill="none" stroke="#0f766e" strokeWidth="1.5" strokeDasharray="6 4" />
+  <rect x="230" y="34" width="260" height="20" fill="#ffffff" />
+  <text x="360" y="50" textAnchor="middle" fontFamily="ui-monospace, monospace" fontSize="11" fill="#0f766e">everything inside here is encrypted</text>
+
+  <rect x="30" y="70" width="130" height="60" rx="6" fill="#f3f4f6" stroke="#d1d5db" />
+  <text x="95" y="96" textAnchor="middle" fontFamily="ui-monospace, monospace" fontSize="12" fill="#1a1a1a">phone</text>
+  <text x="95" y="114" textAnchor="middle" fontFamily="ui-monospace, monospace" fontSize="11" fill="#6b7280">another country</text>
+
+  <rect x="30" y="150" width="130" height="60" rx="6" fill="#f3f4f6" stroke="#d1d5db" />
+  <text x="95" y="176" textAnchor="middle" fontFamily="ui-monospace, monospace" fontSize="12" fill="#1a1a1a">laptop</text>
+  <text x="95" y="194" textAnchor="middle" fontFamily="ui-monospace, monospace" fontSize="11" fill="#6b7280">a coffee shop</text>
+
+  <line x1="164" y1="98" x2="516" y2="128" stroke="#0f766e" strokeWidth="1.5" />
+  <polygon points="516,128 507,125 508,133" fill="#0f766e" />
+  <line x1="164" y1="182" x2="516" y2="150" stroke="#0f766e" strokeWidth="1.5" />
+  <polygon points="516,150 507,146 508,154" fill="#0f766e" />
+
+  <rect x="520" y="110" width="170" height="60" rx="6" fill="#ccfbf1" stroke="#0f766e" />
+  <text x="605" y="136" textAnchor="middle" fontFamily="ui-monospace, monospace" fontSize="12" fill="#1a1a1a">your Spark</text>
+  <text x="605" y="154" textAnchor="middle" fontFamily="ui-monospace, monospace" fontSize="11" fill="#6b7280">at home</text>
+
+  <text x="200" y="240" fontFamily="ui-monospace, monospace" fontSize="11" fill="#6b7280">devices connect straight to each other where the network allows it</text>
+
+  <rect x="480" y="252" width="230" height="40" rx="6" fill="#fef3c7" stroke="#d97706" />
+  <text x="595" y="268" textAnchor="middle" fontFamily="ui-monospace, monospace" fontSize="11" fill="#92400e">the Spark must stay powered on</text>
+  <text x="595" y="284" textAnchor="middle" fontFamily="ui-monospace, monospace" fontSize="11" fill="#92400e">AND online at home</text>
+  <line x1="605" y1="214" x2="605" y2="252" stroke="#d97706" strokeWidth="1.5" strokeDasharray="4 3" />
+</svg>
+</div>
+
+**The catch, and it is a real one.** Tailscale connects your devices. It does not keep your machine alive. The Spark still has to be powered on **and** have working internet at home. If your router dies while you are away, your phone has nothing to connect to and no way to fix it.
+
+If you plan to rely on this while travelling, a battery backup covering the Spark **and the router** is what makes it trustworthy. Backing up only the Spark gives you a running machine you cannot reach.
+
+## Add a password
+
+By default your server has no authentication. Anyone who can reach the port can use the model.
+
+On a home network that is contained. Once it is on a VPN reachable from anywhere, add a key:
+
+```bash
+echo "your-long-random-key" > ~/.llama-api-key
+chmod 600 ~/.llama-api-key
+```
+
+Then add `--api-key-file /home/you/.llama-api-key` to the server command.
+
+**Use the file version, not the plain `--api-key` flag.** Anything you put on a command line is visible to every user on the machine through the process list. A file with restricted permissions is not.
+
+## See what it is doing
+
+Once things work, you want numbers. llama.cpp can publish statistics in a standard format by adding one flag: `--metrics`.
+
+That exposes an address with things like:
+
+| Name it publishes | What it means |
+|---|---|
+| `llamacpp:prompt_tokens_total` | tokens it has read |
+| `llamacpp:tokens_predicted_total` | tokens it has written |
+| `llamacpp:predicted_tokens_seconds` | current writing speed |
+| `llamacpp:prompt_tokens_cached_total` | work it avoided repeating |
+| `llamacpp:requests_processing` | how busy it is right now |
+
+The `llamacpp:` prefix is part of the name. Searching for the bare name finds nothing.
+
+Two open-source programs turn that into graphs. **Prometheus** visits that address every few seconds and records the numbers over time. **Grafana** draws them.
+
+> Prometheus is the notebook. Grafana is the pen.
+
+Both run in containers on the Spark itself. Prometheus sends nothing anywhere. Grafana, out of the box, reports anonymous usage statistics and checks for updates, so set `reporting_enabled = false` and `check_for_updates = false` if you want the whole stack silent.
+
+**Run them on the Spark, not your laptop.** Prometheus needs to reach the model every few seconds forever. On the same machine that connection cannot fail. From your laptop across wifi it would punch holes in your history every time the network hiccuped, and you would end up measuring your wifi instead of your model.
+
+The graph worth watching first is **memory used over time**. When you load a second model, you will see the line step up. That turns the budgeting from lesson four from arithmetic into something you can watch happen.
+
+## Where to go next
+
+You now have a machine that runs models privately, survives reboots, is reachable from anywhere, is protected by a key, and reports what it is doing.
+
+Reasonable next steps, roughly in order of value:
+
+**Run more than one model.** A tool called `llama-swap` sits in front of several models and loads them on demand, so only what you are using takes up space.
+
+**Fine-tune something.** Teaching a model about your own data is the thing this hardware is genuinely good at, because the meter is not running.
+
+**Find the limits.** Try a model far bigger than you think is sensible. Watch where it slows down. The arithmetic from lesson three will tell you what to expect, and checking your prediction against reality is the fastest way to make it stick.
+
+The mental models here transfer. Memory capacity versus bandwidth, reading fast and writing slow, weights plus conversation cache. Those hold on any machine you ever run a model on, rented or owned.

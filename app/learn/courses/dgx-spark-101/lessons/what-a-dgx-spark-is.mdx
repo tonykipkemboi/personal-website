@@ -1,0 +1,160 @@
+---
+title: 'What a DGX Spark Is'
+summary: 'Start here. What the machine is, what problem it solves, and who it is actually for.'
+description: 'A plain introduction to the NVIDIA DGX Spark: what an AI model is, where models normally run, and what changes when you run one on a computer sitting on your desk.'
+order: 1
+updatedAt: '2026-08-30'
+---
+
+Before anything else, one sentence.
+
+> A DGX Spark is a small computer that runs AI models on your desk instead of renting someone else's computer to do it.
+
+Everything else in this course explains how it pulls that off and what you give up in return.
+
+## First, what is an AI model?
+
+If you have used ChatGPT or Claude, you have used an AI model. It helps to know what one physically **is**, because that shapes everything later.
+
+An AI model is a **file**. A very large file full of numbers.
+
+Those numbers are called **parameters**. When you hear "a 27 billion parameter model," that means the file contains 27 billion numbers. The file is the model. Nothing else hides behind it.
+
+One more word, because every number later in this course uses it. Models do not read and write in words. They work in **tokens**, which are chunks of text roughly three quarters of an English word. "Running" might be one token, or it might be "run" plus "ning". Every tool you meet reports speed in tokens per second, so this course does too.
+
+To use a model, a computer loads that file into its memory and does arithmetic with those numbers. Your question goes in as numbers, the machine multiplies its way through the file, and words come out the other side.
+
+So "running a model" means: **hold a giant file of numbers in memory, and do math with it very quickly.**
+
+Keep that sentence. Most of this course is a consequence of it.
+
+## Where models normally run
+
+When you type into ChatGPT, almost nothing happens on your laptop. Your words travel over the internet to a data center owned by a company, a machine there does the arithmetic, and the answer travels back.
+
+You are renting a computer by the question.
+
+<div className="diagram-scroll">
+<svg viewBox="0 0 720 320" role="img" aria-label="Two diagrams. The first shows a laptop sending words over the internet to a company data center and receiving an answer back. The second shows a laptop sending words a short distance to a DGX Spark on the same desk and receiving an answer back, with nothing leaving the building.">
+  <rect x="0" y="0" width="720" height="320" fill="#ffffff" />
+
+  <text x="16" y="26" fontFamily="ui-monospace, monospace" fontSize="13" fill="#6b7280">USING A CLOUD SERVICE</text>
+
+  <rect x="16" y="44" width="120" height="64" rx="6" fill="#f3f4f6" stroke="#d1d5db" />
+  <text x="76" y="72" textAnchor="middle" fontFamily="ui-monospace, monospace" fontSize="13" fill="#1a1a1a">your</text>
+  <text x="76" y="90" textAnchor="middle" fontFamily="ui-monospace, monospace" fontSize="13" fill="#1a1a1a">laptop</text>
+
+  <line x1="140" y1="66" x2="300" y2="66" stroke="#9ca3af" strokeWidth="1.5" />
+  <polygon points="300,66 292,62 292,70" fill="#9ca3af" />
+  <text x="220" y="58" textAnchor="middle" fontFamily="ui-monospace, monospace" fontSize="11" fill="#6b7280">your words</text>
+
+  <line x1="300" y1="90" x2="140" y2="90" stroke="#9ca3af" strokeWidth="1.5" />
+  <polygon points="140,90 148,86 148,94" fill="#9ca3af" />
+  <text x="220" y="106" textAnchor="middle" fontFamily="ui-monospace, monospace" fontSize="11" fill="#6b7280">the answer</text>
+
+  <rect x="304" y="34" width="120" height="84" rx="6" fill="#fef3c7" stroke="#d1d5db" strokeDasharray="4 4" />
+  <text x="364" y="70" textAnchor="middle" fontFamily="ui-monospace, monospace" fontSize="13" fill="#1a1a1a">the</text>
+  <text x="364" y="88" textAnchor="middle" fontFamily="ui-monospace, monospace" fontSize="13" fill="#1a1a1a">internet</text>
+
+  <line x1="428" y1="62" x2="560" y2="62" stroke="#9ca3af" strokeWidth="1.5" />
+  <polygon points="560,62 552,58 552,66" fill="#9ca3af" />
+  <line x1="560" y1="92" x2="428" y2="92" stroke="#9ca3af" strokeWidth="1.5" />
+  <polygon points="428,92 436,88 436,96" fill="#9ca3af" />
+
+  <rect x="564" y="44" width="140" height="64" rx="6" fill="#f3f4f6" stroke="#d1d5db" />
+  <text x="634" y="72" textAnchor="middle" fontFamily="ui-monospace, monospace" fontSize="13" fill="#1a1a1a">somebody</text>
+  <text x="634" y="90" textAnchor="middle" fontFamily="ui-monospace, monospace" fontSize="13" fill="#1a1a1a">else&apos;s computer</text>
+
+  <line x1="16" y1="150" x2="704" y2="150" stroke="#e5e7eb" strokeWidth="1" />
+
+  <text x="16" y="186" fontFamily="ui-monospace, monospace" fontSize="13" fill="#6b7280">USING A DGX SPARK</text>
+
+  <rect x="16" y="204" width="120" height="64" rx="6" fill="#f3f4f6" stroke="#d1d5db" />
+  <text x="76" y="232" textAnchor="middle" fontFamily="ui-monospace, monospace" fontSize="13" fill="#1a1a1a">your</text>
+  <text x="76" y="250" textAnchor="middle" fontFamily="ui-monospace, monospace" fontSize="13" fill="#1a1a1a">laptop</text>
+
+  <line x1="140" y1="226" x2="250" y2="226" stroke="#0f766e" strokeWidth="1.5" />
+  <polygon points="250,226 242,222 242,230" fill="#0f766e" />
+  <text x="195" y="218" textAnchor="middle" fontFamily="ui-monospace, monospace" fontSize="11" fill="#0f766e">your words</text>
+
+  <line x1="250" y1="250" x2="140" y2="250" stroke="#0f766e" strokeWidth="1.5" />
+  <polygon points="140,250 148,246 148,254" fill="#0f766e" />
+  <text x="195" y="266" textAnchor="middle" fontFamily="ui-monospace, monospace" fontSize="11" fill="#0f766e">the answer</text>
+
+  <rect x="254" y="194" width="150" height="84" rx="6" fill="#ccfbf1" stroke="#0f766e" />
+  <text x="329" y="230" textAnchor="middle" fontFamily="ui-monospace, monospace" fontSize="13" fill="#1a1a1a">the box on</text>
+  <text x="329" y="248" textAnchor="middle" fontFamily="ui-monospace, monospace" fontSize="13" fill="#1a1a1a">your desk</text>
+
+  <text x="430" y="230" fontFamily="ui-monospace, monospace" fontSize="12" fill="#6b7280">nothing leaves</text>
+  <text x="430" y="248" fontFamily="ui-monospace, monospace" fontSize="12" fill="#6b7280">the building</text>
+</svg>
+</div>
+
+The DGX Spark moves that second box into your house.
+
+## What it physically is
+
+It is about the size of a thick hardcover book. It sits on a desk. It plugs into a wall outlet and runs **DGX OS**, NVIDIA's own version of Linux built on Ubuntu. The distinction matters later: installing plain Ubuntu on it costs you the graphics drivers NVIDIA supports.
+
+It is a whole computer, not a part you install inside another one. The distinction trips people up, so it is worth saying plainly: **you do not put this inside your PC.** It is its own machine that you talk to over your network.
+
+Three numbers describe it, and you will meet all three again later:
+
+| Number | What it is |
+|---|---|
+| **128 GB of memory** | the workspace. A model has to be loaded in here to run. |
+| **up to 4 TB of storage** | the shelf. Model files sit here when they are not running. |
+| **about $4,700** | the price as of August 2026. It launched at $3,999 and went up. |
+
+Memory and storage get confused constantly, so it is worth separating them once. Storage is where files live when nothing is happening, like the drive in your laptop. Memory is the workspace something has to be loaded into before it can run. Your phone has both, and only ever advertises the storage number.
+
+## What problem it solves
+
+Two problems, and they are different from each other.
+
+**The first is the meter.** Running a model needs a **GPU**, a chip originally built for video game graphics that turns out to be very good at the kind of maths models do. Lesson two explains why. Renting a machine with a good one costs money by the hour.
+
+Be careful with this argument, because the obvious version of it does not hold. Measured against what hosted services charge per token, this machine would take many years to pay for itself, and it is slower than what you would rent. Anyone selling you one on pure economics is not doing the arithmetic.
+
+The real cost is the meter running while you think. Each attempt has a price, so you start deciding which questions are worth paying to answer, and the ones you talk yourself out of are usually the interesting ones. Owning the hardware makes experiments free at the point of use, which changes what you are willing to try rather than what you spend.
+
+**The second is privacy.** When you use a hosted service, your words go to a company. For most things nobody cares. For your own notes, your company's internal documents, or a language nobody has built a model for yet, "it never leaves my house" is a real feature rather than a slogan.
+
+## What people do with one
+
+Understanding the machine is not the same as wanting one, so here is what it gets used for.
+
+**Working through your own documents.** Point it at years of notes, contracts, transcripts or research and ask questions across all of it. The material never leaves your house, which matters when it is a company's internal files or a client's.
+
+**Teaching a model something it does not know.** Models are trained on what was common on the internet, so they are weak on anything that was not. Adjusting one to handle a specific language, a company's vocabulary, or a niche subject means running the same training job over and over, and paying by the hour for that is what stops most people from trying.
+
+Worth setting expectations here: retraining a model outright needs several times more memory than running it, so even a small model will not fit. What does fit is training a small add-on layer that sits on top of a frozen model, which is how almost everyone does this in practice and is a topic of its own.
+
+**Building something that uses a model constantly.** If a tool you are writing calls a model on every keystroke, a metered bill makes you cautious in a way that hurts the tool. A machine you already own does not.
+
+**Learning by breaking things.** Reading about how models are served teaches you less than serving one badly and fixing it, and that is a much easier lesson to take when experiments are free.
+
+## Who it is not for
+
+Worth being honest, because the machine has a specific shape.
+
+It is **not faster** than a good gaming graphics card at running a model that fits on that card, and is often slower. Lesson three explains why.
+
+It is **not** a machine for gaming or video editing. It runs Linux on a kind of chip most consumer software was never built for.
+
+It is **not** required for learning about AI, since renting a GPU for a few dollars teaches you plenty.
+
+What it is good at is holding **large** models, the ones a normal graphics card cannot fit at all, and holding them all day without a meter running.
+
+## Where this course goes
+
+Four lessons are published.
+
+1. This one, covering what the machine is and who would want one.
+2. What is inside the box, and the single design choice that separates it from every PC you have used.
+3. Why memory decides everything about the speed you get.
+4. Which models fit, worked out with the arithmetic.
+
+Two more are being written: getting your first model running, and reaching it from anywhere. Both give commands you type at real hardware, so they are being tested end to end on a Spark before they go up rather than assembled from other people's guides.
+
+You do not need to own one to follow along. Nothing in these four lessons requires the hardware, and the mental models apply to any machine you run an AI model on.

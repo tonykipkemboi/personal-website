@@ -1,0 +1,157 @@
+---
+title: 'What Models Actually Fit'
+summary: 'How to work out the size of any model before you download it, what quantization really does, and what 128 GB buys you.'
+description: 'Learn to calculate model file size from parameter count and precision, understand FP16 and 4-bit quantization in plain terms, budget for the KV cache, and see which models fit in a DGX Spark.'
+order: 4
+updatedAt: '2026-08-30'
+---
+
+By the end of this lesson you will be able to look at any model name and work out, in your head, whether it will run on a given machine. It is one multiplication.
+
+## Model size is a multiplication
+
+You already know a model is a file full of numbers, and that the count of those numbers is the parameter count.
+
+The file size is just:
+
+```
+file size  =  how many numbers  ×  how many bytes each number takes
+```
+
+The first half is in the name. "27B" means 27 billion. The second half is the part nobody explains.
+
+## What FP16 and its friends mean
+
+When you store a number on a computer, you choose how much space to give it. More space means more precision.
+
+These formats have names, and the number in the name is **how many bits each parameter gets**. Eight bits make one byte.
+
+| Format | Bits each | Bytes each | In plain terms |
+|---|---|---|---|
+| FP32 | 32 | 4 | Full precision. Rarely used to run models now. |
+| FP16 or BF16 | 16 | 2 | Half precision. The normal full-size download. |
+| FP8 | 8 | 1 | A quarter the size of FP32. |
+| FP4 | 4 | 0.5 | An eighth the size of FP32. Blackwell chips do this in hardware. |
+
+"FP" stands for floating point, which is just the computer's way of writing decimal numbers.
+
+So the famous line "a 70B model in FP16 is about 140 GB" is this:
+
+```
+70,000,000,000 numbers  ×  2 bytes  =  140,000,000,000 bytes  ≈  140 GB
+```
+
+Try the same calculation on the model from the last lesson: 27 billion numbers times 2 bytes is 54 GB, and sure enough, the BF16 download of that model is 54 GB.
+
+## Quantization, explained without math
+
+Quantization means storing each number in **fewer bits**.
+
+The photo analogy helps here. A RAW photo from a camera holds enormous detail and is huge. A good JPEG of the same photo is maybe a tenth the size, and most people cannot tell the difference on a screen. You threw away detail that was not doing much work.
+
+Quantization does that to a model. Same model, less precision per number, dramatically smaller file.
+
+<div className="diagram-scroll">
+<svg viewBox="0 0 720 250" role="img" aria-label="A bar chart comparing file sizes of the same 27 billion parameter model at different precisions: full precision 54 GB, 8-bit 29 GB, 6-bit 22 GB, and 4-bit 16.8 GB, with predicted speed increasing as size falls.">
+  <rect x="0" y="0" width="720" height="250" fill="#ffffff" />
+  <text x="16" y="24" fontFamily="ui-monospace, monospace" fontSize="13" fill="#6b7280">THE SAME 27B MODEL, STORED FOUR WAYS</text>
+
+  <text x="16" y="62" fontFamily="ui-monospace, monospace" fontSize="12" fill="#1a1a1a">full (16-bit)</text>
+  <rect x="130" y="48" width="440" height="22" rx="3" fill="#e5e7eb" stroke="#9ca3af" />
+  <text x="580" y="63" fontFamily="ui-monospace, monospace" fontSize="12" fill="#1a1a1a">54 GB</text>
+
+  <text x="16" y="102" fontFamily="ui-monospace, monospace" fontSize="12" fill="#1a1a1a">8-bit</text>
+  <rect x="130" y="88" width="236" height="22" rx="3" fill="#d1fae5" stroke="#0f766e" />
+  <text x="580" y="103" fontFamily="ui-monospace, monospace" fontSize="12" fill="#1a1a1a">29 GB</text>
+
+  <text x="16" y="142" fontFamily="ui-monospace, monospace" fontSize="12" fill="#1a1a1a">6-bit</text>
+  <rect x="130" y="128" width="182" height="22" rx="3" fill="#ccfbf1" stroke="#0f766e" />
+  <text x="580" y="143" fontFamily="ui-monospace, monospace" fontSize="12" fill="#1a1a1a">22 GB</text>
+
+  <text x="16" y="182" fontFamily="ui-monospace, monospace" fontSize="12" fill="#1a1a1a">4-bit</text>
+  <rect x="130" y="168" width="137" height="22" rx="3" fill="#99f6e4" stroke="#0f766e" />
+  <text x="580" y="183" fontFamily="ui-monospace, monospace" fontSize="12" fill="#1a1a1a">16.8 GB</text>
+
+  <line x1="130" y1="206" x2="570" y2="206" stroke="#9ca3af" strokeWidth="1" />
+  <polygon points="130,206 138,202 138,210" fill="#9ca3af" />
+  <text x="350" y="228" textAnchor="middle" fontFamily="ui-monospace, monospace" fontSize="11" fill="#6b7280">smaller file = fewer bytes to read per token = faster</text>
+</svg>
+</div>
+
+Here is the part people miss. On this machine, **quantization buys speed, not just space.**
+
+Remember the arithmetic from the last lesson. Speed is bandwidth divided by bytes read per token. Halve the file and the tokens per second close to double. Not quite double, because some overhead stays the same size whatever you do.
+
+You will see names like `Q4_K_M` or `Q8_0` on downloads. The number is roughly the bits per parameter. **Q4_K_M is the community default** and a good starting point. Q8 is nearly indistinguishable from full precision. Q2 exists and is usually not worth it.
+
+## The cost everyone forgets
+
+Model weights are not the only thing in memory. There is a second cost called the **KV cache**.
+
+Think of it as the model's short-term memory of the current conversation. As you talk, it keeps notes so it does not have to re-read everything from scratch for every token.
+
+Here is the part that catches people out: **this cost belongs to the model, not to the machine.** There is no Spark number for it. Two models of the same size can differ by more than ten times, because it depends on how the model is built internally.
+
+Real figures at a 32,000 token conversation:
+
+| Model | KV cache at 32k tokens |
+|---|---|
+| Llama 3.1 8B | about 4 GB |
+| Gemma 3 27B | about 4 GB |
+| Qwen3 32B | about 8 GB |
+| Llama 3.3 70B | about 10 GB |
+
+Notice the 8B and the 27B costing the same, and the 70B costing more than twice either. Size does not predict it.
+
+Two things follow.
+
+**It is per model, not shared.** Run three models at once and each keeps its own notes.
+
+**You pay for it up front**, which surprises people. The server reserves the whole amount when it starts, sized by the conversation length you configured rather than by how much you say. Ask for room for 131,000 tokens with a 70B and around 40 GB is committed before you type anything, on top of 42 GB of weights. That is most of a Spark, gone at launch.
+
+**And it slows you down.** Lesson three covered it: those notes get read every token too, so a longer setting costs speed as well as memory. Both reasons point the same way, so pick a size you will use.
+
+When you are planning for a specific model, look up its real number rather than reusing someone else's. Two ways: the model's `config.json` on its download page carries the values, and the server prints the figure it allocated when it loads, which is the easier of the two.
+
+There is also a lever worth knowing exists. The notes can be stored at lower precision, the same trick as quantizing the model, which roughly halves every number in that table for very little quality cost.
+
+## Putting it together
+
+Your real budget is about **120 GB** once the operating system takes its share. A sensible setup might look like this:
+
+| What | Weights | Conversation memory | Total |
+|---|---|---|---|
+| A 27B model, 4-bit, 32k conversation | 16 GB | 4 GB | 20 GB |
+| A 12B model, 4-bit, 16k conversation | 7 GB | 2 GB | 9 GB |
+| A 9B model, 4-bit, 16k conversation | 5.5 GB | 2 GB | 7.5 GB |
+| | | | **36.5 GB** |
+
+Three models loaded at once, comfortably, with over 80 GB spare.
+
+**The rule that falls out of this: give your main model the long conversation memory and keep the side models short.** Context is where the space goes.
+
+## The quick estimate
+
+For a 4-bit model, this is close enough to do in your head:
+
+```
+size in GB  ≈  billions of parameters  ×  0.6
+```
+
+You may notice that is 0.6 rather than the 0.5 the table above implies for four bits.
+
+The same gap shows up in the chart earlier: the arithmetic says 8-bit should be 27 GB and the real file is 29. Squashing every number equally hurts quality, so real quantized files keep some parts at higher precision. Every level runs 8 to 25% over the clean arithmetic, and the 4-bit case is where the gap is widest.
+
+So use the table to understand what is happening and the 0.6 rule to plan with.
+
+So:
+
+- 9B is about 5.5 GB
+- 12B is about 7 GB
+- 27B is about 16 GB
+- 70B is about 42 GB
+- 120B is about 72 GB (the mixture-of-experts model from lesson three: all 72 GB still has to sit in memory, even though only a slice gets read per token)
+
+All of those fit on a Spark. On a 32 GB gaming card you get to roughly 32B before the weights alone crowd out the conversation notes. You can force a 70B by parking most of it in slower system memory, and it will crawl at one or two tokens per second.
+
+That gap is what you paid for.

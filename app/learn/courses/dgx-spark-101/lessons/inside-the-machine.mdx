@@ -1,0 +1,148 @@
+---
+title: 'Inside the Machine'
+summary: 'The one design choice that makes a DGX Spark different from every PC you have used: it has no separate graphics memory.'
+description: 'How the GB10 chip works, what a CPU and GPU each do, why normal computers have two separate pools of memory, and what changes when a machine has only one.'
+order: 2
+updatedAt: '2026-08-30'
+---
+
+To understand this machine you need two ideas: what the parts do, and where the memory lives. The second one is the surprise.
+
+## The two workers
+
+Every computer has a **CPU**, the central processing unit. Think of it as one very clever worker. It can do almost anything, it handles one thing at a time extremely fast, and it runs your operating system, your files, your network.
+
+A **GPU**, the graphics processing unit, is different. It is thousands of simple workers who all do the same small task at the same moment. Each one is far dumber than the CPU. There are just an enormous number of them.
+
+That sounds like a strange thing to build until you know what AI math looks like. Running a model means multiplying huge grids of numbers together. That is millions of tiny multiplications that do not depend on each other, so they can all happen at once.
+
+> A CPU is one expert doing tasks in order. A GPU is a stadium of people each doing one multiplication at the same time.
+
+GPUs were built for video game graphics, which happens to be the same shape of math. AI inherited the hardware.
+
+## Where memory normally lives
+
+Here is the part that matters, and almost nobody explains it before you buy a machine.
+
+In a normal computer there are **two separate pools of memory**.
+
+Your system RAM belongs to the CPU. It is generous, often 16 to 64 GB.
+
+Your graphics card has its own memory, called **VRAM**, video RAM. It is physically on the card, it is much faster, and it is much smaller. A very good consumer card in 2026 has 24 or 32 GB.
+
+The GPU can only work on data that is in VRAM. If something lives in system RAM, it must be **copied** across a connection called PCIe first. That copy takes time.
+
+<div className="diagram-scroll">
+<svg viewBox="0 0 720 400" role="img" aria-label="Two architecture diagrams. The first shows a normal PC with a CPU connected to system RAM, and separately a GPU connected to its own smaller VRAM, with a slow PCIe copy link between the two halves. The second shows the DGX Spark with a Grace CPU and Blackwell GPU both connected directly to one shared 128 GB memory pool, with no copying.">
+  <rect x="0" y="0" width="720" height="400" fill="#ffffff" />
+
+  <text x="16" y="24" fontFamily="ui-monospace, monospace" fontSize="13" fill="#6b7280">A NORMAL PC: TWO SEPARATE POOLS</text>
+
+  <rect x="16" y="40" width="150" height="56" rx="6" fill="#f3f4f6" stroke="#d1d5db" />
+  <text x="91" y="73" textAnchor="middle" fontFamily="ui-monospace, monospace" fontSize="13" fill="#1a1a1a">CPU</text>
+
+  <line x1="91" y1="96" x2="91" y2="124" stroke="#9ca3af" strokeWidth="1.5" />
+
+  <rect x="16" y="124" width="150" height="72" rx="6" fill="#e5e7eb" stroke="#d1d5db" />
+  <text x="91" y="150" textAnchor="middle" fontFamily="ui-monospace, monospace" fontSize="12" fill="#1a1a1a">system RAM</text>
+  <text x="91" y="170" textAnchor="middle" fontFamily="ui-monospace, monospace" fontSize="11" fill="#6b7280">64 GB, slower</text>
+
+  <line x1="170" y1="160" x2="290" y2="160" stroke="#b91c1c" strokeWidth="2" strokeDasharray="6 4" />
+  <polygon points="290,160 282,156 282,164" fill="#b91c1c" />
+  <polygon points="170,160 178,156 178,164" fill="#b91c1c" />
+  <text x="230" y="148" textAnchor="middle" fontFamily="ui-monospace, monospace" fontSize="11" fill="#b91c1c">PCIe</text>
+  <text x="230" y="180" textAnchor="middle" fontFamily="ui-monospace, monospace" fontSize="11" fill="#b91c1c">every byte</text>
+  <text x="230" y="196" textAnchor="middle" fontFamily="ui-monospace, monospace" fontSize="11" fill="#b91c1c">gets copied</text>
+
+  <rect x="294" y="40" width="150" height="56" rx="6" fill="#f3f4f6" stroke="#d1d5db" />
+  <text x="369" y="73" textAnchor="middle" fontFamily="ui-monospace, monospace" fontSize="13" fill="#1a1a1a">GPU</text>
+
+  <line x1="369" y1="96" x2="369" y2="124" stroke="#9ca3af" strokeWidth="1.5" />
+
+  <rect x="294" y="124" width="76" height="72" rx="6" fill="#fee2e2" stroke="#b91c1c" />
+  <text x="332" y="150" textAnchor="middle" fontFamily="ui-monospace, monospace" fontSize="12" fill="#1a1a1a">VRAM</text>
+  <text x="332" y="170" textAnchor="middle" fontFamily="ui-monospace, monospace" fontSize="11" fill="#6b7280">32 GB, fast</text>
+
+  <text x="470" y="150" fontFamily="ui-monospace, monospace" fontSize="12" fill="#6b7280">the model must fit</text>
+  <text x="470" y="168" fontFamily="ui-monospace, monospace" fontSize="12" fill="#6b7280">inside VRAM, 32 GB,</text>
+  <text x="470" y="186" fontFamily="ui-monospace, monospace" fontSize="12" fill="#6b7280">or it crawls</text>
+
+  <line x1="16" y1="228" x2="704" y2="228" stroke="#e5e7eb" strokeWidth="1" />
+
+  <text x="16" y="264" fontFamily="ui-monospace, monospace" fontSize="13" fill="#6b7280">DGX SPARK: ONE SHARED POOL</text>
+
+  <rect x="16" y="280" width="175" height="56" rx="6" fill="#f3f4f6" stroke="#d1d5db" />
+  <text x="103" y="313" textAnchor="middle" fontFamily="ui-monospace, monospace" fontSize="13" fill="#1a1a1a">Grace CPU</text>
+
+  <rect x="269" y="280" width="175" height="56" rx="6" fill="#f3f4f6" stroke="#d1d5db" />
+  <text x="356" y="313" textAnchor="middle" fontFamily="ui-monospace, monospace" fontSize="13" fill="#1a1a1a">Blackwell GPU</text>
+
+  <line x1="191" y1="318" x2="269" y2="318" stroke="#0f766e" strokeWidth="2" />
+  <text x="230" y="304" textAnchor="middle" fontFamily="ui-monospace, monospace" fontSize="11" fill="#0f766e">NVLink C2C</text>
+
+  <line x1="103" y1="336" x2="103" y2="356" stroke="#0f766e" strokeWidth="2" />
+  <line x1="356" y1="336" x2="356" y2="356" stroke="#0f766e" strokeWidth="2" />
+
+  <rect x="16" y="356" width="428" height="36" rx="6" fill="#ccfbf1" stroke="#0f766e" />
+  <text x="230" y="380" textAnchor="middle" fontFamily="ui-monospace, monospace" fontSize="13" fill="#1a1a1a">one pool of memory, 128 GB</text>
+
+  <text x="470" y="330" fontFamily="ui-monospace, monospace" fontSize="12" fill="#0f766e">nothing crosses PCIe</text>
+  <text x="470" y="352" fontFamily="ui-monospace, monospace" fontSize="12" fill="#6b7280">both chips read the</text>
+  <text x="470" y="370" fontFamily="ui-monospace, monospace" fontSize="12" fill="#6b7280">same physical memory</text>
+</svg>
+</div>
+
+## What the Spark does instead
+
+The chip inside a DGX Spark is called the **GB10 Grace Blackwell Superchip**. Long name, simple idea.
+
+Grace is the CPU. Blackwell is the GPU. They are two separate pieces of silicon sitting in one package, joined by a fast connection NVIDIA calls **NVLink-C2C** (chip to chip).
+
+And they share **one pool of memory**. All 128 GB of it.
+
+Not "the GPU gets 96 and the CPU gets 32." Not a split you configure. One pool, and both chips use the same physical addresses to point at the same data.
+
+This has two consequences worth sitting with.
+
+**Nothing has to cross PCIe.** On a normal machine, moving a model into the GPU means shuffling it down that slow lane. Here the GPU reads the data where it already sits.
+
+**There is no small box to overflow.** The limit is not 24 GB of VRAM. The limit is the whole machine.
+
+## Why `nvidia-smi` says "N/A"
+
+`nvidia-smi` is the standard command for checking a GPU. On this machine, asking it about memory gives you this:
+
+```bash
+$ nvidia-smi --query-gpu=memory.total --format=csv
+memory.total [MiB]
+[N/A]
+```
+
+Every new owner sees this and assumes something is broken.
+
+Nothing is broken. `nvidia-smi` is asking "how much dedicated video memory does this card have," and the honest answer is **none**, because there is no separate card and no separate memory. The tool has no way to say that, so it says N/A.
+
+To see memory on this machine you ask the operating system instead:
+
+```bash
+$ free -h
+               total        used        free      shared  buff/cache   available
+Mem:           121Gi        44Gi        56Gi       1.0Gi        22Gi        76Gi
+Swap:           15Gi          0B        15Gi
+```
+
+That is real output, and it is wider than it needs to be. The two columns worth reading are **total** and **available**. Here 121 exists and 76 is available, because a model is loaded and using the rest. Ignore the column headed `free`, which counts only memory nobody has touched at all and is always lower.
+
+You may notice that says 121, not 128, and the `Gi` rather than `GB`.
+
+Two things are happening. Storage and memory get advertised in units of a thousand, while operating systems count in units of 1024, which alone turns 128 into about 119. And the machine's firmware reserves a few gigabytes for itself before Linux sees the pool at all.
+
+Depending on which tool you ask you will see somewhere between 119 and 122. Plan around that, not around 128.
+
+## The one thing to remember
+
+Every other lesson leans on this:
+
+> The DGX Spark has one pool of memory that everything shares. A normal computer has a small fast pool for the GPU and a big slow pool for everything else.
+
+That single difference is why enormous models fit, and, as the next lesson shows, why they run at the speed they do.
