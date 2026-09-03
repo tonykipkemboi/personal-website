@@ -49,11 +49,11 @@ export const courseCatalog: CourseMetadata[] = [
     summary:
       'A plain-English guide to the NVIDIA DGX Spark: what it is, how its memory works, why that decides its speed, and which models actually fit.',
     description:
-      'Start with what a DGX Spark is, then learn how its unified memory differs from a normal graphics card, why memory bandwidth rather than raw compute decides how fast it answers, and how to work out which models fit in 128 GB. Four lessons published, two more on running and serving a model in progress.',
+      'Start with what a DGX Spark is, then learn how its unified memory differs from a normal graphics card, why memory bandwidth rather than raw compute decides how fast it answers, and how to work out which models fit in 128 GB. Finish by building llama.cpp, serving a model, and reaching it from anywhere, with every command explained and every step verified on real hardware.',
     level: 'Beginner',
     status: 'First pass',
     publishedAt: '2026-08-30',
-    updatedAt: '2026-08-30',
+    updatedAt: '2026-09-03',
     tags: ['DGX Spark', 'Local AI', 'GB10', 'Unified Memory', 'llama.cpp'],
     sources: [
       {

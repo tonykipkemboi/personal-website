@@ -6,7 +6,7 @@ order: 2
 updatedAt: '2026-08-30'
 ---
 
-To understand this machine you need two ideas: what the parts do, and where the memory lives. The second one is the surprise.
+To understand this machine you need two ideas: what the parts do, and where the memory lives. The second one is where it differs from every PC you have used.
 
 ## The two workers
 
@@ -21,8 +21,6 @@ That sounds like a strange thing to build until you know what AI math looks like
 GPUs were built for video game graphics, which happens to be the same shape of math. AI inherited the hardware.
 
 ## Where memory normally lives
-
-Here is the part that matters, and almost nobody explains it before you buy a machine.
 
 In a normal computer there are **two separate pools of memory**.
 
@@ -117,8 +115,6 @@ $ nvidia-smi --query-gpu=memory.total --format=csv
 memory.total [MiB]
 [N/A]
 ```
-
-Every new owner sees this and assumes something is broken.
 
 Nothing is broken. `nvidia-smi` is asking "how much dedicated video memory does this card have," and the honest answer is **none**, because there is no separate card and no separate memory. The tool has no way to say that, so it says N/A.
 

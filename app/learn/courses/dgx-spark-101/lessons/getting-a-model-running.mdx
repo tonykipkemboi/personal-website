@@ -1,103 +1,90 @@
 ---
 title: 'Getting a Model Running'
-summary: 'The practical path from a fresh machine to a working model, and the three things that will break on the way.'
-description: 'First boot, the arm64 and sm_121 gotchas, choosing between Ollama, llama.cpp and vLLM, building llama.cpp with CUDA, and serving your first model on a DGX Spark.'
+summary: 'The full path from a machine you just switched on to a model answering you in a browser, with every command explained.'
+description: 'A step by step walkthrough for a DGX Spark: reaching a terminal, the three things that break, building llama.cpp, downloading a model, serving it, and checking it actually worked.'
 order: 5
-updatedAt: '2026-08-30'
-comingSoon: true
+updatedAt: '2026-09-02'
 ---
 
-The practical lesson, and the point where the course starts typing commands.
+This is where the course stops explaining and starts doing.
 
-**If you do not own a Spark, keep reading anyway.** The three things that break here tell you more about how this machine works than any spec sheet, and none of it requires the hardware to understand.
+**If you do not own a Spark, read it anyway.** The three things that break here explain more about how this machine works than any spec sheet, and none of it needs the hardware to follow.
+
+Every step below was run on a real Spark. Where a step exists because something went wrong, that is said plainly.
 
 ## First, what a terminal is
 
-If you have never used one, nobody explains this part.
+If you have never used one, start here. Nothing later makes sense without it.
 
-A **terminal** is a window where you type instructions instead of clicking things. Ubuntu, the operating system on the Spark, is normally driven this way. It looks unfriendly and it is mostly just typing a word and pressing enter.
+A **terminal** is a window where you type instructions instead of clicking things. You type a line, press enter, the machine does it and prints something back. Linux, which is what the Spark runs, is normally driven this way.
 
 Two ways to get one.
 
-**Plug a monitor, keyboard and mouse into the Spark.** It boots to a desktop like any computer. Open the app called Terminal.
+**Plug a monitor, keyboard and mouse into the Spark.** It boots to a desktop like any computer, and there is an app called Terminal. Simple, and it means walking to the machine every time.
 
-**Or reach it from your own laptop**, which is what most people end up doing. Open Terminal on a Mac, or PowerShell on Windows, and type:
+**Or reach it from your own laptop**, which is what most people settle on. Open Terminal on a Mac or PowerShell on Windows and type:
 
 ```bash
 ssh yourname@spark-1234.local
 ```
 
-`ssh` means "secure shell," and it gives you a terminal on the other machine as though you were sitting at it. `yourname` is the account you made during setup. The `spark-1234.local` part is the name your Spark announced on your network, which NVIDIA's setup app shows you. Its network address works too.
+`ssh` stands for **secure shell**. It gives you a terminal on the other machine, encrypted, as though you were sitting at it. Your laptop becomes a keyboard and a screen. The Spark does the work.
 
-### How to read the command blocks in this course
+`yourname` is the account you made during setup. `spark-1234.local` is the name your Spark announces on your home network, which NVIDIA's setup app shows you. Its network address works too.
 
-Worth stating once, because it trips up everyone:
+### How to read the command blocks
 
-- A line starting with `$` is something **you type**. Do not type the `$` itself.
-- Lines underneath with no `$` are what the machine **printed back**.
-- A `\` at the end of a line means the command keeps going on the next line. Copy the whole block.
-- Anything in `<angle brackets>` is a placeholder. Replace it, brackets and all.
+Worth stating once:
+
+- A block **without** a `$` is a command to type.
+- A block **with** a `$` shows a command and what the machine printed back. Do not type the `$` itself.
+- A `\` at the end of a line means the command continues on the next one. Copy the whole block.
+- Anything in `<angle brackets>` is a placeholder. Replace it, brackets included.
 
 ## Three things that break
 
-Knowing them in advance turns each from an afternoon into a minute.
+Knowing them in advance turns each from a lost afternoon into a minute.
 
-### Gotcha one: reboot before you panic
+### The GPU looks broken on first boot
 
-On first boot, the standard GPU command may fail like this:
+Run the standard graphics command and you may get this:
 
 ```bash
 $ nvidia-smi
 Failed to initialize NVML: Driver/library version mismatch
 ```
 
-This looks alarming and is almost always harmless. It happens on any Linux machine after a graphics driver update: the new driver files are in place, but the running system still has the old one loaded. They disagree, so the tool refuses.
+This looks alarming and is almost always harmless. It happens on any Linux machine after a graphics driver update: the new driver files are installed, the running system still has the old one loaded, and the two disagree, so the tool refuses to answer.
 
 ```bash
 sudo reboot
 ```
 
-Afterwards you should see the real thing:
+`sudo` means "do this as an administrator," and it will ask for your password. After the reboot:
 
 ```bash
 $ nvidia-smi --query-gpu=name,driver_version,compute_cap --format=csv,noheader
 NVIDIA GB10, 580.173.02, 12.1
 ```
 
-Note that last number, `12.1`. It matters in a moment.
+Note that last number, `12.1`. It matters shortly.
 
-### Gotcha two: this is not an Intel machine
+### This is not an Intel machine
 
-The Grace CPU is **ARM**, the same family of chip as your phone or a modern Mac. The architecture is called **aarch64** or **arm64**.
+The Spark's processor is **ARM**, the same family as your phone or a modern Mac. Written down it appears as `aarch64` or `arm64`.
 
-Nearly all servers and desktops are a different architecture called **x86_64**. Software is compiled for one or the other, and something built only for x86 will not run here.
+Almost every server and desktop in the world is a different family called `x86_64`. Software has to be built for one or the other, and something built only for x86 will not run here.
 
-This bites in two places.
+You meet this when installing things. If a tool refuses to install, or tries to build itself from scratch and fails, this is usually why.
 
-**Docker images.** Many published images only exist for x86. To check *before* pulling one, ask the registry what it offers:
+### Your chip is newer than some software expects
 
-```bash
-docker manifest inspect <image-name> | grep architecture
-```
+That `12.1` from earlier is the chip's **compute capability**, a version number NVIDIA gives each GPU generation. In code it is written `sm_121`.
 
-If `arm64` is not in that list, there is no native build for this machine. It may still run under emulation, but emulated containers cannot reach the GPU, which defeats the point.
-
-`docker image inspect` will not answer this. It only reads images you have already downloaded, and on an ARM machine it reports `arm64` for anything multi-platform regardless.
-
-**Python packages.** Normally `pip install` downloads a prebuilt binary called a wheel. If no arm64 wheel exists, pip tries to compile the package from source on your machine instead. A five second install becomes twenty minutes, and often fails on a missing compiler.
-
-If you have seen people online complain about ARM machines, this is usually what they mean. It is real, and it is survivable.
-
-### Gotcha three: sm_121
-
-That `12.1` from earlier is the chip's **compute capability**, a version number NVIDIA gives each GPU generation. Written in code as `sm_121`.
-
-Software that runs on GPUs is often compiled ahead of time for specific compute capabilities. `sm_121` is new, so some projects have no support for it yet.
-
-This single number decides your software stack, so it is worth understanding before you pick tools.
+Software that runs on GPUs is often compiled ahead of time for particular versions. `sm_121` is new enough that some projects have not caught up, so this one number decides which tools work well on your machine.
 
 <div className="diagram-scroll">
-<svg viewBox="0 0 720 300" role="img" aria-label="A three-column comparison of inference software for a DGX Spark. Ollama is easiest but lags on new model architectures. llama.cpp requires building from source but supports the hardware and new models. vLLM is fastest for many simultaneous users but needs NVIDIA's CUDA 13 container image on this chip. llama.cpp is the recommended starting point for one person.">
+<svg viewBox="0 0 720 300" role="img" aria-label="A three-column comparison of software for running models on a DGX Spark. Ollama is easiest to start but can lag on new models. llama.cpp supports this chip and the newest models but must be built from source, and is the recommended choice for one person. vLLM is best for many simultaneous users but needs NVIDIA's CUDA 13 container image.">
   <rect x="0" y="0" width="720" height="300" fill="#ffffff" />
   <text x="16" y="24" fontFamily="ui-monospace, monospace" fontSize="13" fill="#6b7280">CHOOSING WHAT RUNS YOUR MODEL</text>
 
@@ -111,7 +98,7 @@ This single number decides your software stack, so it is worth understanding bef
   <text x="32" y="226" fontFamily="ui-monospace, monospace" fontSize="11" fill="#6b7280">first afternoon</text>
 
   <rect x="254" y="44" width="210" height="200" rx="8" fill="#ccfbf1" stroke="#0f766e" strokeWidth="2" />
-  <text x="359" y="74" textAnchor="middle" fontFamily="ui-monospace, monospace" fontSize="14" fill="#1a1a1a">llama.cpp (start here)</text>
+  <text x="359" y="74" textAnchor="middle" fontFamily="ui-monospace, monospace" fontSize="13" fill="#1a1a1a">llama.cpp (start here)</text>
   <text x="270" y="106" fontFamily="ui-monospace, monospace" fontSize="11" fill="#0f766e">+ supports sm_121</text>
   <text x="270" y="126" fontFamily="ui-monospace, monospace" fontSize="11" fill="#0f766e">+ newest models</text>
   <text x="270" y="146" fontFamily="ui-monospace, monospace" fontSize="11" fill="#0f766e">+ full control</text>
@@ -135,29 +122,56 @@ This single number decides your software stack, so it is worth understanding bef
 
 The short version: **vLLM is a restaurant kitchen built for a dinner rush. llama.cpp is a home kitchen.** If you are one person asking one question at a time, a home kitchen is what you want.
 
-## Building llama.cpp
+## Install the one missing piece
 
-You need to compile it yourself so it targets your specific chip. The machine already has the compiler.
+```bash
+sudo apt install -y libssl-dev
+```
+
+`apt` is Ubuntu's software installer. `-y` answers yes to its confirmation question so it does not stop and wait for you.
+
+Why this package: the Spark already ships with the tools for building software, so `cmake`, `gcc` and `git` are there. What it lacks are the files a program you compile yourself needs in order to make encrypted web connections.
+
+Skip it and llama.cpp still builds. It loses the ability to download models over an encrypted connection without saying so, and the download step later fails with a confusing message about HTTPS not being supported. This step exists because I skipped it the first time and lost an evening to it.
+
+## Build llama.cpp
+
+**llama.cpp** is the program that loads a model and runs it. You compile it yourself, which sounds intimidating and is three commands.
+
+**Compiling** means turning human-readable source code into a program your specific machine can run. Most software you install was compiled by somebody else for a common machine. Yours is not a common machine, which is why you do it here.
 
 ```bash
 git clone --depth 1 https://github.com/ggml-org/llama.cpp.git
 cd llama.cpp
+```
 
+`git clone` downloads the source code. `--depth 1` takes only the current version rather than the entire history, which is far smaller. `cd` moves you into the folder it created.
+
+```bash
 cmake -B build \
   -DCMAKE_BUILD_TYPE=Release \
   -DGGML_CUDA=ON \
-  -DCMAKE_CUDA_ARCHITECTURES=121
+  -DCMAKE_CUDA_ARCHITECTURES=121 \
+  -DLLAMA_OPENSSL=ON
+```
 
+`cmake` works out how to build the software for your machine. Each option:
+
+- `-B build` puts everything it generates in a folder called `build`, keeping it away from the source.
+- `-DCMAKE_BUILD_TYPE=Release` builds the fast version rather than the one meant for debugging.
+- `-DGGML_CUDA=ON` is the important one. **CUDA** is NVIDIA's system for running ordinary software on a GPU. Leave this out and everything runs on the CPU, roughly twenty times slower.
+- `-DCMAKE_CUDA_ARCHITECTURES=121` targets your exact chip, the `12.1` from earlier. llama.cpp detects this on its own when you build on the machine itself, so this is belt and braces.
+- `-DLLAMA_OPENSSL=ON` switches on the encrypted downloads that `libssl-dev` made possible.
+
+You will see it print `Replacing 121 with 121a`. That is correct and not an error. The `a` version carries some Blackwell-specific instructions.
+
+```bash
 cmake --build build --config Release -j 20
 ```
 
-`-DGGML_CUDA=ON` is the line that matters. It says build the GPU version.
+This does the actual compiling. `-j 20` uses twenty processor cores at once, because the Spark has twenty. On a different machine you would use however many it has.
 
-`-DCMAKE_CUDA_ARCHITECTURES=121` pins the build to your exact chip. llama.cpp detects it on its own when you build on the machine itself, so this is belt and braces rather than required. It matters if you ever build somewhere the GPU is not visible.
-
-You will see it print `Replacing 121 with 121a`. That is correct and not an error. The `a` version carries Blackwell's four-bit instructions.
-
-It takes about twenty minutes. Then confirm it found the hardware:
+Roughly twenty minutes. When it finishes, check the GPU was found:
 
 ```bash
 $ ./build/bin/llama-server --list-devices
@@ -165,68 +179,136 @@ Available devices:
   CUDA0: NVIDIA GB10 (124610 MiB, 78190 MiB free)
 ```
 
-There is your one shared pool from lesson two, seen from the software's side.
+There is the single shared memory pool from lesson two, seen from the software's side. If nothing about CUDA appears, the build did not pick up the GPU and running a model will be painfully slow.
 
-## Where models come from
+## Get a model
 
-The course has talked about model files for four lessons without saying where you get one. Here it is.
+Models live on **Hugging Face**, at `huggingface.co`. It works like a code-sharing site, except the things being shared are those giant files of numbers.
 
-Almost every open model lives on **Hugging Face**, at `huggingface.co`. It works like a code-sharing site, except the things being shared are those giant files of numbers.
+You want a packaging format called **GGUF**, which puts a model into a single file that llama.cpp reads directly. Very large models are sometimes published split across several numbered files instead, and the download command below handles that for you.
 
-You want a specific packaging called **GGUF**. It puts an entire model into one single file, which is the format llama.cpp reads. Without it you get a folder of many pieces meant for different software.
-
-So search Hugging Face for the model name plus GGUF, for example `gemma-3-27b GGUF`. Open a result and you will see a file list with names like:
-
-```
-gemma-3-27b-it-Q4_K_M.gguf     16.5 GB
-gemma-3-27b-it-Q8_0.gguf       28.7 GB
-```
-
-Those suffixes are the quantization levels from lesson four. `Q4_K_M` is the sensible default.
-
-Download it straight onto the Spark:
+One command downloads and runs it:
 
 ```bash
-mkdir -p ~/models
-cd ~/models
-curl -L -o model.gguf "<paste the download link here>"
+./build/bin/llama-server -hf OBLITERATUS/Qwen3.8-27B-OBLITERATED:Q4_K_M
 ```
 
-Right-click the download arrow on Hugging Face and copy the link address to get that URL. A 16 GB file takes about five minutes on a fast connection and considerably longer on weak wifi, and there is no progress bar worth watching.
+`-hf` means "fetch this from Hugging Face." The part before the slash is who published it, the part after is the model, and the bit after the colon is the **quantization level** from lesson four. `Q4_K_M` is the sensible default.
 
-## Serving a model
+Two things that will confuse you:
 
-With a model file downloaded, one command starts a server:
+**It prints nothing while downloading** if you have sent the output to a file. It looks frozen and it is not. Watch the file growing in `~/.cache/huggingface/hub/` if you want reassurance.
+
+**Some models are gated**, meaning the publisher wants you to accept terms before downloading. Google's Gemma models are gated. If a download fails with a permissions error, that is why, and you accept the terms on the model's page first. The model above is not gated.
+
+## Serve it
+
+Once the file is on disk, start the server properly:
 
 ```bash
 ./build/bin/llama-server \
-  --model /path/to/your-model.gguf \
+  --model <path to your .gguf file> \
   --host 0.0.0.0 \
   --port 8080 \
-  --ctx-size 32768
+  --ctx-size 32768 \
+  --spec-type draft-mtp
 ```
 
-Two flags, and both earn their place:
+What each part does:
 
-- `--host 0.0.0.0` lets other devices on your network reach it, instead of only the machine itself. It also means anyone on your network can use it, so lesson six adds a password.
+- `--model` is the file you just downloaded.
+- `--host 0.0.0.0` lets other devices on your network reach it. Without it, only the Spark itself can. It also means anyone on your network can use it, which lesson six fixes with a password.
+- `--port 8080` is the numbered door it listens at. A **port** is how one machine offers several services at once without them colliding.
 - `--ctx-size 32768` is the conversation length from lesson four. Its memory cost depends on the model, so check yours.
+- `--spec-type draft-mtp` is covered below and is worth having.
 
-Guides online often add `--n-gpu-layers 999`, `--jinja` and `--flash-attn auto`. Those were all necessary once and are now the defaults, so they change nothing. llama.cpp already offloads everything it can, already uses the model's own chat template, and already turns on flash attention where the hardware allows.
+Guides online often add `--n-gpu-layers 999`, `--jinja` and `--flash-attn auto`. Those were all necessary once and are now the defaults, so they change nothing.
 
-Then open `http://<your-machine>:8080` in a browser. llama.cpp ships its own chat interface, so you need nothing else installed to start talking to it.
+## Check that it worked
 
-## Two settings worth knowing
+The most common silent failure here is a model that loaded onto the CPU instead of the GPU. It works. It is twenty times slower, and nothing tells you.
 
-**Model cards are not decoration.** Many models publish recommended settings, things like temperature and repetition penalty. These often matter a great deal, and the defaults in most tools are wrong for a specific model. Read the card.
+The obvious command gives you nothing useful:
 
-**Watch out for tools that keep models loaded.** Some servers hold a model in memory for hours after you stop using it. On a machine where memory is one shared pool, that is space nobody else can use. Find the setting and turn it down.
+```bash
+$ nvidia-smi --query-gpu=memory.total --format=csv
+memory.total [MiB]
+[N/A]
+```
+
+Lesson two explained why: there is no separate graphics memory to report on. But the same tool **can** tell you what each program is using:
+
+```bash
+$ nvidia-smi --query-compute-apps=pid,process_name,used_gpu_memory --format=csv
+931202, llama-server, 32660 MiB
+```
+
+If your server appears there holding gigabytes, the model is on the GPU. If the list is empty, it is not, and the thing to check is that `-DGGML_CUDA=ON` was in your cmake command.
+
+Speed is the other confirmation. The server logs every request:
+
+```
+eval time = 1806.33 ms / 24 tokens (12.73 tokens per second)
+```
+
+Double figures means the GPU. One or two tokens per second means the CPU.
+
+## Open it in a browser
+
+Go to `http://<your machine name>:8080` from any device on your network.
+
+You get a chat interface, and a fair question is where it came from, since you never installed one.
+
+**It is built into the server.** llama.cpp ships a small web app inside its source code, and compiling the server compiles that in too. There is no separate install and no web server to configure. Ask the server for its home page and it hands you the interface.
+
+That is your first conversation with a model running on hardware you own.
+
+## A free speedup already in your model file
+
+Look back at the startup log for lines like this:
+
+```
+W model has unused tensor blk.64.nextn.eh_proj.weight (29 MB) -- ignoring
+```
+
+That is a **multi-token prediction head**, usually shortened to MTP. Some models ship with one and most tools ignore it by default.
+
+Lesson three explained the hard limit: to write one token the model reads itself end to end, so twenty tokens means twenty full reads. MTP works around it. A small extra part guesses the next few tokens, and the main model checks all of those guesses **in a single read** instead of one read each.
+
+Picture a fast assistant scribbling down the next three words while an expert glances at them and asks one question: *is that what I was going to write?* Guesses the expert agrees with are kept. Guesses it disagrees with go in the bin, and the expert writes their own word.
+
+**The assistant never gets a vote.** Nothing it suggests survives unless the main model would have produced it anyway, which is what makes this a speed trick rather than a change to what your model says.
+
+Measured on a Spark with a 27B model:
+
+| | Generation speed |
+|---|---|
+| without MTP | 12.7 tokens per second |
+| with MTP, writing code | 27.4 tokens per second |
+| with MTP, writing prose | 19.9 tokens per second |
+
+Between 1.6 and 2.2 times faster for one flag and no extra memory, because the part doing the work was already in the file you downloaded.
+
+### Why the two numbers differ
+
+Everything depends on how often the guesses are right, which is called the **acceptance rate**. Measured over 100 guesses on that machine:
+
+| Guess | Accepted |
+|---|---|
+| first token ahead | 68% |
+| second token ahead | 47% |
+| third token ahead | 26% |
+
+Guessing one word ahead is easy and three is hard, and that decay is why you get a useful speedup rather than a threefold one. It also explains code beating prose: code is predictable, so more guesses land.
 
 ## If something goes wrong
 
 Three checks, in order:
 
-1. `nvidia-smi` shows the GPU, and if it does not, reboot.
-2. `free -h` shows the memory you expect. If used memory is high, something is still loaded.
-3. `docker image inspect` says `arm64` on anything you are pulling.
+1. `nvidia-smi` shows the GPU, and if it reports a driver mismatch, reboot.
+2. `nvidia-smi --query-compute-apps=pid,process_name,used_gpu_memory --format=csv` lists your server. If it does not, the model is on the CPU.
+3. `free -h` shows memory available. If very little is free, something else is still loaded.
 
-Those three cover most of what goes wrong on this machine.
+Those three cover most of what goes wrong here.
+
+Lesson six turns this into something that survives a reboot and that you can reach from anywhere.

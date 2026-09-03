@@ -1,23 +1,36 @@
 ---
 title: 'Using It From Anywhere'
-summary: 'Reach your machine from your phone in another country, keep it running through reboots, and see what it is doing.'
-description: 'How to make a local model server survive reboots, reach it privately from anywhere with Tailscale, add an API key, and monitor tokens per second and memory with Prometheus and Grafana.'
+summary: 'Keep it running through reboots, reach it from your phone in another country, put a password on it, and see what it is doing.'
+description: 'Turn a local model server into something dependable: a systemd service that survives reboots, remote access over Tailscale, an API key, and how to check its speed and memory.'
 order: 6
-updatedAt: '2026-08-30'
-comingSoon: true
+updatedAt: '2026-09-02'
 ---
 
-A model you can only use while sitting at the machine is a demo. This lesson turns it into a tool.
+At the end of lesson five you had a model answering questions, and it stops the moment you close that terminal window.
 
-Four things, in the order they matter.
+This lesson fixes four things, in the order they matter.
 
 ## Make it survive a reboot
 
-If you started the server by typing a command in a terminal, it dies when you close that terminal. The fix on Linux is a **service**, a job the operating system starts on its own and restarts if it crashes.
+Right now the server is running because you typed a command. Close the window and it dies. Restart the machine and it stays dead.
 
-You do not need administrator rights for this. A user-level service works fine.
+The fix on Linux is a **service**, which is a job the operating system starts on its own, keeps an eye on, and restarts if it crashes. Everything running in the background on your machine is a service.
 
-Create a file at `~/.config/systemd/user/llama-server.service`:
+You describe one in a small text file. Make the folder it lives in:
+
+```bash
+mkdir -p ~/.config/systemd/user
+```
+
+`mkdir` makes a folder and `-p` creates any missing folders along the way. The `~` is shorthand for your home folder.
+
+Then create the file:
+
+```bash
+nano ~/.config/systemd/user/llama-server.service
+```
+
+`nano` is a simple text editor that runs in the terminal. Paste in the following, then press **Ctrl-O** and enter to save, and **Ctrl-X** to leave.
 
 ```ini
 [Unit]
@@ -25,9 +38,10 @@ Description=llama.cpp server
 
 [Service]
 Type=simple
-ExecStart=/home/you/llama.cpp/build/bin/llama-server \
-  --model /home/you/models/your-model.gguf \
-  --host 0.0.0.0 --port 8080 --ctx-size 32768
+ExecStart=/home/<your username>/llama.cpp/build/bin/llama-server \
+  --model /home/<your username>/models/<your model>.gguf \
+  --host 0.0.0.0 --port 8080 \
+  --ctx-size 32768 --spec-type draft-mtp
 Restart=on-failure
 RestartSec=5
 
@@ -35,7 +49,17 @@ RestartSec=5
 WantedBy=default.target
 ```
 
-Then turn it on:
+Replace both `<your username>` placeholders with your actual username. Run `whoami` if you are unsure.
+
+What the parts mean:
+
+- **`[Unit]`, `[Service]`, `[Install]`** are section headings. The file is read in three parts: what this is, how to run it, and when to start it.
+- **`ExecStart`** is the command to run, the same one from lesson five with full paths instead of relative ones. A service has no idea which folder you were standing in.
+- **`Restart=on-failure`** restarts it if it crashes.
+- **`RestartSec=5`** waits five seconds first, so a broken configuration does not spin in a tight loop.
+- **`WantedBy=default.target`** means start this when the user session normally starts things.
+
+Now switch it on:
 
 ```bash
 systemctl --user daemon-reload
@@ -43,11 +67,13 @@ systemctl --user enable --now llama-server
 loginctl enable-linger $USER
 ```
 
-You might expect a line telling it to wait for the network. There isn't one, because the per-user part of systemd has no network target to wait on. `Restart=on-failure` covers it instead: if the network is not ready, the server exits and gets started again five seconds later.
+- `daemon-reload` tells the system to re-read its service files, since you just added one.
+- `enable --now` does two jobs: start it immediately, and start it again on future boots.
+- `enable-linger` matters more than it looks. Without it your services only run while you are logged in, so after a reboot with nobody signed in the model does not come back and nothing tells you why. `$USER` fills in your own username automatically.
 
-People miss that last line. **`enable-linger` lets your service run when you are not logged in**, which includes after a reboot when nobody has signed in yet. Without it the model does not come back, and nothing tells you why.
+You might expect a line telling it to wait for the network. There is not one, because the per-user part of the system has no network signal to wait on. `Restart=on-failure` covers it: if the network is not ready, the server exits and gets started again five seconds later.
 
-From then on:
+From now on:
 
 ```bash
 systemctl --user status llama-server    # is it alive
@@ -55,27 +81,33 @@ systemctl --user restart llama-server   # after changing settings
 systemctl --user stop llama-server      # free the memory
 ```
 
+And when it does not start, this shows you why:
+
+```bash
+journalctl --user -u llama-server -n 50
+```
+
+`journalctl` reads system logs and `-n 50` shows the last fifty lines. Run it first whenever something misbehaves.
+
 ## Reach it from anywhere
 
-Your machine sits on your home network. Your phone, when you leave the house, does not.
+Your Spark sits on your home network. Your phone, once you leave the house, does not.
 
-The old answer was opening ports on your router, which is fiddly and exposes things to the whole internet. The modern answer is a **mesh VPN**, and the easiest one is Tailscale.
+The old answer was opening a hole in your router, which is fiddly and exposes the thing to the entire internet. The modern answer is a **mesh VPN**.
 
-A mesh VPN builds a small private network out of your own devices. Your laptop, your phone, and the Spark all join it. Most of the time they connect straight to each other, and when a network blocks that, Tailscale relays the traffic through its own servers instead. Either way it works, and either way it is encrypted end to end so the relay cannot read it.
+A **VPN**, virtual private network, makes distant machines behave as though they share one small private network. A **mesh** one connects your own devices to each other rather than routing everything through one central server. The easiest is Tailscale.
 
 ```bash
 curl -fsSL https://tailscale.com/install.sh | sh
 sudo tailscale up
 ```
 
-That first line downloads Tailscale's installer and runs it immediately. If you have ever been told not to run scripts off the internet, that instinct is a good one. What makes this acceptable is that the address is Tailscale's own domain over an encrypted connection, and you can paste that URL into a browser and read the script first if you would rather see it.
+The first line downloads Tailscale's installer and runs it immediately. If you have been told not to run scripts off the internet, that is a good instinct. What makes it acceptable here is that the address is Tailscale's own domain over an encrypted connection, and you can paste that URL into a browser and read the script first if you would rather see it.
 
-That prints a link. Open it, sign in, and the machine joins. Install the app on your phone, sign in with the same account, and you can reach the model at a permanent address from anywhere with internet.
-
-**One benefit worth calling out.** Home networks hand out addresses that change, and local names sometimes stop resolving. A Tailscale address stays with the machine for as long as it stays registered. Remove it from your account, reinstall Tailscale, or wipe the disk and it gets a new one, but nothing you do on your router will move it. That removes a whole category of "it worked yesterday" problems.
+The second line prints a link. Open it, sign in, and the machine joins your private network. Install the Tailscale app on your phone, sign in with the same account, and you can reach the model from anywhere.
 
 <div className="diagram-scroll">
-<svg viewBox="0 0 720 300" role="img" aria-label="A network diagram. A phone in another country and a laptop in a coffee shop both connect directly to a DGX Spark at home. A dashed boundary encloses all three, labelled private network. A separate note warns the Spark must stay powered on and online at home.">
+<svg viewBox="0 0 720 300" role="img" aria-label="A network diagram. A phone in another country and a laptop in a coffee shop both connect directly to a DGX Spark at home. A dashed boundary encloses all three, labelled as an encrypted private network. A separate note warns the Spark must stay powered on and online at home.">
   <rect x="0" y="0" width="720" height="300" fill="#ffffff" />
   <text x="16" y="24" fontFamily="ui-monospace, monospace" fontSize="13" fill="#6b7280">YOUR OWN PRIVATE NETWORK</text>
 
@@ -109,30 +141,59 @@ That prints a link. Open it, sign in, and the machine joins. Install the app on 
 </svg>
 </div>
 
+Most of the time your devices connect straight to each other. When a network blocks that, Tailscale passes the traffic through its own relay servers instead. Either way it works, and either way it is encrypted end to end, so the relay cannot read it.
+
+**One benefit worth calling out.** Home networks hand out addresses that change, and local names sometimes stop resolving. A Tailscale address stays with the machine for as long as it stays registered. Remove it from your account, reinstall Tailscale, or wipe the disk and it gets a new one, but nothing your router does will move it. That removes a whole category of "it worked yesterday" problems.
+
 **The catch, and it is a real one.** Tailscale connects your devices. It does not keep your machine alive. The Spark still has to be powered on **and** have working internet at home. If your router dies while you are away, your phone has nothing to connect to and no way to fix it.
 
 If you plan to rely on this while travelling, a battery backup covering the Spark **and the router** is what makes it trustworthy. Backing up only the Spark gives you a running machine you cannot reach.
 
-## Add a password
+## Put a password on it
 
-By default your server has no authentication. Anyone who can reach the port can use the model.
+Until now your server has no authentication at all. Anyone who can reach that port can use your model.
 
-On a home network that is contained. Once it is on a VPN reachable from anywhere, add a key:
+On a home network that is contained. Once it is reachable from anywhere, add a key.
 
 ```bash
-echo "your-long-random-key" > ~/.llama-api-key
+echo "pick-a-long-random-string" > ~/.llama-api-key
 chmod 600 ~/.llama-api-key
 ```
 
-Then add `--api-key-file /home/you/.llama-api-key` to the server command.
+`echo` prints text, and `>` sends that text into a file instead of onto your screen. `chmod 600` sets the file's permissions so only you can read it. The `600` is a compact way of saying "owner can read and write, nobody else can do anything."
 
-**Use the file version, not the plain `--api-key` flag.** Anything you put on a command line is visible to every user on the machine through the process list. A file with restricted permissions is not.
+Then add this to your service file's command and restart:
+
+```
+--api-key-file /home/<your username>/.llama-api-key
+```
+
+**Use the file version, not the plain `--api-key` flag.** Anything you type on a command line is visible to every user on the machine through the list of running processes. A file with locked-down permissions is not.
+
+```bash
+systemctl --user daemon-reload
+systemctl --user restart llama-server
+```
+
+**One thing that will catch you.** The moment the key is live, your browser tab stops working and starts returning errors, because it does not know the key yet. That is expected. Open Settings in the chat interface, paste the key in, and it works again. Do the same on your phone.
 
 ## See what it is doing
 
-Once things work, you want numbers. llama.cpp can publish statistics in a standard format by adding one flag: `--metrics`.
+Add one more flag to the command and the server starts publishing statistics about itself:
 
-That exposes an address with things like:
+```
+--metrics
+```
+
+Then you can read them:
+
+```bash
+curl -H "Authorization: Bearer <your key>" http://localhost:8080/metrics
+```
+
+`curl` fetches a web address from the terminal instead of a browser. The `-H` part sends your key along, because the metrics sit behind the same password as everything else.
+
+What comes back:
 
 | Name it publishes | What it means |
 |---|---|
@@ -144,26 +205,26 @@ That exposes an address with things like:
 
 The `llamacpp:` prefix is part of the name. Searching for the bare name finds nothing.
 
-Two open-source programs turn that into graphs. **Prometheus** visits that address every few seconds and records the numbers over time. **Grafana** draws them.
+For most people that is enough. If you want graphs over time rather than a snapshot, the format those numbers are in is a standard one called Prometheus, and pairing it with a graphing tool called Grafana is the usual route. Both are open source and both run on the Spark itself. That is a project in its own right rather than a step in this lesson.
 
-> Prometheus is the notebook. Grafana is the pen.
+The simpler daily check is the log, which prints the speed of every request:
 
-Both run in containers on the Spark itself. Prometheus sends nothing anywhere. Grafana, out of the box, reports anonymous usage statistics and checks for updates, so set `reporting_enabled = false` and `check_for_updates = false` if you want the whole stack silent.
+```bash
+journalctl --user -u llama-server -f
+```
 
-**Run them on the Spark, not your laptop.** Prometheus needs to reach the model every few seconds forever. On the same machine that connection cannot fail. From your laptop across wifi it would punch holes in your history every time the network hiccuped, and you would end up measuring your wifi instead of your model.
-
-The graph worth watching first is **memory used over time**. When you load a second model, you will see the line step up. That turns the budgeting from lesson four from arithmetic into something you can watch happen.
+`-f` follows the log live, so you watch requests as they happen. Press Ctrl-C to stop.
 
 ## Where to go next
 
-You now have a machine that runs models privately, survives reboots, is reachable from anywhere, is protected by a key, and reports what it is doing.
+You now have a model that runs privately, survives reboots, is reachable from anywhere, and is behind a password.
 
 Reasonable next steps, roughly in order of value:
 
-**Run more than one model.** A tool called `llama-swap` sits in front of several models and loads them on demand, so only what you are using takes up space.
+**Point something at it.** The server speaks the same request format as the big commercial APIs, so most tools built for those can be aimed at your machine by changing one address. Do that and this stops being a toy.
 
-**Fine-tune something.** Teaching a model about your own data is the thing this hardware is genuinely good at, because the meter is not running.
+**Run more than one model.** A tool called `llama-swap` sits in front of several and loads them on demand, so only what you are using takes up memory.
 
-**Find the limits.** Try a model far bigger than you think is sensible. Watch where it slows down. The arithmetic from lesson three will tell you what to expect, and checking your prediction against reality is the fastest way to make it stick.
+**Find the limits.** Try a model much larger than seems sensible and watch where it slows down. The arithmetic from lesson three tells you what to expect, and checking a prediction against reality is the fastest way to make it stick.
 
-The mental models here transfer. Memory capacity versus bandwidth, reading fast and writing slow, weights plus conversation cache. Those hold on any machine you ever run a model on, rented or owned.
+The mental models here transfer. Capacity against bandwidth, reading fast and writing slow, weights plus conversation cache. Those hold on any machine you ever run a model on, rented or owned.
