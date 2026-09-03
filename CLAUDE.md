@@ -7,7 +7,7 @@ Instructions and context for Claude Code when working in this repository.
 Tony Kipkemboi's personal website — a Next.js 16 App Router site with a file-system MDX blog, deployed on Vercel.
 
 - **Live site:** https://tonykipkemboi.com
-- **Stack:** Next.js 16.1.6 · React 19 · TypeScript · Tailwind CSS v4 · next-mdx-remote v6
+- **Stack:** Next.js 16 · React 19 · TypeScript · Tailwind CSS v4 · next-mdx-remote v6
 - **Font:** IBM Plex Mono (Google Fonts)
 - **Deployment:** Vercel (auto-deploy on push to `main`)
 
@@ -140,13 +140,15 @@ TypeScript: `strict: false`, `strictNullChecks: true`. Do not enable full strict
 - Config: `eslint.config.mjs` (flat config format)
 - Extends `eslint-config-next` + `eslint-config-prettier`
 - All `jsx-a11y` rules set to `error` (strict accessibility)
+- `.vercel/**` is in `ignores`. It is gitignored so CI never sees it, but a local `vercel build` writes `.cjs` files there, and `.cjs` is missing from `eslint-config-next`'s file glob (`js,jsx,mjs,ts,tsx,mts,cts`). Those files then match our rules block without the plugin loaded, and `npm run lint` dies with "could not find plugin jsx-a11y" locally while CI stays green.
 - Max warnings: 0 — any warning fails CI
 
 ---
 
 ## Dependency Notes
 
-- **npm overrides** are set for `minimatch >= 10.2.1` to fix high-severity transitive ReDoS vulnerabilities in the ESLint toolchain. Do not remove this override. The remaining 11 moderate `ajv` vulnerabilities in `@eslint/eslintrc` and `eslint` are unavoidable — the only npm-suggested fix would downgrade `eslint-config-next` to `0.2.4`, which would break the project entirely. These are dev-toolchain-only, moderate severity, and accepted.
+- **npm overrides** are set for `minimatch >= 10.2.1` to fix high-severity transitive ReDoS vulnerabilities in the ESLint toolchain. Do not remove this override.
+- `npm audit` is clean as of 2026-09-03 (0 vulnerabilities). The `ajv` advisories previously noted here as unavoidable are resolved: `ajv@6.14.0` patched the 6.x line, so no `eslint-config-next` downgrade is needed. CI runs `npm audit --audit-level=low`, so any new advisory fails the build immediately.
 - `@types/react` and `@types/react-dom` must stay on `^19.0.0` to match the React 19 runtime.
 - `next-mdx-remote` must be v6+ for compatibility with Next.js 16's RSC runtime.
 
