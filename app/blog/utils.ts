@@ -3,6 +3,8 @@ import path from 'path'
 
 type Metadata = {
   title: string
+  /** Drafts are visible only in the local development server. */
+  draft?: string
   publishedAt: string
   summary: string
   description?: string
@@ -121,7 +123,11 @@ export async function getBlogPosts() {
   const posts = await getMDXData(
     path.join(process.cwd(), 'app', 'blog', 'posts')
   )
-  return posts.sort((a, b) => {
+  const visiblePosts = posts.filter(
+    (post) =>
+      post.metadata.draft !== 'true' || process.env.NODE_ENV === 'development'
+  )
+  return visiblePosts.sort((a, b) => {
     if (a.metadata.publishedAt > b.metadata.publishedAt) return -1
     if (a.metadata.publishedAt < b.metadata.publishedAt) return 1
     return 0

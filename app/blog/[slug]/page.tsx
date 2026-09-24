@@ -47,6 +47,9 @@ export async function generateMetadata({ params }: PageParams) {
 
   return {
     title,
+    ...(post.metadata.draft === 'true' && {
+      robots: { index: false, follow: false },
+    }),
     description: description || summary,
     keywords,
     openGraph: {
@@ -147,6 +150,12 @@ export default async function BlogPost({ params }: PageParams) {
         >
           {category}
         </Link>
+      )}
+
+      {post.metadata.draft === 'true' && (
+        <p className="mt-6 rounded border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-900">
+          Draft preview · Visible only in local development
+        </p>
       )}
 
       <h1 className="mt-4 text-[clamp(2rem,4vw,2.875rem)] font-medium leading-[1.1] tracking-[-0.03em] text-[#0a0a0a]">
