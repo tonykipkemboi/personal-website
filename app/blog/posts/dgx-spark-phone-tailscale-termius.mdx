@@ -16,7 +16,7 @@ I'm writing this from my hotel in Providence, Rhode Island. It's my first time h
 
 Lately, I've been using the Spark to run small experiments and fine-tune models. If an idea comes to mind, I can queue it up, try it, look at the results, and move on. At least for the experiments I'm running, compute hasn't been the thing holding me back. I've found that really useful, and I wanted to keep doing it while I was here.
 
-At the airport, I was already connected to the Spark from my laptop, and that was working fine. But once we got on the plane and had to put our laptops away, I started wondering whether I could connect from my phone instead. The machine was still running at home. I just needed another way to reach it.
+At the airport, I was already connected to the Spark from my laptop, and that was working fine. But once I got on the plane and had to put my laptop away, I started wondering whether I could connect from my phone instead. The machine was still running at home. I just needed another way to reach it.
 
 There are already guides out there on how to do this. I decided to work through it myself, and this post is me documenting how I got it working. I can now connect from my phone and continue working on those experiments without needing my laptop in between.
 
@@ -81,9 +81,9 @@ That let me check which machine I was on and see what was using the GPU. I actua
 
 What I wanted was to describe a task the way I do from my laptop and have an agent work through it on the machine.
 
-We installed Codex CLI directly on the Spark using the [official installation instructions](https://developers.openai.com/codex/cli/). I signed in with my ChatGPT account. That uses my plan's Codex allowance rather than separate API-key billing. It still has usage limits; installing it on another machine doesn't give me another allowance. [Codex pricing](https://chatgpt.com/codex/pricing/)
+I installed Codex CLI directly on the Spark using the [official installation instructions](https://developers.openai.com/codex/cli/). I signed in with my ChatGPT account. That uses my plan's Codex allowance rather than separate API-key billing. It still has usage limits; installing it on another machine doesn't give me another allowance. [Codex pricing](https://chatgpt.com/codex/pricing/)
 
-We also configured it to use ChatGPT sign-in, since I specifically didn't want to accidentally start paying for API usage.
+I also configured it to use ChatGPT sign-in, since I specifically didn't want to accidentally start paying for API usage.
 
 <img
   src="/blog/dgx-spark-phone/screens-1-4-masked.png"
@@ -104,13 +104,13 @@ That is the sort of request I want to make from my phone. I can read the respons
 
 A phone connection is going to drop at some point. I might change networks, close Termius, or put the phone away. I wanted the session to stay on the Spark when that happened.
 
-For that, we used tmux and made a small shortcut:
+For that, I used tmux and made a small shortcut:
 
 ```bash
 ~/.local/bin/spark-codex
 ```
 
-This is a script we created for my setup, not a command that comes with Codex. It starts or attaches to a named tmux session. Inside that session, it checks the login and starts Codex.
+This is a script I created for my setup, not a command that comes with Codex. It starts or attaches to a named tmux session. Inside that session, it checks the login and starts Codex.
 
 If you're setting up your own version, the basic pattern is:
 
@@ -133,7 +133,7 @@ To apply it without restarting the session:
 tmux set -g mouse on
 ```
 
-That enables mouse events for scrolling, selecting panes, and resizing them. How finger gestures map to those events depends on the phone terminal's settings. We verified that the option was on at the server.
+That enables mouse events for scrolling, selecting panes, and resizing them. How finger gestures map to those events depends on the phone terminal's settings. I verified that the option was on at the server.
 
 ## The conversations don't automatically follow me
 
@@ -165,21 +165,21 @@ That's an example, not a training run from this walkthrough.
 
 The board lives on the Spark. An agent checks it before new work, claims the resources it needs, and leaves a short update when something changes. If another session owns the resource, it contacts that session. Interrupting existing work still needs my explicit approval.
 
-We capped task descriptions at 120 characters and notes at 180. Notes on the same topic replace the previous update and normally expire after 24 hours. Active work claims don't expire automatically. Older history moves to an archive, so agents aren't reading the whole history just to find out whether the GPU is busy.
+I capped task descriptions at 120 characters and notes at 180. Notes on the same topic replace the previous update and normally expire after 24 hours. Active work claims don't expire automatically. Older history moves to an archive, so agents aren't reading the whole history just to find out whether the GPU is busy.
 
 There is no agent constantly polling the board and burning tokens to tell me nothing has changed. Messages get checked at task checkpoints, so replies aren't instant either.
 
-The board rejects conflicting claims, but it can't stop an agent from ignoring the rules and running a shell command anyway. It's a coordination system we have to follow, not a replacement for permissions. Existing jobs are protected even if they haven't been added to the board.
+The board rejects conflicting claims, but it can't stop an agent from ignoring the rules and running a shell command anyway. It's a coordination system I require my agents to follow, not a replacement for permissions. Existing jobs are protected even if they haven't been added to the board.
 
 ## Could the model run locally too?
 
 I wanted to check this because the Spark is already running local models. Could I use one of those instead of sending Codex's requests to OpenAI?
 
-Codex does support local inference through Ollama or LM Studio. We checked the installed CLI's `--oss` option against [OpenAI's documentation](https://openai.com/index/unrolling-the-codex-agent-loop/) and [Ollama's integration guide](https://docs.ollama.com/integrations/codex).
+Codex does support local inference through Ollama or LM Studio. I checked the installed CLI's `--oss` option against [OpenAI's documentation](https://openai.com/index/unrolling-the-codex-agent-loop/) and [Ollama's integration guide](https://docs.ollama.com/integrations/codex).
 
 The phone connection would stay the same. Termius would still connect to the Spark over Tailscale; Codex would talk to a model server on the Spark instead of the hosted model.
 
-But having a model downloaded isn't enough. The server needs to support the protocol Codex expects, and the model needs to handle its tool calls. We haven't tested my existing local language model in that role. Qwen Image, which I use through ComfyUI, is an image generator and isn't a replacement for the coding model.
+But having a model downloaded isn't enough. The server needs to support the protocol Codex expects, and the model needs to handle its tool calls. I haven't tested my existing local language model in that role. Qwen Image, which I use through ComfyUI, is an image generator and isn't a replacement for the coding model.
 
 For now, the diagram shows that as an option, not something I'm claiming to have working. It would use the Spark's GPU and memory alongside everything else, so I'd need to check capacity before starting it. The local server would still expose an API, but that isn't the same as paying OpenAI per request.
 
