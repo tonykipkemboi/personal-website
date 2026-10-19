@@ -46,7 +46,7 @@ Open weights also don't mean the company releases its adapted model, or owns the
 
 First, though, there has to be a job small enough to describe.
 
-## Intercom: extract the customer's issue
+## 1. Intercom: extract the customer's issue
 
 Before Fin can answer a support question, it needs a usable account of what the customer is asking. A conversation can include a correction, a greeting, and a reply to an earlier answer. Searching for all of that at once gives the next step more to untangle.
 
@@ -64,7 +64,7 @@ Intercom later expands the scope. Its [March 2026 Apex announcement](https://www
 
 There's a defined task and a production comparison. The ambiguous conversations also point to the next problem: what goes into the training examples?
 
-## Shopify: turn messy products and failed tasks into training data
+## 2. Shopify: turn messy products and failed tasks into training data
 
 A merchant's title, description, and images can each contain part of what Shopify needs to classify a product. The output needs to fit consistent product types and attributes, even when the input doesn't.
 
@@ -82,7 +82,7 @@ Shopify estimates annual serving costs of about $1 million for the specialized m
 
 The company has a way to collect failures and train against them. I'd still want to know whether the result makes someone's work easier, beyond producing a better-looking model score.
 
-## Airbnb and LinkedIn: check the work around the model
+## 3. Airbnb: check the work around the model
 
 Airbnb's support agents need to pick up a conversation without reading every message and call transcript that came before them. A summary at the end helps the next person; notes that stay current can help the person already handling the case.
 
@@ -94,6 +94,8 @@ Its rollout study reports 3% lower handling time, reaching up to 9% for cases in
 
 The study compares changes before and after rollout across sites, a method called difference-in-differences. The result belongs to the progressive-note workflow, including timing, filtering, prompts, and model adaptation; it doesn't separate each contribution.
 
+## 4. LinkedIn: assess candidates against a role
+
 LinkedIn has another repeated step: assessing a candidate against a role. Its [December 18, 2024 report](https://www.linkedin.com/blog/engineering/generative-ai/how-we-built-domain-adapted-foundation-genai-models-to-power-our-platform) describes EON-8B, adapted from Llama 3.1 8B, powering Hiring Assistant's evaluation agent. That step accounts for nearly 90% of Hiring Assistant's LLM calls.
 
 It reads candidate information, recruiter notes, and job requirements, then returns an assessment with an explanation. LinkedIn describes on-premises training and serving, and reports four percentage points higher matching accuracy than GPT-4o mini without additional fine-tuning on the matching task.
@@ -102,7 +104,7 @@ That is a dated result on a matching test, rather than evidence of better hiring
 
 Coinbase makes that separation especially clear, because it reports an initial workflow experiment, a model benchmark, and production serving results separately.
 
-## Coinbase: evaluate the risk decision, then change the model
+## 5. Coinbase: evaluate the risk decision, then change the model
 
 [Brian Armstrong's October 11 post](https://x.com/brian_armstrong/status/2109412046244913643) describes fine-tuning Qwen3.5-9B on Coinbase's internal data for fraud prevention. The engineering team's October 6–8 series explains what the model does inside Onramp, its product for buying crypto through partner apps.
 
@@ -124,11 +126,13 @@ Detection quality and latency come from separate evaluations. The report establi
 
 That gives me something concrete to compare: the decision, the test, and the serving requirement. It also raises the practical question behind “host it yourself”: who is running the machines?
 
-## Impel and Cresta: decide who operates the model
+## 6. Impel: decide who operates the model
 
 Impel makes Sales AI for dealerships, including replies, follow-ups, and conversation summaries. Its [June 2025 account with AWS](https://aws.amazon.com/blogs/machine-learning/impel-enhances-automotive-dealership-customer-experience-with-fine-tuned-llms-on-amazon-sagemaker/) describes replacing the third-party model behind those functions with a LoRA-adapted Llama model on autoscaled SageMaker endpoints in its own AWS account.
 
 Human-review scores rise from 73% to 86% for personalized replies, 70% to 83% for summaries, and 59% to 92% for follow-ups. The report leaves the exact Llama variant, sample size, and detailed scoring rules undisclosed. It provides output-review results, with no measured vehicle-sales lift or numerical cost savings.
+
+## 7. Cresta: use a serving partner
 
 Cresta's Knowledge Assist uses a live support conversation and retrieved company knowledge to suggest an answer for the human agent. Its [engineering report](https://cresta.com/blog/how-fine-tuned-llms-power-knowledge-assist-summarization-and-chat-suggestions) confirms tuned Mistral models live with customers, with its Ocean training framework adapting models by industry, customer, and task.
 
@@ -144,7 +148,7 @@ For eligible models, you can deploy your own fine-tuned weights while Nebius run
 
 But even with a place to train and serve a model, a good research result still has to make it into the product.
 
-## Harvey: keep research and rollout separate
+## 8. Harvey: keep research and rollout separate
 
 Harvey's [August 20, 2026 Tenet announcement](https://www.harvey.ai/blog/post-training-update-harvey-tenet) describes its first post-trained open-weight model, based on Kimi K3 and trained with Fireworks for legal tasks that take many steps. It reports gains of nine percentage points on its Legal Agent Benchmark and two on LAB Contracts in all-pass rate, meaning every evaluation criterion is satisfied.
 
