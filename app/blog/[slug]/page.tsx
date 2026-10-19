@@ -47,6 +47,7 @@ export async function generateMetadata({ params }: PageParams) {
 
   return {
     title,
+    alternates: { canonical: `${baseUrl}/blog/${post.slug}` },
     ...(post.metadata.draft === 'true' && {
       robots: { index: false, follow: false },
     }),
