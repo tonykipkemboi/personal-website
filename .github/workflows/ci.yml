@@ -27,6 +27,9 @@ jobs:
       - name: Run ESLint
         run: npm run lint
 
+      - name: Check Next lint root discovery
+        run: npm run test:lint-globs
+
       - name: Check Prettier formatting
         run: npm run format:check
 

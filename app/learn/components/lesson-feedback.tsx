@@ -17,6 +17,7 @@ export function LessonFeedback({
   courseSlug,
   lessonSlug,
 }: LessonFeedbackProps) {
+  const [configured, setConfigured] = useState<boolean | null>(null)
   const [upCount, setUpCount] = useState<number | null>(null)
   const [vote, setVote] = useState<Vote | null>(null)
   const [comment, setComment] = useState('')
@@ -43,6 +44,7 @@ export function LessonFeedback({
       if (!response.ok || !active) return
 
       const data = await response.json()
+      setConfigured(data.configured === true)
       if (typeof data.upCount === 'number') {
         setUpCount(data.upCount)
       }
@@ -96,6 +98,8 @@ export function LessonFeedback({
       setMessage('Feedback is temporarily unavailable. Please try again later.')
     }
   }
+
+  if (configured === false) return null
 
   return (
     <form

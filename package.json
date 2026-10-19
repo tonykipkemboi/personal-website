@@ -12,7 +12,8 @@
     "audit:fix": "npm audit fix",
     "check": "npm run lint && npm run format:check && npm run audit",
     "precommit": "lint-staged",
-    "prepare": "husky"
+    "prepare": "husky",
+    "test:lint-globs": "node --test scripts/lint-root-discovery.test.js"
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": [
@@ -48,7 +49,10 @@
   },
   "overrides": {
     "minimatch": ">=10.2.1",
-    "postcss": "$postcss"
+    "postcss": "$postcss",
+    "@next/eslint-plugin-next": {
+      "fast-glob": "file:../../../tools/next-eslint-glob"
+    }
   },
   "devDependencies": {
     "@eslint/eslintrc": "3.3.7",
@@ -56,7 +60,7 @@
     "@typescript-eslint/eslint-plugin": "8.70.1",
     "@typescript-eslint/parser": "8.70.1",
     "eslint": "^9.39.2",
-    "eslint-config-next": "16.3.6",
+    "eslint-config-next": "16.4.2",
     "eslint-config-prettier": "10.1.8",
     "eslint-plugin-jsx-a11y": "6.10.2",
     "husky": "9.1.7",
