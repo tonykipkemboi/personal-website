@@ -7,6 +7,7 @@ import React from 'react'
 import { Figure } from './pre'
 import { PretextDemo } from './pretext-demo'
 import { YouTube } from './youtube'
+import { DiagramViewer } from './diagram-viewer'
 
 function Table({ data }) {
   let headers = data.headers.map((header, index) => (
@@ -166,6 +167,7 @@ let components = {
   AiOutput,
   PretextDemo,
   YouTube,
+  DiagramViewer,
 }
 
 export function CustomMDX(props) {
