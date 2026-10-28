@@ -48,15 +48,16 @@ First, though, there has to be a job small enough to describe.
 
 ## 1. Intercom: extract the customer's issue
 
-<a href="/blog/specialized-models-in-production/intercom-process.webp" target="_blank" rel="noopener noreferrer" aria-label="Open Intercom workflow diagram at full size">
+<a href="/blog/specialized-models-in-production/intercom-editorial.webp" target="_blank" rel="noopener noreferrer" aria-label="Open Intercom workflow diagram at full size">
   <Image
-    src="/blog/specialized-models-in-production/intercom-process.webp"
-    alt="Hand-drawn Fin workflow: ModernBERT detects addressable issues, LoRA-tuned Qwen3-14B extracts the issue, and retrieval and reranking feed answer generation; the results card shows extractor A/B tradeoffs."
-    width="1536"
-    height="1024"
+    src="/blog/specialized-models-in-production/intercom-editorial.webp"
+    alt="Intercom previously used one model call to detect and extract a customer issue. ModernBERT now detects whether there is an issue; if so, LoRA-tuned Qwen3-14B extracts it for retrieval, reranking, and a Fin answer."
+    width="3072"
+    height="2048"
     sizes="(max-width: 768px) 100vw, 672px"
     loading="lazy"
   />
+  <span className="block text-center text-sm">View full-size diagram</span>
 </a>
 
 Before Fin can answer a support question, it needs a usable account of what the customer is asking. A conversation can include a correction, a greeting, and a reply to an earlier answer. Searching for all of that at once gives the next step more to untangle.
@@ -77,15 +78,16 @@ There's a defined task and a production comparison. The ambiguous conversations 
 
 ## 2. Shopify: turn messy products and failed tasks into training data
 
-<a href="/blog/specialized-models-in-production/shopify-process.webp" target="_blank" rel="noopener noreferrer" aria-label="Open Shopify workflow diagram at full size">
+<a href="/blog/specialized-models-in-production/shopify-editorial.webp" target="_blank" rel="noopener noreferrer" aria-label="Open Shopify workflow diagram at full size">
   <Image
-    src="/blog/specialized-models-in-production/shopify-process.webp"
-    alt="Two separate Shopify workflows: a tuned vision model extracts requested catalogue fields with a reviewed-data training loop; Sidekick repairs failed conversations to train its GraphQL agent, with serving-cost projections labeled separately."
-    width="1536"
-    height="1024"
+    src="/blog/specialized-models-in-production/shopify-editorial.webp"
+    alt="Shopify uses a fine-tuned Qwen2-VL 7B model to turn product text and images into requested product fields, with reviewed examples feeding training."
+    width="3072"
+    height="1536"
     sizes="(max-width: 768px) 100vw, 672px"
     loading="lazy"
   />
+  <span className="block text-center text-sm">View full-size diagram</span>
 </a>
 
 A merchant's title, description, and images can each contain part of what Shopify needs to classify a product. The output needs to fit consistent product types and attributes, even when the input doesn't.
@@ -106,15 +108,16 @@ The company has a way to collect failures and train against them. I'd still want
 
 ## 3. Airbnb: check the work around the model
 
-<a href="/blog/specialized-models-in-production/airbnb-process.webp" target="_blank" rel="noopener noreferrer" aria-label="Open Airbnb workflow diagram at full size">
+<a href="/blog/specialized-models-in-production/airbnb-editorial.webp" target="_blank" rel="noopener noreferrer" aria-label="Open Airbnb workflow diagram at full size">
   <Image
-    src="/blog/specialized-models-in-production/airbnb-process.webp"
-    alt="Airbnb's progressive-note workflow: tuned Mixtral generates candidate notes, DeBERTa filters them for a human agent, edits feed future notes and offline retraining, and the rollout comparison already uses a tuned bulk summarizer."
-    width="1536"
-    height="1024"
+    src="/blog/specialized-models-in-production/airbnb-editorial.webp"
+    alt="Airbnb moved from bulk summaries to progressive notes: Mixtral generates notes, DeBERTa filters trivial ones, and a support agent uses the remaining notes."
+    width="3072"
+    height="1536"
     sizes="(max-width: 768px) 100vw, 672px"
     loading="lazy"
   />
+  <span className="block text-center text-sm">View full-size diagram</span>
 </a>
 
 Airbnb's support agents need to pick up a conversation without reading every message and call transcript that came before them. A summary at the end helps the next person; notes that stay current can help the person already handling the case.
@@ -129,15 +132,16 @@ The study compares changes before and after rollout across sites, a method calle
 
 ## 4. LinkedIn: assess candidates against a role
 
-<a href="/blog/specialized-models-in-production/linkedin-process.webp" target="_blank" rel="noopener noreferrer" aria-label="Open LinkedIn workflow diagram at full size">
+<a href="/blog/specialized-models-in-production/linkedin-editorial.webp" target="_blank" rel="noopener noreferrer" aria-label="Open LinkedIn workflow diagram at full size">
   <Image
-    src="/blog/specialized-models-in-production/linkedin-process.webp"
-    alt="Candidate profiles, recruiter notes and job requirements feed on-premises EON-8B, which returns a match assessment and explanation to a recruiter; training and matching-evaluation results are separate."
-    width="1536"
-    height="1024"
+    src="/blog/specialized-models-in-production/linkedin-editorial.webp"
+    alt="Candidate profiles, recruiter notes and job requirements feed on-premises EON-8B, adapted from Llama 3.1 8B, which returns an explained match assessment to a recruiter."
+    width="3072"
+    height="2048"
     sizes="(max-width: 768px) 100vw, 672px"
     loading="lazy"
   />
+  <span className="block text-center text-sm">View full-size diagram</span>
 </a>
 
 LinkedIn has another repeated step: assessing a candidate against a role. Its [December 18, 2024 report](https://www.linkedin.com/blog/engineering/generative-ai/how-we-built-domain-adapted-foundation-genai-models-to-power-our-platform) describes EON-8B, adapted from Llama 3.1 8B, powering Hiring Assistant's evaluation agent. That step accounts for nearly 90% of Hiring Assistant's LLM calls.
@@ -150,15 +154,16 @@ Coinbase makes that separation especially clear, because it reports an initial w
 
 ## 5. Coinbase: evaluate the risk decision, then change the model
 
-<a href="/blog/specialized-models-in-production/coinbase-process.webp" target="_blank" rel="noopener noreferrer" aria-label="Open Coinbase workflow diagram at full size">
+<a href="/blog/specialized-models-in-production/coinbase-editorial.webp" target="_blank" rel="noopener noreferrer" aria-label="Open Coinbase workflow diagram at full size">
   <Image
-    src="/blog/specialized-models-in-production/coinbase-process.webp"
-    alt="Coinbase Onramp sends selected transactions after existing ML and rules to tuned Qwen3.5-9B for risk classification; application policy makes decisions, upstream blocks remain blocked, and training, benchmark quality and production latency are separate."
-    width="1536"
-    height="1024"
+    src="/blog/specialized-models-in-production/coinbase-editorial.webp"
+    alt="Existing machine-learning models and rules block some transactions; selected transactions go to tuned Qwen3.5-9B for risk classification before application policy is applied. Existing blocks stand."
+    width="3072"
+    height="2048"
     sizes="(max-width: 768px) 100vw, 672px"
     loading="lazy"
   />
+  <span className="block text-center text-sm">View full-size diagram</span>
 </a>
 
 [Brian Armstrong's October 11 post](https://x.com/brian_armstrong/status/2109412046244913643) describes fine-tuning Qwen3.5-9B on Coinbase's internal data for fraud prevention. The engineering team's October 6–8 series explains what the model does inside Onramp, its product for buying crypto through partner apps.
@@ -183,15 +188,16 @@ That gives me something concrete to compare: the decision, the test, and the ser
 
 ## 6. Impel: decide who operates the model
 
-<a href="/blog/specialized-models-in-production/impel-process.webp" target="_blank" rel="noopener noreferrer" aria-label="Open Impel workflow diagram at full size">
+<a href="/blog/specialized-models-in-production/impel-editorial.webp" target="_blank" rel="noopener noreferrer" aria-label="Open Impel workflow diagram at full size">
   <Image
-    src="/blog/specialized-models-in-production/impel-process.webp"
-    alt="Impel replaces a third-party model with LoRA-tuned Llama on autoscaled SageMaker endpoints in its AWS account, producing replies, summaries and follow-ups; the comparison shows human-review scores rather than sales outcomes."
-    width="1536"
-    height="1024"
+    src="/blog/specialized-models-in-production/impel-editorial.webp"
+    alt="Impel replaced a third-party model with LoRA-tuned Llama on SageMaker in its AWS account to produce personalized replies, conversation summaries and follow-ups."
+    width="3072"
+    height="2048"
     sizes="(max-width: 768px) 100vw, 672px"
     loading="lazy"
   />
+  <span className="block text-center text-sm">View full-size diagram</span>
 </a>
 
 Impel makes Sales AI for dealerships, including replies, follow-ups, and conversation summaries. Its [June 2025 account with AWS](https://aws.amazon.com/blogs/machine-learning/impel-enhances-automotive-dealership-customer-experience-with-fine-tuned-llms-on-amazon-sagemaker/) describes replacing the third-party model behind those functions with a LoRA-adapted Llama model on autoscaled SageMaker endpoints in its own AWS account.
@@ -200,15 +206,16 @@ Human-review scores rise from 73% to 86% for personalized replies, 70% to 83% fo
 
 ## 7. Cresta: use a serving partner
 
-<a href="/blog/specialized-models-in-production/cresta-process.webp" target="_blank" rel="noopener noreferrer" aria-label="Open Cresta workflow diagram at full size">
+<a href="/blog/specialized-models-in-production/cresta-editorial.webp" target="_blank" rel="noopener noreferrer" aria-label="Open Cresta workflow diagram at full size">
   <Image
-    src="/blog/specialized-models-in-production/cresta-process.webp"
-    alt="Cresta retrieves company knowledge and live conversation context for a Mistral-based Ocean model with customer LoRA on Fireworks-managed serving, which suggests an answer to a human agent."
-    width="1536"
-    height="1024"
+    src="/blog/specialized-models-in-production/cresta-editorial.webp"
+    alt="Live conversations and retrieved knowledge feed Mistral-based Ocean with customer LoRA on Fireworks-managed serving; the suggested answer goes to a human agent."
+    width="3072"
+    height="2048"
     sizes="(max-width: 768px) 100vw, 672px"
     loading="lazy"
   />
+  <span className="block text-center text-sm">View full-size diagram</span>
 </a>
 
 Cresta's Knowledge Assist uses a live support conversation and retrieved company knowledge to suggest an answer for the human agent. Its [engineering report](https://cresta.com/blog/how-fine-tuned-llms-power-knowledge-assist-summarization-and-chat-suggestions) confirms tuned Mistral models live with customers, with its Ocean training framework adapting models by industry, customer, and task.
@@ -227,15 +234,16 @@ But even with a place to train and serve a model, a good research result still h
 
 ## 8. Harvey: keep research and rollout separate
 
-<a href="/blog/specialized-models-in-production/harvey-process.webp" target="_blank" rel="noopener noreferrer" aria-label="Open Harvey workflow diagram at full size">
+<a href="/blog/specialized-models-in-production/harvey-editorial.webp" target="_blank" rel="noopener noreferrer" aria-label="Open Harvey workflow diagram at full size">
   <Image
-    src="/blog/specialized-models-in-production/harvey-process.webp"
-    alt="Three separate Harvey research workflows: Kimi K3 Tenet post-training, tuned GLM-5.2 Review Table answers with citations, and an RL-trained Qwen root coordinating fixed readers for diligence; checkpoint customer rollout is unconfirmed."
-    width="1536"
-    height="1024"
+    src="/blog/specialized-models-in-production/harvey-editorial.webp"
+    alt="Harvey research on diligence: fixed reader sub-agents examine legal documents and return findings to a Qwen3.5-122B-A10B root agent, which coordinates them and assembles a diligence memo."
+    width="3072"
+    height="2048"
     sizes="(max-width: 768px) 100vw, 672px"
     loading="lazy"
   />
+  <span className="block text-center text-sm">View full-size diagram</span>
 </a>
 
 Harvey's [August 20, 2026 Tenet announcement](https://www.harvey.ai/blog/post-training-update-harvey-tenet) describes its first post-trained open-weight model, based on Kimi K3 and trained with Fireworks for legal tasks that take many steps. It reports gains of nine percentage points on its Legal Agent Benchmark and two on LAB Contracts in all-pass rate, meaning every evaluation criterion is satisfied.
