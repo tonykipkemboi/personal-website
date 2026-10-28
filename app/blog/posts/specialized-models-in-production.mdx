@@ -18,35 +18,35 @@ image: '/blog/specialized-models-in-production-hero.jpg'
 
 *AI-generated illustrations.*
 
-It's the first Saturday of October, and I'm driving to a birthday party for my friend's son at a farm in Maryland. You pay to get in, and there are goats to feed, rabbits to see, tractor rides, and a zip line. Fun stuff.
+It's the first Saturday of October, and I'm driving to a birthday party at a farm in Maryland. There are goats to feed, rabbits to see, tractor rides, and a zip line.
 
-On the drive, I'm thinking about something that keeps coming up in conversations with friends and on AI podcasts: enterprises want to depend less on frontier models. The proposed alternative is usually some version of “Use open-source models and host them yourself.”
+On the drive, I keep thinking about something that comes up in conversations with friends and on AI podcasts: enterprises want to depend less on frontier models. The usual alternative is "use open-source models and host them yourself."
 
-I don't disagree with reducing that dependence. But I'm still left with three questions: Which model, doing what work, and deployed where? If you're considering fine-tuning for your own product, these examples can help you decide which tasks are worth testing and how to compare the results with what you use today.
+I don't disagree with reducing that dependence. But I still have three questions: which model, doing what work, and deployed where?
 
-Before I get out of the car, I record a voice note on my phone so I can come back to these questions and write about them later. That note became the starting point for this post.
+Before I get out of the car, I record a voice note with those questions and how I'd explain them to someone else. That note is where this post started.
 
-For this post, I looked for companies that had adapted a model for a particular job, put it into a product, and reported what changed.
+To answer them, I did some market research: which companies have published about adapting a model for one job and putting it in a product, and what results did they get? Here are eight, from extracting a customer's issue to reviewing a payment for fraud. The numbers come from their own reports, and Harvey's newer work is still research.
 
-There are useful examples here, from extracting a customer's issue to reviewing a payment for fraud. Most describe production systems; Harvey's newer work shows promising research with a less settled path to customer deployment. The results come from company and partner reports, and I haven't independently reproduced their experiments.
+If you're considering fine-tuning for your own product, these examples can help you pick which tasks to test and how to compare the results with what you use today.
 
 ## A few terms before the company names
 
 | Term | What it means here |
-| --- | --- |
+| ---- | ------------------ |
 | Frontier model | A leading general-purpose model, used as a starting point or comparison |
-| Open-weight model | A model whose learned parameters are available; its license and training-data disclosure are separate questions |
-| LLM | Large language model, the kind of model generating text in these examples |
-| GPU | A processor used to train and run models |
-| Fine-tuning or post-training | Adapting an existing model through further training for the behavior you need |
-| Inference or serving | Running the trained model to produce an answer |
-| Evaluation | Checking outputs against examples and criteria that define success for the job |
+| Open-weight model | A model whose learned parameters are available (its license and training-data disclosure are separate questions) |
+| LLM | Large language model, the kind that generates text |
+| GPU | The processor used to train and run models |
+| Fine-tuning (post-training) | Adapting an existing model with more training for the behavior you need |
+| Inference (serving) | Running the trained model to produce an answer |
+| Evaluation | Checking outputs against examples and criteria that define success |
 
-Open weights also don't mean the company releases its adapted model, or owns the machines serving it. Those choices show up differently across these companies.
+Open weights also don't mean the company releases its adapted model or owns the machines serving it.
 
-First, though, there has to be a job small enough to describe.
+First, though, you need a job small enough to describe.
 
-## 1. Intercom: extract the customer's issue
+## 1. Intercom: finding the customer's issue
 
 <DiagramViewer
   company="Intercom"
@@ -56,23 +56,17 @@ First, though, there has to be a job small enough to describe.
   height={2048}
 />
 
-Before Fin can answer a support question, it needs a usable account of what the customer is asking. A conversation can include a correction, a greeting, and a reply to an earlier answer. Searching for all of that at once gives the next step more to untangle.
+**The problem.** Before Fin can answer a support question, it needs a clear version of what the customer is asking. A conversation can include a correction, a greeting, and a reply to an earlier answer, and searching on all of that at once makes the next step harder.
 
-Intercom's [September 11, 2025 report](https://fin.ai/research/david-vs-goliath-are-small-llms-any-good/) describes adapting Qwen3-14B for issue extraction with LoRA, a method that trains a small set of changes to the model. It uses 60,000 training examples and 10,000 validation examples from consenting customers with US accounts and English-locale conversations, with personal information redacted.
+**What they did.** Intercom adapted Qwen3-14B to pull out the customer's issue, using LoRA (a method that trains a small set of changes to the model). Its [September 2025 report](https://fin.ai/research/david-vs-goliath-are-small-llms-any-good/) describes 60,000 training examples from consenting customers, with personal information redacted.
 
-The downstream pipeline's offline answer rate reaches 63.4%, compared with 63.3% using GPT-4.1 and 18% using untuned Qwen. That measures whether extraction helps the rest of Fin answer the question.
+Later, a custom model called Apex became the core answering model for nearly all English chat and email conversations, replacing Sonnet 4.0, according to its [March 2026 announcement](https://www.intercom.com/blog/announcing-fin-apex-the-age-of-vertical-models-is-here/). [Fergal Reid's account](https://www.linkedin.com/pulse/announcing-fin-apex-custom-llm-powering-fergal-reid-phd--6a2zf/) says it started from an unnamed open-weight model, runs on EC2 for more than a million conversations a week, and still hands some work, like Procedures, to frontier models such as Sonnet.
 
-In a one-week production A/B test, transaction cost falls 12.5%, answer rate falls 0.1 percentage points, and customer satisfaction stays unchanged. Median end-to-end latency gets 100 milliseconds worse.
+**The result.** The pipeline's offline answer rate reaches 63.4%, against 63.3% with GPT-4.1 and 18% with untuned Qwen. In a one-week production test, transaction cost falls 12.5%, answer rate falls 0.1 percentage points, and customer satisfaction stays unchanged. Median latency gets 100 milliseconds worse.
 
-Training only on clearly resolved conversations makes answer rate worse too. The authors find that model reluctant to extract an issue from an ambiguous conversation, which is an inconvenient thing for a support model to be reluctant about.
+Training only on clearly resolved conversations hurt the answer rate, because the model became reluctant to extract an issue from an ambiguous one. My takeaway is that what goes into the training examples matters as much as which model you pick. Shopify builds its whole process around that.
 
-Intercom later expands the scope. Its [March 2026 Apex announcement](https://www.intercom.com/blog/announcing-fin-apex-the-age-of-vertical-models-is-here/) reports nearly all English chat and email conversations running Apex as the core answering model, replacing Sonnet 4.0.
-
-[Fergal Reid's account](https://www.linkedin.com/pulse/announcing-fin-apex-custom-llm-powering-fergal-reid-phd--6a2zf/) describes an unnamed open-weight starting model, supervised training on examples, and reinforcement learning using reward signals. Intercom runs inference on EC2 for more than a million conversations a week, while work such as Procedures still uses frontier models including Sonnet. The unnamed Apex base can't be assumed to be the earlier Qwen model.
-
-There's a defined task and a production comparison. The ambiguous conversations also point to the next problem: what goes into the training examples?
-
-## 2. Shopify: turn messy products and failed tasks into training data
+## 2. Shopify: classifying products
 
 <DiagramViewer
   company="Shopify"
@@ -82,23 +76,17 @@ There's a defined task and a production comparison. The ambiguous conversations 
   height={1536}
 />
 
-A merchant's title, description, and images can each contain part of what Shopify needs to classify a product. The output needs to fit consistent product types and attributes, even when the input doesn't.
+**The problem.** A merchant's title, description, and images each hold part of what Shopify needs to classify a product. The output still has to fit consistent product types and attributes, even when the input doesn't.
 
-Shopify's [July 2025 catalogue report](https://shopify.engineering/leveraging-multimodal-llms) describes fine-tuned models that handle text and images, including Qwen2VL 7B, in production. Its infrastructure handles 40 million calls and roughly 16 billion tokens a day (tokens are the pieces of text models process).
+**What they did.** Shopify's [July 2025 catalogue report](https://shopify.engineering/leveraging-multimodal-llms) describes fine-tuned models that read text and images, including Qwen2VL 7B, handling 40 million calls and roughly 16 billion tokens a day (tokens are the pieces of text models process). Several models produce labels, an arbitrator reconciles them, and people review the evaluation labels. Uncertain predictions and production failures feed the next training round. Shopify also trained the models to write only the fields that need filling.
 
-Multiple models produce labels, an arbitrator reconciles them, and people review evaluation labels. Uncertain predictions and production failures become material for the next training round.
+**The result.** Median latency drops from two seconds to 500 milliseconds, and GPU usage falls 40%. The report credits the whole training-and-serving change, not fine-tuning alone.
 
-Shopify also changes how much the models have to write. Training them to predict only the fields that need filling cuts median latency from two seconds to 500 milliseconds and GPU usage by 40%. The report describes Triton managing requests across its GPU fleet and a streaming pipeline carrying results back into the system; the gains belong to that training-and-serving change, rather than an isolated test of fine-tuning.
+Sidekick, Shopify's GraphQL agent, uses the same idea, according to its [August 2026 report](https://shopify.engineering/sidekicks-continual-learning-loop). It writes and runs queries against a merchant's store data (GraphQL is the query language for that). Low-scoring conversations become repair candidates, frontier models propose fixes, an automated evaluator checked against human judgments scores them, and successful sequences of actions become training examples.
 
-The same need for useful failures appears in [Sidekick's August 2026 report](https://shopify.engineering/sidekicks-continual-learning-loop). Its GraphQL agent writes and runs queries against a merchant's store data, then turns the results into an answer. GraphQL is the query language it uses to ask for that data.
+Shopify estimates about $1 million a year to serve the specialized model, against $27 million for frontier inference at that traffic. Those are projections, and they don't fully account for training and maintaining the loop. Sidekick's base model is unnamed, so the catalogue is the clearer open-weight example.
 
-Low-scoring conversations become repair candidates. Frontier models propose fixes, an automated evaluator calibrated against human judgments scores them, and experts handle difficult cases. Successful sequences of actions become training examples.
-
-Shopify estimates annual serving costs of about $1 million for the specialized model against $27 million for frontier inference at that traffic level. Those are projections, with no full accounting of training and maintaining the loop. The report also leaves the base model unnamed, so the catalogue remains the clearer open-weight example.
-
-The company has a way to collect failures and train against them. I'd still want to know whether the result makes someone's work easier, beyond producing a better-looking model score.
-
-## 3. Airbnb: check the work around the model
+## 3. Airbnb: notes for support agents
 
 <DiagramViewer
   company="Airbnb"
@@ -108,17 +96,13 @@ The company has a way to collect failures and train against them. I'd still want
   height={1536}
 />
 
-Airbnb's support agents need to pick up a conversation without reading every message and call transcript that came before them. A summary at the end helps the next person; notes that stay current can help the person already handling the case.
+**The problem.** Support agents need to pick up a conversation without reading every earlier message and call transcript. A summary at the end helps the next person, but notes that stay current can help the person already handling the case.
 
-Its [2025 paper](https://aclanthology.org/2025.emnlp-industry.140.pdf) describes a Mixtral-8×7B model producing incremental notes, with a separate classifier filtering trivial bullets. Initial training uses about 30,000 examples for supervised learning and preference optimization, which teaches the model to favor better outputs, followed by about 8,000 examples drawn from agent edits.
+**What they did.** Airbnb's [2025 paper](https://aclanthology.org/2025.emnlp-industry.140.pdf) describes a Mixtral-8×7B model that writes incremental notes as the conversation goes, with a separate classifier that filters out trivial bullets. It was trained on about 30,000 examples, then about 8,000 more drawn from agent edits. It runs on two A100 GPUs per instance, with median latency of 600 milliseconds.
 
-The deployed summarizer runs through Triton and TensorRT-LLM on two A100 GPUs per instance. Inference latency is 600 milliseconds at the median and two seconds at the 95th percentile (95% of requests finish within that time). The paper doesn't specify a cloud or private-network boundary.
+**The result.** Handling time drops 3%, and up to 9% for cases involving three or more agents. That's measured against sites already using bulk summaries from a fine-tuned Mixtral model. The gain belongs to the whole progressive-note workflow (timing, filtering, prompts, and the model), and the study doesn't separate them.
 
-Its rollout study reports 3% lower handling time, reaching up to 9% for cases involving three or more agents. The comparison sites already use bulk summaries from a fine-tuned Mixtral model.
-
-The study compares changes before and after rollout across sites, a method called difference-in-differences. The result belongs to the progressive-note workflow, including timing, filtering, prompts, and model adaptation; it doesn't separate each contribution.
-
-## 4. LinkedIn: assess candidates against a role
+## 4. LinkedIn: assessing candidates
 
 <DiagramViewer
   company="LinkedIn"
@@ -128,15 +112,13 @@ The study compares changes before and after rollout across sites, a method calle
   height={2048}
 />
 
-LinkedIn has another repeated step: assessing a candidate against a role. Its [December 18, 2024 report](https://www.linkedin.com/blog/engineering/generative-ai/how-we-built-domain-adapted-foundation-genai-models-to-power-our-platform) describes EON-8B, adapted from Llama 3.1 8B, powering Hiring Assistant's evaluation agent. That step accounts for nearly 90% of Hiring Assistant's LLM calls.
+**The problem.** LinkedIn's Hiring Assistant keeps repeating one step: assessing a candidate against a role. That step accounts for nearly 90% of its LLM calls.
 
-It reads candidate information, recruiter notes, and job requirements, then returns an assessment with an explanation. LinkedIn describes on-premises training and serving, and reports four percentage points higher matching accuracy than GPT-4o mini without additional fine-tuning on the matching task.
+**What they did.** LinkedIn adapted Llama 3.1 8B into EON-8B, trained and served on-premises, according to its [December 18, 2024 report](https://www.linkedin.com/blog/engineering/generative-ai/how-we-built-domain-adapted-foundation-genai-models-to-power-our-platform). It reads candidate information, recruiter notes, and job requirements, then returns an assessment with an explanation.
 
-That is a dated result on a matching test, rather than evidence of better hiring outcomes or a before-and-after migration. Alongside Airbnb, it shows why I need the name of the measured thing as much as the size of the improvement.
+**The result.** Matching accuracy is four percentage points higher than GPT-4o mini without additional fine-tuning on the matching task. That's a dated result on a matching test, not evidence of better hiring outcomes.
 
-Coinbase makes that separation especially clear, because it reports an initial workflow experiment, a model benchmark, and production serving results separately.
-
-## 5. Coinbase: evaluate the risk decision, then change the model
+## 5. Coinbase: catching fraud
 
 <DiagramViewer
   company="Coinbase"
@@ -146,27 +128,19 @@ Coinbase makes that separation especially clear, because it reports an initial w
   height={2048}
 />
 
-[Brian Armstrong's October 11 post](https://x.com/brian_armstrong/status/2109412046244913643) describes fine-tuning Qwen3.5-9B on Coinbase's internal data for fraud prevention. The engineering team's October 6–8 series explains what the model does inside Onramp, its product for buying crypto through partner apps.
+**The problem.** Coinbase wanted to catch more fraud in Onramp, its product for buying crypto through partner apps, on top of its existing machine-learning models and rules.
 
-[Part one](https://www.coinbase.com/blog/part-one-how-coinbase-built-evaluated-and-post-trained-a-fraud-agent) starts with a Claude Opus agent reviewing selected transactions after the existing machine-learning model and rules. Application code prepares recent transaction history and applies the decision policy. The agent can flag more risk, but can't override an upstream block.
+**What they did.** [Brian Armstrong's October 11 post](https://x.com/brian_armstrong/status/2109412046244913643) describes fine-tuning Qwen3.5-9B on Coinbase's internal data. The engineering team's October 6 to 8 series shows how they got there:
 
-The online experiment reports 30% fewer fraudulent transactions and 22% less fraud value compared with the existing stack alone. Those are results from adding the Claude-powered review workflow.
+- [Part one](https://www.coinbase.com/blog/part-one-how-coinbase-built-evaluated-and-post-trained-a-fraud-agent): A Claude Opus agent reviews selected transactions after the existing models and rules. It can flag more risk, but it can't override an upstream block. In the online experiment, fraudulent transactions fall 30% and fraud value falls 22% compared with the existing stack alone.
+- [Part two](https://www.coinbase.com/blog/part-two-owning-intelligence-series): Coinbase tests models on 16,140 historical transactions across 7,293 users, including 813 confirmed fraud cases, all from before the agent rollout. Newer versions of Opus, Sonnet, and GPT have lower recall and F1 on this benchmark.
+- [Part three](https://www.coinbase.com/blog/part-three-owning-intelligence-series): Coinbase adapts Qwen3.5-9B with reinforcement learning (GRPO, with LoRA updates), checking rewards against known fraud outcomes. It serves the model with Ray Serve LLM and vLLM on autoscaled L40S GPUs.
 
-Then comes model selection. [Part two](https://www.coinbase.com/blog/part-two-owning-intelligence-series) uses 16,140 historical transactions across 7,293 users, including 813 confirmed fraud cases. The data predates the agent rollout so the agent's own blocking decisions don't change which outcomes can be observed.
+**The result.** Against Opus 4.5, Coinbase reports gains of 7.5 percentage points in precision, 12.0 in recall, 9.6 in F1, and 35.4 in dollar-weighted recall. Recall is how much fraud the model catches, precision is how many of its flags are right, F1 combines the two, and dollar-weighted recall is the share of fraudulent transaction value identified.
 
-With the context and decision policy held fixed, newer versions of Opus, Sonnet, and GPT have lower recall and F1 on this benchmark. Recall measures how much fraud the agent catches; precision measures how many of its fraud flags are correct. F1 combines the two, so catching more fraud by flagging everything doesn't automatically earn a good score.
+Median end-to-end LLM-request latency is 0.683 seconds against 1.515 seconds for Opus 4.5, a 55% reduction. Detection quality and latency come from separate evaluations, and the report doesn't isolate a live fraud-loss reduction from replacing Opus with tuned Qwen.
 
-[Part three](https://www.coinbase.com/blog/part-three-owning-intelligence-series) describes adapting Qwen3.5-9B with SkyRL on Anyscale. It uses GRPO, a reinforcement-learning method that learns from groups of scored responses, with LoRA updates. Rewards are checked against known fraud outcomes, and the benchmark compares single-pass decision agents with adaptive rules and reflection disabled.
-
-Against Opus 4.5, Coinbase reports gains of 7.5 percentage points in precision, 12.0 in recall, 9.6 in F1, and 35.4 in dollar-weighted recall. That last measure is the share of fraudulent transaction value identified. The report's figure specifies percentage-point differences despite the percent signs in its prose.
-
-The adapted model serves production traffic through Ray Serve LLM and vLLM, software for running and distributing model requests, on autoscaled L40S GPUs. Median end-to-end LLM-request latency is 0.683 seconds against 1.515 seconds for Opus 4.5, a 55% reduction.
-
-Detection quality and latency come from separate evaluations. The report establishes production serving, but doesn't isolate a live fraud-loss reduction from replacing Opus with tuned Qwen.
-
-That gives me something concrete to compare: the decision, the test, and the serving requirement. It also raises the practical question behind “host it yourself”: who is running the machines?
-
-## 6. Impel: decide who operates the model
+## 6. Impel: writing dealership replies
 
 <DiagramViewer
   company="Impel"
@@ -176,11 +150,13 @@ That gives me something concrete to compare: the decision, the test, and the ser
   height={2048}
 />
 
-Impel makes Sales AI for dealerships, including replies, follow-ups, and conversation summaries. Its [June 2025 account with AWS](https://aws.amazon.com/blogs/machine-learning/impel-enhances-automotive-dealership-customer-experience-with-fine-tuned-llms-on-amazon-sagemaker/) describes replacing the third-party model behind those functions with a LoRA-adapted Llama model on autoscaled SageMaker endpoints in its own AWS account.
+**The problem.** Impel makes Sales AI for dealerships, including replies, follow-ups, and conversation summaries, and it was running on a third-party model.
 
-Human-review scores rise from 73% to 86% for personalized replies, 70% to 83% for summaries, and 59% to 92% for follow-ups. The report leaves the exact Llama variant, sample size, and detailed scoring rules undisclosed. It provides output-review results, with no measured vehicle-sales lift or numerical cost savings.
+**What they did.** According to its [June 2025 account with AWS](https://aws.amazon.com/blogs/machine-learning/impel-enhances-automotive-dealership-customer-experience-with-fine-tuned-llms-on-amazon-sagemaker/), Impel replaced that model with a LoRA-adapted Llama model on autoscaled SageMaker endpoints in its own AWS account.
 
-## 7. Cresta: use a serving partner
+**The result.** Human-review scores rise from 73% to 86% for personalized replies, 70% to 83% for summaries, and 59% to 92% for follow-ups. The report leaves out the exact Llama variant, the sample size, and the scoring rules, and it doesn't measure vehicle-sales lift or cost savings.
+
+## 7. Cresta: suggesting answers to support agents
 
 <DiagramViewer
   company="Cresta"
@@ -190,21 +166,21 @@ Human-review scores rise from 73% to 86% for personalized replies, 70% to 83% fo
   height={2048}
 />
 
-Cresta's Knowledge Assist uses a live support conversation and retrieved company knowledge to suggest an answer for the human agent. Its [engineering report](https://cresta.com/blog/how-fine-tuned-llms-power-knowledge-assist-summarization-and-chat-suggestions) confirms tuned Mistral models live with customers, with its Ocean training framework adapting models by industry, customer, and task.
+**The problem.** Human agents in live support conversations need a good suggested answer quickly. Cresta's Knowledge Assist builds one from the conversation and retrieved company knowledge.
 
-[Fireworks' deployment account](https://fireworks.ai/blog/story-cresta-knowledge-assist) describes a shared base model with customer-specific LoRA adapters on provider-managed dedicated instances. Cresta customizes the models while Fireworks operates the serving infrastructure.
+**What they did.** Cresta uses tuned Mistral models, adapted by industry, customer, and task with its Ocean training framework, according to its [engineering report](https://cresta.com/blog/how-fine-tuned-llms-power-knowledge-assist-summarization-and-chat-suggestions). [Fireworks' deployment account](https://fireworks.ai/blog/story-cresta-knowledge-assist) describes a shared base model with customer-specific LoRA adapters on provider-managed dedicated instances. Cresta customizes the models, and Fireworks operates the serving infrastructure.
 
-Impel deploys in its AWS account, Cresta uses a serving partner, and LinkedIn describes on-premises serving. All three adapt models; the infrastructure responsibilities differ. Owning the recipe doesn't require owning the stove.
+**The result.** The tuned models are live with customers.
+
+The setups differ even where the idea is the same. Impel deploys in its own AWS account, Cresta uses a serving partner, and LinkedIn describes on-premises serving. All three adapt models, and the infrastructure responsibilities differ.
 
 ### Where to deploy
 
-There are plenty of places to deploy a fine-tuned model, and Nebius Token Factory is one option to consider. Its [Dedicated Endpoints](https://docs.tokenfactory.nebius.com/ai-models-inference/dedicated-endpoints/overview) reserve GPU capacity for your organization. You choose the region, the GPU setup, and the minimum and maximum capacity as traffic changes.
+There are plenty of places to deploy a fine-tuned model, and Nebius Token Factory is one to consider. Its [Dedicated Endpoints](https://docs.tokenfactory.nebius.com/ai-models-inference/dedicated-endpoints/overview) reserve GPU capacity for your organization. You choose the region, the GPU setup, and the minimum and maximum capacity as traffic changes.
 
-For eligible models, you can deploy your own fine-tuned weights while Nebius runs the serving infrastructure. You pay for GPU time, so I'd compare the cost and response times using the traffic I expect the product to handle. You can browse the [endpoints console](https://tokenfactory.nebius.com/endpoints), but you'll need to sign in to deploy.
+For eligible models, you can deploy your own fine-tuned weights while Nebius runs the serving infrastructure. You pay for GPU time, so I'd compare cost and response times using the traffic I expect the product to handle. You can browse the [endpoints console](https://tokenfactory.nebius.com/endpoints), but you'll need to sign in to deploy.
 
-But even with a place to train and serve a model, a good research result still has to make it into the product.
-
-## 8. Harvey: keep research and rollout separate
+## 8. Harvey: multi-step legal work
 
 <DiagramViewer
   company="Harvey"
@@ -214,23 +190,23 @@ But even with a place to train and serve a model, a good research result still h
   height={2048}
 />
 
-Harvey's [August 20, 2026 Tenet announcement](https://www.harvey.ai/blog/post-training-update-harvey-tenet) describes its first post-trained open-weight model, based on Kimi K3 and trained with Fireworks for legal tasks that take many steps. It reports gains of nine percentage points on its Legal Agent Benchmark and two on LAB Contracts in all-pass rate, meaning every evaluation criterion is satisfied.
+**The problem.** Legal work often takes many steps across many documents, from answering questions across a stack of contracts to reviewing a whole document room.
 
-Training uses synthetic, public legal, and human-expert data, with no customer data in its post-training efforts. Tenet is presented as a research preview.
+**What they did.** Harvey post-trained open-weight models for specific legal tasks, in three efforts:
 
-Another [August report with Applied Compute](https://www.harvey.ai/blog/training-frontier-review-table-models-with-applied-compute) trains GLM-5.2 for Review Table, where lawyers ask questions across documents and receive a grid of answers with citations. Its per-cell score combines correctness and citation quality on a 0–1 scale, with models evaluated at minimal reasoning effort.
+- [Tenet](https://www.harvey.ai/blog/post-training-update-harvey-tenet) (August 20, 2026): Based on Kimi K3 and trained with Fireworks on synthetic, public legal, and human-expert data, with no customer data. Presented as a research preview.
+- [Review Table](https://www.harvey.ai/blog/training-frontier-review-table-models-with-applied-compute): GLM-5.2, trained with Applied Compute, where lawyers ask questions across documents and get a grid of answers with citations. [Applied Compute](https://www.appliedcompute.com/case-studies/harvey-review-table) describes the public legal documents, frontier-generated questions, and expert checks behind the training data.
+- [Diligence](https://www.harvey.ai/blog/post-training-rlm-agents-for-m-and-a-diligence): With Baseten, a root agent divides a document room among sub-agents and assembles their findings into a diligence memo. Reinforcement learning on the Qwen3.5-122B-A10B root, with Qwen3.6-35B-A3B sub-agents held fixed.
 
-The reported score is 0.903, against 0.867 for Fable 5 and 0.857 for GPT-5.6-Sol. Average cost per cell is 54.8% below Sonnet 5 on the same tasks. [Applied Compute](https://www.appliedcompute.com/case-studies/harvey-review-table) describes public legal documents, frontier-generated questions, and expert checks behind the synthetic training material.
+**The result.**
 
-In [September work with Baseten](https://www.harvey.ai/blog/post-training-rlm-agents-for-m-and-a-diligence), a root agent divides a document room among sub-agents and assembles their findings into a diligence memo. Reinforcement learning on the Qwen3.5-122B-A10B root, with Qwen3.6-35B-A3B sub-agents held fixed, raises the fraction of evaluation criteria passed from 29.9% to 63.0% on 50 synthetic lab diligence rooms held out of training.
+- Tenet: Gains of nine percentage points on Harvey's Legal Agent Benchmark and two on LAB Contracts in all-pass rate, meaning every evaluation criterion is satisfied.
+- Review Table: A score of 0.903 (correctness and citation quality per cell, 0 to 1, at minimal reasoning effort), against 0.867 for Fable 5 and 0.857 for GPT-5.6-Sol. Average cost per cell is 54.8% below Sonnet 5.
+- Diligence: The fraction of evaluation criteria passed rises from 29.9% to 63.0% on 50 synthetic lab diligence rooms held out of training.
 
-These results measure the reported tasks. The diligence work is initial research, and training inside Review Table's production setup doesn't establish customer traffic on the reported checkpoint. None of these announcements establishes publicly downloadable adapted weights, a public license for them, or a public model endpoint.
+These are research results. None of them establishes customer traffic on these checkpoints, or publicly downloadable weights, a public license, or a public model endpoint.
 
-Harvey's [earlier work with OpenAI](https://openai.com/index/harvey/) belongs to separate proprietary-model history. An initial GPT-3 experiment used 100 landlord-and-tenant questions from Reddit, with attorneys saying they would send 86 answers without edits.
-
-Later, lawyers at ten firms preferred a custom case-law model over GPT-4 97% of the time in side-by-side comparisons. Longer, more complete answers were among the reasons given. Preference is what that number measures.
-
-Then, in a [May 2025 BigLaw Bench comparison](https://www.harvey.ai/blog/expanding-harveys-model-offerings), Harvey reports newer models optimized within its systems surpassing its originally benchmarked system. Specialization still needs a fresh comparison when the alternatives change.
+Harvey's [earlier work with OpenAI](https://openai.com/index/harvey/) shows why a comparison needs refreshing. Lawyers at ten firms preferred a custom case-law model over GPT-4 97% of the time in side-by-side comparisons, though longer, more complete answers were among the reasons, so that number measures preference. Then, in a [May 2025 BigLaw Bench comparison](https://www.harvey.ai/blog/expanding-harveys-model-offerings), Harvey reports newer models optimized within its systems surpassing its originally benchmarked system. Specialization still needs a fresh comparison when the alternatives change.
 
 ## The job description
 
@@ -238,6 +214,6 @@ I'd start with the work that repeats: what comes in, what should come back, what
 
 Then compare the existing workflow with the proposed one. Keep the ambiguous cases in the examples, measure the outcome the people doing the work care about, and count training, evaluation, engineering, monitoring, and serving alongside whatever still goes to a frontier model.
 
-These are selected company reports, so they can't tell me the typical return or how many other attempts failed. They can give me a more useful place to start the next conversation.
+These are selected company reports, so they can't tell me the typical return or how many other attempts failed. They give me a better place to start the next conversation.
 
-On the way to the birthday party, I had a question about replacing models. Now I'd ask for a job description first. “Open source” has put in an application; it still needs to say what it's there to do.
+On the drive to the birthday party, I was asking how to replace frontier models. Now I'd start with a different question: what's the job? "Open source" is an applicant. The job description comes first.
