@@ -132,8 +132,7 @@ export default async function Page() {
           <div className="flex max-w-[820px] flex-col items-start gap-8">
             <span className={LABEL}>AI engineer · builder · writer</span>
             <h1 className="text-[clamp(2.5rem,5.5vw,4.5rem)] font-medium leading-[1.04] tracking-[-0.035em] text-[#0a0a0a]">
-              Tony Kipkemboi builds AI agents, fine-tunes models, and learns in
-              public.
+              I make things, learn in public, and mostly use AI to do it.
             </h1>
             <p className="max-w-[540px] text-lg leading-relaxed text-neutral-500">
               This is where I keep what I&apos;m building, learning, and
