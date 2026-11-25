@@ -1,5 +1,10 @@
 import { MetadataRoute } from 'next'
-import { getBlogPosts, getAllTags, getAllCategories } from './blog/utils'
+import {
+  getBlogPosts,
+  getAllTags,
+  getAllCategories,
+  getPostDateModified,
+} from './blog/utils'
 import { getCourses } from './learn/utils'
 
 export const baseUrl = 'https://tonykipkemboi.com'
@@ -9,7 +14,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const posts = await getBlogPosts()
   const blogs = posts.map((post) => ({
     url: `${baseUrl}/blog/${post.slug}`,
-    lastModified: new Date(post.metadata.publishedAt).toISOString(),
+    lastModified: new Date(getPostDateModified(post)).toISOString(),
     changeFrequency: 'monthly' as const,
     priority: 0.8,
   }))
@@ -50,7 +55,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   )
 
   // Static pages
-  const routes = ['', '/blog', '/learn', '/press'].map((route) => ({
+  const routes = ['', '/blog', '/learn', '/press', '/privacy'].map((route) => ({
     url: `${baseUrl}${route}`,
     lastModified: new Date().toISOString(),
     changeFrequency: 'weekly' as const,

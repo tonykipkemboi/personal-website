@@ -17,6 +17,7 @@ export type CourseMetadata = {
     href: string
     description: string
   }[]
+  image?: string
 }
 
 export type LessonMetadata = {
@@ -45,15 +46,16 @@ export type Course = {
 export const courseCatalog: CourseMetadata[] = [
   {
     slug: 'dgx-spark-101',
-    title: 'DGX Spark 101',
+    title: 'DGX Spark 101: Memory, Models, Setup',
     summary:
       'A plain-English guide to the NVIDIA DGX Spark: what it is, how its memory works, why that decides its speed, and which models actually fit.',
     description:
-      'Start with what a DGX Spark is, then learn how its unified memory differs from a normal graphics card, why memory bandwidth rather than raw compute decides how fast it answers, and how to work out which models fit in 128 GB. Finish by building llama.cpp, serving a model, and reaching it from anywhere, with every command explained and every step verified on real hardware.',
+      'A plain-English NVIDIA DGX Spark guide: how unified memory works, which models fit in 128 GB, and how to serve a model and reach it from anywhere.',
     level: 'Beginner',
     status: 'First pass',
     publishedAt: '2026-08-30',
     updatedAt: '2026-09-03',
+    image: '/blog/dgx-spark-phone/architecture.png',
     tags: ['DGX Spark', 'Local AI', 'GB10', 'Unified Memory', 'llama.cpp'],
     sources: [
       {
@@ -85,6 +87,7 @@ export const courseCatalog: CourseMetadata[] = [
     status: 'First pass',
     publishedAt: '2026-06-17',
     updatedAt: '2026-06-17',
+    image: '/learn/lora-101/01-lora-sidecar-tony.png',
     tags: ['LoRA', 'Fine-tuning', 'Adapters', 'QLoRA'],
     sources: [
       {

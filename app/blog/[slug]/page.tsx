@@ -9,8 +9,14 @@ import {
   calculateReadingTime,
   getPostOgImage,
   getPostOgCard,
+  getPostDateModified,
 } from 'app/blog/utils'
 import { baseUrl } from 'app/sitemap'
+import { skillsPluginsFaqs } from '../posts/agent-skills-and-plugins-explained.faq'
+
+const faqsBySlug: Record<string, { question: string; answer: string }[]> = {
+  'agent-skills-and-plugins-explained': skillsPluginsFaqs,
+}
 
 export async function generateStaticParams() {
   const posts = await getBlogPosts()
@@ -89,13 +95,14 @@ export default async function BlogPost({ params }: PageParams) {
 
   const readingTime = calculateReadingTime(post.content)
   const category = post.metadata.category
+  const faqs = faqsBySlug[post.slug]
 
   const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'BlogPosting',
     headline: post.metadata.title,
     datePublished: post.metadata.publishedAt,
-    dateModified: post.metadata.publishedAt,
+    dateModified: getPostDateModified(post),
     description: post.metadata.description || post.metadata.summary,
     image: getPostOgImage(post, baseUrl),
     url: `${baseUrl}/blog/${post.slug}`,
@@ -129,6 +136,19 @@ export default async function BlogPost({ params }: PageParams) {
     timeRequired: `PT${readingTime}M`,
   }
 
+  const faqJsonLd = faqs && {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqs.map((item) => ({
+      '@type': 'Question',
+      name: item.question,
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: item.answer,
+      },
+    })),
+  }
+
   return (
     <section className="mx-auto w-full max-w-[720px] px-6 pt-10 pb-20 sm:px-8">
       <script
@@ -136,6 +156,13 @@ export default async function BlogPost({ params }: PageParams) {
         suppressHydrationWarning
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
+      {faqJsonLd && (
+        <script
+          type="application/ld+json"
+          suppressHydrationWarning
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
+        />
+      )}
 
       <Link
         href="/blog"
@@ -183,6 +210,18 @@ export default async function BlogPost({ params }: PageParams) {
       <article className="prose mt-12">
         <CustomMDX source={post.content} />
       </article>
+
+      {faqs && (
+        <section className="prose mt-12">
+          <h2>FAQ</h2>
+          {faqs.map((item) => (
+            <div key={item.question}>
+              <h3>{item.question}</h3>
+              <p>{item.answer}</p>
+            </div>
+          ))}
+        </section>
+      )}
 
       <div className="mt-12 flex items-center justify-between border-t border-neutral-200 pt-8">
         <span className="text-sm text-neutral-400">Thanks for reading.</span>
