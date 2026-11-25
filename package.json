@@ -47,7 +47,7 @@
     "typescript": "~5.9.3"
   },
   "overrides": {
-    "minimatch": ">=10.2.1",
+    "minimatch": ">=11.0.1",
     "postcss": "$postcss",
     "@next/eslint-plugin-next": {
       "fast-glob": "file:../../../tools/next-eslint-glob"
@@ -56,8 +56,8 @@
   "devDependencies": {
     "@eslint/eslintrc": "3.3.7",
     "@eslint/js": "^9.39.2",
-    "@typescript-eslint/eslint-plugin": "8.70.1",
-    "@typescript-eslint/parser": "8.70.1",
+    "@typescript-eslint/eslint-plugin": "8.74.0",
+    "@typescript-eslint/parser": "8.74.0",
     "eslint": "^9.39.2",
     "eslint-config-next": "16.4.6",
     "eslint-config-prettier": "10.1.8",
@@ -65,6 +65,7 @@
     "husky": "9.1.7",
     "lint-staged": "^16.2.7",
     "playwright": "1.63.0",
-    "prettier": "3.9.9"
+    "prettier": "3.9.9",
+    "typescript-eslint": "8.74.0"
   }
 }
