@@ -1,3 +1,4 @@
+import type { Metadata } from 'next'
 import { Suspense } from 'react'
 import Link from 'next/link'
 import { RecentPosts } from './components/recent-posts'
@@ -86,6 +87,28 @@ const recognition = [
 const SHELL = 'mx-auto w-full max-w-[1240px] px-6 sm:px-10 lg:px-20'
 const LABEL = 'text-xs font-medium uppercase tracking-[0.18em] text-neutral-400'
 
+const homeTitle = 'Tony Kipkemboi | AI Agents, Fine-Tuning & Building in Public'
+const homeDescription =
+  'AI engineer building practical agent systems, fine-tuning experiments, and developer tools, then sharing the lessons through field notes, courses, and talks.'
+
+export const metadata: Metadata = {
+  title: { absolute: homeTitle },
+  description: homeDescription,
+  alternates: { canonical: baseUrl },
+  openGraph: {
+    title: homeTitle,
+    description: homeDescription,
+    url: baseUrl,
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: homeTitle,
+    description: homeDescription,
+    creator: '@tonykipkemboi',
+  },
+}
+
 export default async function Page() {
   const courses = await getCourses()
 
@@ -137,7 +160,7 @@ export default async function Page() {
       {/* Recent field notes */}
       <section className={`${SHELL} pb-20`}>
         <div className="mb-5 flex items-end justify-between">
-          <span className={LABEL}>Recent field notes</span>
+          <h2 className={LABEL}>Recent field notes</h2>
           <Link
             href="/blog"
             className="border-b border-neutral-300 pb-0.5 text-sm text-[#0a0a0a] transition-opacity hover:opacity-60"
@@ -167,7 +190,7 @@ export default async function Page() {
       {/* Learning guides */}
       <section className={`${SHELL} pb-20`}>
         <div className="mb-5 flex items-end justify-between">
-          <span className={LABEL}>Guides I am building</span>
+          <h2 className={LABEL}>Guides I am building</h2>
           <Link
             href="/learn"
             className="border-b border-neutral-300 pb-0.5 text-sm text-[#0a0a0a] transition-opacity hover:opacity-60"
@@ -202,7 +225,7 @@ export default async function Page() {
       {/* Experiments */}
       <section className={`${SHELL} pb-20`}>
         <div className="mb-5 flex items-end justify-between">
-          <span className={LABEL}>Current experiments</span>
+          <h2 className={LABEL}>Current experiments</h2>
           <a
             href="https://github.com/tonykipkemboi"
             target="_blank"

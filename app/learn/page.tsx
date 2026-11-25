@@ -1,10 +1,29 @@
+import type { Metadata } from 'next'
 import Link from 'next/link'
 import { getCourseReadingTime, getCourses } from './utils'
+import { baseUrl } from 'app/sitemap'
 
-export const metadata = {
-  title: 'Learn',
-  description:
-    'Distilled guides from what Tony Kipkemboi is learning and testing in AI agents, fine-tuning, and developer tools.',
+const title = 'Courses on DGX Spark, LoRA, and Agents'
+const description =
+  'Plain-English courses from Tony Kipkemboi on NVIDIA DGX Spark, LoRA fine-tuning, and the practical details of running models and agent tools yourself.'
+const canonical = `${baseUrl}/learn`
+
+export const metadata: Metadata = {
+  title,
+  description,
+  alternates: { canonical },
+  openGraph: {
+    title,
+    description,
+    url: canonical,
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title,
+    description,
+    creator: '@tonykipkemboi',
+  },
 }
 
 const SHELL = 'mx-auto w-full max-w-[1240px] px-6 sm:px-10 lg:px-20'

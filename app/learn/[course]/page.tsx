@@ -26,29 +26,34 @@ export async function generateMetadata({ params }: PageParams) {
     return {}
   }
 
-  return {
-    title: course.metadata.title,
-    description: course.metadata.description,
-    openGraph: {
-      title: course.metadata.title,
-      description: course.metadata.description,
-      type: 'article',
-      url: `${baseUrl}/learn/${course.metadata.slug}`,
-      images: [
+  const url = `${baseUrl}/learn/${course.metadata.slug}`
+  const { title, description, image } = course.metadata
+  const ogImages = image
+    ? [
         {
-          url: '/learn/lora-101/01-lora-sidecar-tony.png',
-          width: 1536,
-          height: 864,
-          alt: `${course.metadata.title} course illustration`,
+          url: image,
+          alt: `${title} course illustration`,
         },
-      ],
+      ]
+    : undefined
+
+  return {
+    title,
+    description,
+    alternates: { canonical: url },
+    openGraph: {
+      title,
+      description,
+      type: 'article',
+      url,
+      ...(ogImages && { images: ogImages }),
     },
     twitter: {
       card: 'summary_large_image',
-      title: course.metadata.title,
-      description: course.metadata.description,
+      title,
+      description,
       creator: '@tonykipkemboi',
-      images: ['/learn/lora-101/01-lora-sidecar-tony.png'],
+      ...(image && { images: [image] }),
     },
   }
 }

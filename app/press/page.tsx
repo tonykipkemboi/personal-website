@@ -1,10 +1,28 @@
 import type { Metadata } from 'next'
 import { FilteredAppearances } from '../components/press-filter'
+import { baseUrl } from 'app/sitemap'
+
+const title = 'Talks, Courses, and Interviews'
+const description =
+  "Talks, courses, podcasts, and interviews with Tony Kipkemboi on AI agents, fine-tuning, and production systems, including Harvard, O'Reilly, and MLOps World."
+const canonical = `${baseUrl}/press`
 
 export const metadata: Metadata = {
-  title: 'Press',
-  description:
-    'Talks, courses, podcasts, and features from Tony Kipkemboi on AI agents, fine-tuning, and production AI systems.',
+  title,
+  description,
+  alternates: { canonical },
+  openGraph: {
+    title,
+    description,
+    url: canonical,
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title,
+    description,
+    creator: '@tonykipkemboi',
+  },
 }
 
 export interface MediaAppearance {

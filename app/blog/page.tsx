@@ -1,11 +1,30 @@
+import type { Metadata } from 'next'
 import { Suspense } from 'react'
 import { getBlogPosts } from './utils'
 import { BlogSearch } from 'app/components/blog-search'
+import { baseUrl } from 'app/sitemap'
 
-export const metadata = {
-  title: 'Blog',
-  description:
-    'Field notes from Tony Kipkemboi on building AI agents, fine-tuning models, and shipping developer tools.',
+const title = 'Field Notes on AI Agents & Fine-Tuning'
+const description =
+  'Field notes from Tony Kipkemboi on AI agents, fine-tuning, and developer tools — experiments, tutorials, and lessons from building in public.'
+const canonical = `${baseUrl}/blog`
+
+export const metadata: Metadata = {
+  title,
+  description,
+  alternates: { canonical },
+  openGraph: {
+    title,
+    description,
+    url: canonical,
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title,
+    description,
+    creator: '@tonykipkemboi',
+  },
 }
 
 const SHELL = 'mx-auto w-full max-w-[1240px] px-6 sm:px-10 lg:px-20'

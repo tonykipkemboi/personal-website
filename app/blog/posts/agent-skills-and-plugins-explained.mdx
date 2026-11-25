@@ -1,8 +1,8 @@
 ---
-title: 'AI Agent Skills and Plugins Explained (2026)'
+title: 'AI Agent Skills vs Plugins: The Difference'
 publishedAt: '2026-03-27'
 summary: 'Skills are reusable instructions for AI tools. Plugins bundle them for distribution. Almost every major AI tool uses the same format.'
-description: 'AI agent skills vs plugins — what they are, how they differ, and why every major provider (Claude, ChatGPT, Gemini) adopted the same SKILL.md format. Clear examples included.'
+description: 'Skills vs plugins for AI agents — a skill is one reusable workflow, a plugin is the installable bundle. Why Claude, ChatGPT, and Gemini all use SKILL.md.'
 author: 'Tony Kipkemboi'
 category: 'AI Agents'
 tags: ['AI Agents', 'Agent Skills', 'Plugins', 'Enterprise AI']
@@ -102,6 +102,8 @@ Three numbers worth knowing:
 The [OWASP Foundation](https://genai.owasp.org/resource/owasp-top-10-for-agentic-applications-for-2026/) published a top 10 for AI agent security. The top threats: goal hijacking, tool misuse, over-permissioned agents, supply chain attacks through malicious plugins, and unexpected code execution.
 
 The practical version: install skills from trusted sources only, keep permissions tight, review skills like you review code, and pin your versions.
+
+That last point matters most: 78% of compromised agents had broader permissions than they needed. I go deeper on giving agents their own identity, roles, and least-privilege access in [RBAC for AI Agents: Identity and Access](/blog/agent-authentication-rbac).
 
 ## Where this is going
 

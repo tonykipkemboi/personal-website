@@ -35,13 +35,13 @@ export const metadata: Metadata = {
     'google-adsense-account': 'ca-pub-5929640898604287',
   },
   title: {
-    default: 'Tony Kipkemboi',
+    default: 'Tony Kipkemboi | AI Agents, Fine-Tuning & Building in Public',
     template: '%s | Tony Kipkemboi',
   },
   description:
     'AI engineer building practical agent systems, fine-tuning experiments, and developer tools, then sharing the lessons through field notes, courses, and talks.',
   openGraph: {
-    title: 'Tony Kipkemboi',
+    title: 'Tony Kipkemboi | AI Agents, Fine-Tuning & Building in Public',
     description:
       'AI engineer building practical agent systems, fine-tuning experiments, and developer tools, then sharing the lessons through field notes, courses, and talks.',
     url: baseUrl,
@@ -59,7 +59,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Tony Kipkemboi',
+    title: 'Tony Kipkemboi | AI Agents, Fine-Tuning & Building in Public',
     description:
       'AI engineer building practical agent systems, fine-tuning experiments, and developer tools, then sharing the lessons through field notes, courses, and talks.',
     creator: '@tonykipkemboi',

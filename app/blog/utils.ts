@@ -21,6 +21,13 @@ type Metadata = {
   videoUploadDate?: string
   /** Optional VideoObject description; falls back to the post description. */
   videoDescription?: string
+  /** ISO date the post was last updated, e.g. `2026-11-25`. Falls back to publishedAt. */
+  updatedAt?: string
+}
+
+/** dateModified for JSON-LD and sitemaps: updatedAt when set, otherwise publishedAt. */
+export function getPostDateModified(post: { metadata: Metadata }): string {
+  return post.metadata.updatedAt || post.metadata.publishedAt
 }
 
 /**
